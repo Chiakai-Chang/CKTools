@@ -17,7 +17,6 @@
 
 ## 科技偵查指令秘笈
 * ## [現場勘查參考(操作系統Log與指令)](https://hackmd.io/@chiakai/OSnCMD)
-
 * ## 網頁勘查_DevTools Console 可用指令
   * ### 列舉出網頁中所有的圖片<img>連結
     ```javascript
@@ -26,17 +25,30 @@
     });
     ```
   * ### 列舉出網頁中所有的影片<video>連結
-     ```javascript
-     document.querySelectorAll('video').forEach(target_tag => {
-       console.log(target_tag.src);
-     });
-     ```
+    ```javascript
+    document.querySelectorAll('video').forEach(target_tag => {
+      console.log(target_tag.src);
+    });
+    ```
   * ### 列舉出網頁中所有的連結<a>
-      ```javascript
-      document.querySelectorAll('a').forEach(target_tag => {
-        console.log(target_tag.src);
-      });
-       ```
+    ```javascript
+    document.querySelectorAll('a').forEach(target_tag => {
+      console.log(target_tag.src);
+    });
+    ```
+* ## ☆ 快速點「簿冊傳閱」(勤教) 密技 ☆
+  * 步驟:
+    * 1. 開啟到「值班臺應勤簿冊電子化系統」-「簿冊傳閱」的網頁
+    * 2. 按「F12」開啟DevTools，選「Console」頁籤
+    * 3. 在「>」後面輸入以下指令，然後按 「Enter」鍵，瞬間就可以幫你全部點完
+  * 指令:
+    ```javascript
+    document.querySelectorAll('#btnDetail').forEach(button => button.click());
+    ```
+  * 補充指令(這個是「允許」你將複製的指令「貼上」到 DevTools 用的指令):
+    ```javascript
+    allow pasting
+    ```
 
 ## 精心研發各種線上偵查小幫手
 * ## 全新! [Cross-Border Investigation Assistant 跨境偵查小助手](https://chiakai.pse.is/XBIA)
