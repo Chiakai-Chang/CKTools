@@ -25,18 +25,18 @@
       console.log(target_tag.src);
     });
     ```
-   * ### 列舉出網頁中所有的影片<video>連結
-      ```javascript
-      document.querySelectorAll('video').forEach(target_tag => {
-        console.log(target_tag.src);
-      });
-      ```
+  * ### 列舉出網頁中所有的影片<video>連結
+     ```javascript
+     document.querySelectorAll('video').forEach(target_tag => {
+       console.log(target_tag.src);
+     });
+     ```
   * ### 列舉出網頁中所有的連結<a>
       ```javascript
       document.querySelectorAll('a').forEach(target_tag => {
         console.log(target_tag.src);
       });
-      ```
+       ```
 
 ## 精心研發各種線上偵查小幫手
 * ## 全新! [Cross-Border Investigation Assistant 跨境偵查小助手](https://chiakai.pse.is/XBIA)
