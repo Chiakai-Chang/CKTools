@@ -1,0 +1,200 @@
+# Chiakai's 科偵軍火庫
+* 更新至 2024-03-21
+
+## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
+![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)
+* [**AI Insight Seeker**](https://chiakai.pse.is/AIInsightSeeker) 是一款專為網路犯罪偵查而設計的創新工具，旨在透過專為資訊爆炸時代科技犯罪偵查之設計，實現對網路犯罪偵查活動的深入洞察、一站式偵查資源快速取用和偵查作為之有效追蹤管理。結合了 Google Sheets 的靈活性和易用性，提供了一個統一的管理平台，使偵查人員能夠有效記錄、追蹤和分享偵查知識和經驗。
+* **核心特色**
+  * **智慧型洞察與管理**：<br>
+    透過整合的儀表板，AI Insight Seeker 為偵查人員提供案件進度、活動完成情況和任務逾期提醒的即時概覽，支持偵查活動的全面管理。
+  * **偵查作為一覽表**：<br>
+    作為知識共享和問題解決的核心，這個工作表詳細記錄每一步偵查行動的規劃、進行狀態和結果，包括預計完成日期和逾期提醒，確保案件追蹤的準確性和時效性。這不僅促進了知識共享，還提高了偵查工作的效率和成效。
+  * **障礙排除記錄**：<br>
+    專門設計來記錄偵查過程中遇到的障礙和延遲原因，這一功能強調了在面對挑戰時的透明度和問題解決策略，促進了團隊間的溝通和協作。
+  * **一站式管理與深度整合工具**：<br>
+    將常用的網路偵查工具如 WHOIS、PingFromEverywhere 等整合於單一平台，方便快速使用和記錄偵查結果，提升偵查效率。
+* 同仁可搭配 [**Chiakai's CyberSleuths: Digital Detective Challenge**](https://chiakai.pse.is/CyberSleuths) 這個專為訓練網路科技犯罪偵查而設計之事件擬真遊戲，透過各種隨機生成之網路犯罪事件，逐一學習如何進行相關調查與管理相關偵查作為。
+
+## 科技偵查指令秘笈
+* ## [現場勘查參考(操作系統Log與指令)](https://hackmd.io/@chiakai/OSnCMD)
+
+* ## 網頁勘查_DevTools Console 可用指令
+  * ### 列舉出網頁中所有的圖片<img>連結
+    ```javascript
+    document.querySelectorAll('img').forEach(target_tag => {
+      console.log(target_tag.src);
+    });
+    ```
+   * ### 列舉出網頁中所有的影片<video>連結
+      ```javascript
+      document.querySelectorAll('video').forEach(target_tag => {
+        console.log(target_tag.src);
+      });
+      ```
+  * ### 列舉出網頁中所有的連結<a>
+      ```javascript
+      document.querySelectorAll('a').forEach(target_tag => {
+        console.log(target_tag.src);
+      });
+      ```
+
+## 精心研發各種線上偵查小幫手
+* ## 全新! [Cross-Border Investigation Assistant 跨境偵查小助手](https://chiakai.pse.is/XBIA)
+  * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://chiakai.pse.is/XBIA)
+  * 因網路犯罪愈發頻繁，使用境外IP如 VPN、Web Hosting 等躲避查緝的情形也愈發常見。為貫徹刑案偵查並尋求突破可能，特別開發此工具協助同仁在跨國調閱資料時，幫忙提醒應注意事項、提供調閱之建議，並以該國適當的用詞用語協助撰寫資料調閱之 Email，藉以降低同仁跨境追查之協調困難，提升同仁突破困境之意願。
+  * 特色:
+    * 1、協助偵辦跨國案件的 Email 撰寫。
+    * 2、會幫忙提醒要注意時區等等。
+    * 3、不知道可以調什麼，也可以幫你想。
+    * 4、一次產多國語言都可以。
+    * 5、還會幫你使用跨國適當的用詞用語。
+  * 趕快來試用看看吧!!
+  * 範例:
+    <table>
+      <tr>
+        <td><img src="https://chiakai-chang.github.io/tempHTML/img/CBIA_Start.png" width="250" height="250"></td>
+        <td><img src="https://chiakai-chang.github.io/tempHTML/img/CBIA_Chinese.png" width="250" height="250"></td>
+      </tr>
+      <tr>
+        <td><img src="https://chiakai-chang.github.io/tempHTML/img/CBIA_Japanese.png" width="250" height="250"></td>
+        <td><img src="https://chiakai-chang.github.io/tempHTML/img/CBIA_English.png" width="250" height="250"></td>
+      </tr>
+      <tr>
+        <td><img src="https://chiakai-chang.github.io/tempHTML/img/CBIA_China.png" width="250" height="250"></td>
+        <td></td>
+      </tr>
+    </table>
+
+* ## 全新改版! [Code Investigater AI 隨身程式碼鑑識小幫手](https://chiakai.pse.is/CodeInvestigatorAI)
+  * [![](https://chiakai-chang.github.io/tempHTML/img/Cute_CODE_INVESTIGATOR_AI.png)](https://chiakai.pse.is/CodeInvestigatorAI)
+  * 為解決執行數位鑑識現場勘查時，遇到「開發人員」相關現場充斥複雜難懂之各種程式碼的問題，該問題令現場查緝人員難以快速瞭解掌握涉案情形或釐清現場人員所言是否真實，特別開發此工具，提供快速分析程式碼並產出報告的功能，協助現場快速掌握涉案狀況。
+  * 特色:
+    * 1、可以直接將程式文檔上傳(如 .html、.py、.bat、.sh、.ps1等)，不用複製貼上。
+    * 2、經歷數個月 N 輪的 Promt Engineering (提示工程)實測，目前可實現分析程式並給出以下報告內容: 
+      * (1) 辨識是哪一種程式語言
+      * (2) 分析程式功能概要
+      * (3) 分析程式執行分析、函數名稱與程式碼出處(區分自動、手動的函數與類別區塊)
+      * (4) 分析程式作者撰寫與變數命名之風格/特徵
+      * (5) 分析並嘗試找出程式內留之相關聯絡資訊
+      * (6) 分析並嘗試找出程式內之登入資訊(如帳號,密碼,Token等數位憑證)
+      * (7) 分析並嘗試找出程式內之網路資訊(如IP、Port、路徑):
+      * (8) 分析程式有無加密動作
+      * (9) 分析程式是否有惡意程式碼
+      * (10) 分析程式之網路交互作用(如從何處取得資料或將資料傳輸至何處)
+      * (11) 分析程式是否存在資料混淆
+      * (12) 分析程式是否有可疑/違法活動並總結出摘要
+      * (13) 提供偵查建議
+  * 趕快來試用看看吧!!
+  * 當前有兩個版本：
+    * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CodeInvestigatorAI)
+      * 語言模型：GPT-4 turbo (數一數二強大)
+      * 次數限制：40筆/3小時
+      * 收費：需有 ChatGPT Plus 資格(20美元/月)
+    * ### (免費! 但結果較不穩定) [POE 平臺](https://chiakai.pse.is/CodeInvestigatorPOE)
+      * 基於 Claude-instant-100k 語言模型
+      * 次數限制：40筆/天
+      * 免費
+
+## 精心研發各種小幫手程式 (Colab 即取即用，點擊程式名稱即可開啟)
+* ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
+   * 緣起:
+     * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
+     * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
+     * 而且下載後，還有需要分析該 IP 使用者作息時間與下載內容剖繪。
+     * 故設計這個小幫手幫忙，除自動下載以外，並利用 AI 幫忙分析(由 Chat-GPT 幫忙的唷，感謝 g4f 套件的開發團隊，但是他們是逆向人家的 API，好像也不太適合推崇，大家默默的...使用就好)，讓大家輕鬆偵查。
+   * \[**重要提醒**\] 請務必將本小幫手按以下步驟複製到您的雲端硬碟，再開始執行唷
+     * 1. 請按左上角「檔案」
+     * 2. 請選「在雲端硬碟中儲存副本」
+     * 3. 恭喜，你已經將本小幫手複製到您的雲端硬碟囉
+
+* ## [網路檔案下載取證小幫手](https://chiakai.pse.is/DigitalForensicsFileDownloader)
+  * 此小幫手旨在協助您從指定網址下載檔案。主要步驟包括：
+    1. 下載並保存檔案。
+    2. 同時保存該檔案的「原始封包」。
+    3. 對下載的檔案和原始封包計算「雜湊值(HASH)」。
+    4. 將上述所有資料壓縮成zip檔，便於封存並下載證據。
+  * 使用此小幫手的優點：
+    1. 透過 Colab 的虛擬主機進行下載，有效隱藏下載者的 IP 地址和裝置資訊，保護您的隱私。
+    2. 結合下載檔案、保存原始封包和雜湊值計算於一體的高效率操作。
+    3. 小幫手的程式碼完全開源，無需安裝任何額外套件，使用透明安全。
+
+* ## [臉書好友整理神器](https://colab.research.google.com/drive/1JCgq0qmmsAtfuICuyk_CciQVjgSfKZ33?usp=sharing)
+   * 請參考教學: [使用指引](https://drive.google.com/file/d/1KI8intBMvUYx2rTMgFi2utGGM6oxEH0i/view)
+   * 整理大量以往難以人工彙整之臉書留言或按攢者資訊，並用以從事「交集分析」抓出關鍵犯嫌。
+
+* ## [臉書留言整理神器](https://colab.research.google.com/drive/1t4xkYcXG0apHxFmjXqOPpR_cHpKwtfxV?usp=sharing)
+   * 最近網路相關案件越來越多，臉書上假消息、恐嚇、不當發文等等也是越發頻繁，若是假帳號或相關資料很少的帳號發文，或者由他人轉 PO 的文章，常常都有需要從該貼文的留言內容，嘗試看看有無其他線索的需求。
+   * 手動瀏覽再複製貼上，實在是很費力，所以特別撰寫這個小程式，只要會取得「留言部份」的網頁原始碼，貼給本程式，就會自動幫忙整理出以下資訊：
+      * 1、留言者
+      * 2、留言者臉書連結
+      * 3、留言內容
+
+* ## [IPv6 格式轉換小幫手](https://colab.research.google.com/drive/1we5ASiwmo9hfpVU9fNz0b115R-c0VPL5?usp=sharing)
+   * 鑒於 IPv6 位址表示法太長，因此有所謂的以下「省略規則」：
+      * 規則1：
+         * 為每組數字的第一個0可以省略，若整組皆為0，則以0表示。譬如，「0DB8」可以省略為「DB8」，「0000」則為「0」。
+      * 規則2：
+         * 為連續出現的0000可以省略成「::」。譬如：「:0000:0000:0000:0000:」可以省略成「:0000:0000:0000::」、「:0:0:0:0:」、「:0::0:」或「::」。
+   * 投單調取 IPv6 時，須輸入完整128bits，不可省略「0」，英文部分須為大寫。
+      * 範例：2001:B400:E2AD:236A:713E:0BF4:804C:1573
+   * 所以特別撰寫這個小程式，幫忙將 IPv6 都轉成符合投單調取的格式
+
+* ## [批量 IP HTTP HEAD 確認小幫手](https://colab.research.google.com/drive/1N559gaAMvCnsKWwK3Y3DPUGDI26JGfNc?usp=sharing)
+  * 若您有一批 IP 想了解該 IP 是什麼網站
+  * 除了透過 Reverse IP Lookup 查詢 Domain 以外，。
+  * 也可以針對該 IP 之 80 (http) 或 443 (https) port 發送 HTTP HEAD 請求。
+    * 若該 IP 是 WEB server，就會回應 HTTP Headers，即該網站的 Meta Data，包括：
+      * 伺服器類型，如: CloudFlare, Google 等。
+      * Location，如： 該網頁的域名。
+  * 曾經偵辦案件時取得過某不知身分犯嫌的 IP 連線紀錄，想了解他連線到的 IP 是什麼網站，看有沒有有助於瞭解查明該犯嫌身分的資料，所以撰寫了這個程式。
+    * 想到可能對大家也會有幫助，特別釋出給大家使用。
+
+* ## [大量同格式JSON彙整小幫手](https://colab.research.google.com/drive/1w1ApO_p3zh38ocU6jW5di3LXfeQWA3t6?usp=sharing)
+  * 現在的網頁大多都基於 MVC 等架構，除了呈現的網頁以外，背後還會用 ajax 等方式用去存取 API 來獲得要更新顯示的資料(大多為 JSON 格式)。
+  * 因為前述 JSON 給的資料往往比網頁上肉眼能看到得「更豐富」，且格式也更容易整理，所以有個小幫手可以幫忙將這些 Json 接收下來，一起轉換成更容易操作的 excel 格式，豈不美哉？
+  * 本小幫手目前有兩種使用方法，適應不同情境：
+    * 用法1: 整理已下載之大量 JSON 檔
+    * 用法2: 每次複製貼上1筆，即時換整 JSON 資料再匯出
+
+* ## [視覺化情資網路關聯小幫手](https://colab.research.google.com/drive/1hVI20D5MchN6OuSI8OSC6MVYTDSJclg6?usp=sharing)
+  * 現在已有的視覺化分析軟體包括：i2 analyst's notebook、KeyLines 等等，真的非常好用。
+  * 但是有以下困擾:
+    1. i2 價格實在...門檻太高了。
+    2. KeyLines 則需要在公務系統內使用，要比較注意資安稽核等等疑慮。
+  * 加上有時候只是單純想要「顯示」情資之間的關聯，用來幫助判斷、分析資料。
+  * 所以撰寫了個小程式，讓大家可以隨時隨地「免費的」視覺化自己資料之間的關聯。
+
+* ## [AWS IP 確認小幫手](https://colab.research.google.com/drive/1T7vX0L2gs9VCNzwzSpvsI84rGTFRXl3R?usp=sharing)
+   *  若大家有遇到 ip 是 amazon (亞馬遜) 的，可以使用這個小幫手來確認 IP 是 AWS 的什麼雲端服務。
+      * 亦可參考 RyanLabs 提供之線上查詢工具：AWS IP Range Checker/Lookup Tool
+         * 該工具僅能查詢 IPv4 的資料
+   * 本程式係從官方：AWS IP address ranges 下載最新之 IP 資訊 (Json 檔，含 IPv4 與 IPv6) 進行比對，為最即時、最準確之資料
+
+* ## [IP 與 CIDR (網段) 轉換小幫手](https://colab.research.google.com/drive/1DaA5otkgKxl5jZMMYxu8AJaTclpWdHPE?usp=sharing)
+  * 因偵辦案件需要設 IP 黑名單阻擋涉案網段，若一個一個 IP 輸入費時費工，有時候 IP Whois 結果又只有提供起始、結束的 IP，還要自己換算成 CIDR 表示法。
+  * 故乾脆自己寫一個程式來做轉換，比漫天找網路資源快多了。
+  * 只要輸入起始、結束的 IP，就會自動將這之前所有不同的網段，都改以 CIDR 表示法的方式全部列舉出來。
+
+* ## [地址轉經緯度小幫手](https://colab.research.google.com/drive/1BWleXRAN1vM82-k9lz-O78fPMqBZf581?usp=sharing)
+  * 借用內政部國土測繪中心「國土測繪圖資服務雲」之電子地圖，查詢任意地址之完整行政區(至村里鄰)及經緯度。 
+
+* ## [User-Agent 解析小幫手](https://colab.research.google.com/drive/1IP1t7yFuIYLnTttwcn_V5fy3XkJASk2d?usp=sharing)
+  * 在做 log 分析時，常常都會遇到 User-Agent 這個資料，該資料通常包含了其應用程式類型(瀏覽器)、作業系統、軟體供應商……等等，有時還會包含軟體修訂版本等資訊。
+  * 因該字串不容易閱讀，所以特別以小程式幫忙解析重點。
+
+* ## [封包 headers 文字轉 dict 小幫手](https://colab.research.google.com/drive/15auzjfvWt6HICDyKtTDEFfKpoT-TlG7s?usp=sharing)
+   * 使用 DevTools 複製找到並複製封包有關 Requests Headers 的文字內容。
+   * 貼到程式後，即可整理成方便使用的 dict 格式，並自動將 cookie 分離。
+
+* ## [時間戳轉換小幫手](https://colab.research.google.com/drive/1uzcBbl5EHOn8J5S_UHWQ2_rpfs_Gjttp?usp=sharing)
+  * 在做資料清洗、資料探勘時，偶爾會發現有以數字表示的時間(即: 時間戳)。
+  * 因為數字的時間戳雖然很方便比較「日期、時間差異」、方便做「時區加減計算」，但是不容易直觀的了解究竟是什麼時間，所以為了方便就寫了個小小小幫手。
+  * 本小幫手目前有兩種使用方法，適應不同情境：
+    * 用法1: 「時間戳」轉換成「西元日期」
+    * 用法2: 「任意日期格式」轉換成「時間戳」
+
+* ## [文字加解密技術](https://colab.research.google.com/drive/1lq6E8jFDKuXveji5zJmzl7m7hT3o3503?usp=sharing)
+   * 提供文字有關「凱薩加密」、「二進制轉換」等2種之加解密，尤其是「二進制轉換」時常受資安相關社群隱藏發言所愛用。
+   * 包含：
+      * 凱撒加密
+      * 二進制轉換 (資安社群常用)
