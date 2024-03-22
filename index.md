@@ -1,5 +1,5 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-03-21
+* 更新至 2024-03-22
 
 ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
 ![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)
@@ -51,8 +51,8 @@
     ```
 
 ## 精心研發各種線上偵查小幫手
-* ## 全新! [Cross-Border Investigation Assistant 跨境偵查小助手](https://chiakai.pse.is/XBIA)
-  * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://chiakai.pse.is/XBIA)
+* ## 全新! [CrossCaseSolver 跨境偵查小助手](https://chiakai.pse.is/CrossCaseSolver_POE)
+  * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://chiakai.pse.is/CrossCaseSolver_POE)
   * 因網路犯罪愈發頻繁，使用境外IP如 VPN、Web Hosting 等躲避查緝的情形也愈發常見。為貫徹刑案偵查並尋求突破可能，特別開發此工具協助同仁在跨國調閱資料時，幫忙提醒應注意事項、提供調閱之建議，並以該國適當的用詞用語協助撰寫資料調閱之 Email，藉以降低同仁跨境追查之協調困難，提升同仁突破困境之意願。
   * 特色:
     * 1、協助偵辦跨國案件的 Email 撰寫。
@@ -61,6 +61,15 @@
     * 4、一次產多國語言都可以。
     * 5、還會幫你使用跨國適當的用詞用語。
   * 趕快來試用看看吧!!
+  * 當前有兩個版本：
+    * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CrossCaseSolver)
+      * 語言模型：GPT-4 turbo (數一數二強大)
+      * 次數限制：40筆/3小時
+      * 收費：需有 ChatGPT Plus 資格(20美元/月)
+    * ### (免費!) [POE 平臺](https://chiakai.pse.is/CrossCaseSolver_POE)
+      * 基於 Claude-instant-100k 語言模型
+      * 次數限制：40筆/天
+      * 免費
   * 範例:
     <table>
       <tr>
