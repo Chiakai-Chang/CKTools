@@ -2,7 +2,7 @@
 * 更新至 2024-03-22
 
 ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
-![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)
+[![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
 * [**AI Insight Seeker**](https://chiakai.pse.is/AIInsightSeeker) 是一款專為網路犯罪偵查而設計的創新工具，旨在透過專為資訊爆炸時代科技犯罪偵查之設計，實現對網路犯罪偵查活動的深入洞察、一站式偵查資源快速取用和偵查作為之有效追蹤管理。結合了 Google Sheets 的靈活性和易用性，提供了一個統一的管理平台，使偵查人員能夠有效記錄、追蹤和分享偵查知識和經驗。
 * **核心特色**
   * **智慧型洞察與管理**：<br>
