@@ -33,15 +33,15 @@
     ```
     * 或者見到 Console 出現以下警示的時候，也請「手動」輸入上記指令
       ![](https://chiakai-chang.github.io/tempHTML/img/allowpasting.png)
-  * ### 列舉出網頁中「所有圖片連結 」(即<img>)
+  * ### 列舉出網頁中「所有圖片連結 」(即\<img\>)
     ```javascript
     document.querySelectorAll('img').forEach(target_tag => {console.log(target_tag.src);});
     ```
-  * ### 列舉出網頁中「所有影片連結」(即<video>)
+  * ### 列舉出網頁中「所有影片連結」(即\<video\>)
     ```javascript
     document.querySelectorAll('video').forEach(target_tag => {console.log(target_tag.src);});
     ```
-  * ### 列舉出網頁中「所有連結」(即<a>) 
+  * ### 列舉出網頁中「所有連結」(即\<a\>) 
     ```javascript
     document.querySelectorAll('a').forEach(target_tag => {console.log(target_tag.src);});
     ```
