@@ -27,11 +27,11 @@
 ## 科技偵查指令秘笈
 * ## [現場勘查參考(操作系統Log與指令)](https://hackmd.io/@chiakai/OSnCMD)
 * ## 網頁勘查_DevTools Console 可用指令
-  * ### [必須先做] 請先「手動」輸入以下指令允許在 Console 貼上程式碼:
+  * ### [必須先做] 請先「手動」輸入以下指令，才會被允許在 DevTools 的 Console 內貼上程式碼:
     ```javascript
     allow pasting
     ```
-    * 或者見到 Console 出現以下警示的時候，也請「手動」輸入上記指令
+    * 或者見到 Console 出現以下警示的時候，也請「**手動**」輸入上記指令
       ![](https://chiakai-chang.github.io/tempHTML/img/allowpasting.png)
   * ### 列舉出網頁中「所有圖片連結 」(即\<img\>)
     ```javascript
