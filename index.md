@@ -6,9 +6,9 @@
 * 本軍火庫內之各項 **Colab** 或 **Google Sheet** 之工具，相關程式碼或設定全部都係開源透明的，歡迎取用、修改或[回饋改進意見](https://forms.gle/euDVcKwk7QsiHgsz8)。
 * 請先記得將工具複製到您的帳號再運作唷!
   * ### Colab 複製方法:
-    * 左上角「檔案」->「在雲端硬碟中儲存副本」
+    * 左上角「**檔案**」->「**在雲端硬碟中儲存副本**」
   * ### Google Sheet 複製方法:
-    * 左上角「檔案」->「建立副本」
+    * 左上角「**檔案**」->「**建立副本**」
 
 ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
 [![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
@@ -33,15 +33,15 @@
     ```
     * 或者見到 Console 出現以下警示的時候，也請「手動」輸入上記指令
       ![](https://chiakai-chang.github.io/tempHTML/img/allowpasting.png)
-  * ### 列舉出網頁中所有的圖片<img>連結
+  * ### 列舉出網頁中「所有圖片連結 」(即<img>)
     ```javascript
     document.querySelectorAll('img').forEach(target_tag => {console.log(target_tag.src);});
     ```
-  * ### 列舉出網頁中所有的影片<video>連結
+  * ### 列舉出網頁中「所有影片連結」(即<video>)
     ```javascript
     document.querySelectorAll('video').forEach(target_tag => {console.log(target_tag.src);});
     ```
-  * ### 列舉出網頁中所有的連結<a>
+  * ### 列舉出網頁中「所有連結」(即<a>) 
     ```javascript
     document.querySelectorAll('a').forEach(target_tag => {console.log(target_tag.src);});
     ```
