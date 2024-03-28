@@ -1,6 +1,14 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-03-22
+* 更新至 2024-03-28
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
+
+## 溫馨提醒
+* 本軍火庫內之各項 **Colab** 或 **Google Sheet** 之工具，相關程式碼或設定全部都係開源透明的，歡迎取用、修改或[回饋改進意見](https://forms.gle/euDVcKwk7QsiHgsz8)。
+* 請先記得將工具複製到您的帳號再運作唷!
+  * ### Colab 複製方法:
+    * 左上角「檔案」->「在雲端硬碟中儲存副本」
+  * ### Google Sheet 複製方法:
+    * 左上角「檔案」->「建立副本」
 
 ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
 [![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
