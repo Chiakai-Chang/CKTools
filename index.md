@@ -19,23 +19,23 @@
 ## 科技偵查指令秘笈
 * ## [現場勘查參考(操作系統Log與指令)](https://hackmd.io/@chiakai/OSnCMD)
 * ## 網頁勘查_DevTools Console 可用指令
+  * ### [必須先做] 請先「手動」輸入以下指令允許在 Console 貼上程式碼:
+    ```javascript
+    allow pasting
+    ```
+    * 或者見到 Console 出現以下警示的時候，也請「手動」輸入上記指令
+      ![](https://chiakai-chang.github.io/tempHTML/img/allowpasting.png)
   * ### 列舉出網頁中所有的圖片<img>連結
     ```javascript
-    document.querySelectorAll('img').forEach(target_tag => {
-      console.log(target_tag.src);
-    });
+    document.querySelectorAll('img').forEach(target_tag => {console.log(target_tag.src);});
     ```
   * ### 列舉出網頁中所有的影片<video>連結
     ```javascript
-    document.querySelectorAll('video').forEach(target_tag => {
-      console.log(target_tag.src);
-    });
+    document.querySelectorAll('video').forEach(target_tag => {console.log(target_tag.src);});
     ```
   * ### 列舉出網頁中所有的連結<a>
     ```javascript
-    document.querySelectorAll('a').forEach(target_tag => {
-      console.log(target_tag.src);
-    });
+    document.querySelectorAll('a').forEach(target_tag => {console.log(target_tag.src);});
     ```
 * ## ☆ 快速點「簿冊傳閱」(勤教) 密技 ☆
   * 步驟:
@@ -45,10 +45,6 @@
   * 指令:
     ```javascript
     document.querySelectorAll('#btnDetail').forEach(button => button.click());
-    ```
-  * 補充指令(這個是「允許」你將複製的指令「貼上」到 DevTools 用的指令):
-    ```javascript
-    allow pasting
     ```
 
 ## 精心研發各種線上偵查小幫手
