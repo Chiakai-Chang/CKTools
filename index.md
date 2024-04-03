@@ -124,7 +124,7 @@
 ## 精心研發各種小幫手程式 (點擊程式名稱即可下載)
 * ## [IPwhois好好查](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
   * 當前版本： 20240403_2 [點我下載](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
-  * 一般案件偵查時，針對 IP 使用紀錄通常有幾十到上百的 IP 要逐筆手動查詢 Whois，再轉貼到 Excel 中，往往查完到整理好可以申請投單調月就已耗時2小時以上；甚至在 log 分析時，還可能面臨多達百萬、甚至上千萬行的資料與 IP，以人力是不可能完成的。因此特別設計此程式，讓大家自由貼上任意文本資料，程式將自動從每一行資料中，將 IP 抽取出來彙整，並以「即時更新離線資料庫」搭配精心設計的「二分搜尋演算法 (Binary search algorithm)」來加速，自動進行 IP Whois 查詢(若係臺灣 IP 還會再進一步自動查詢 TWNIC 資料)，最後將結果整理成「Excel 一覽表」+「臺灣 IP 基資投單格式 TXT 檔」，其中惱人的 IPv6 也會自動幫大家轉換成符合投單系統可以吃的格式。力求從各種面向，以最貼心的方式，大量節約同仁查詢所需耗費的寶貴時間與精力。
+  * 一般案件偵查時，針對 IP 使用紀錄通常有幾十到上百的 IP 要逐筆手動查詢 Whois，再轉貼到 Excel 中，往往查完到整理好可以申請投單調閱就已耗時2小時以上；甚至在從事 log 分析時，還可能面臨有多達百萬、甚至上千萬行的資料與 IP，以人力是不可能完成的困境(以舊版的 IP Whois 好好查仍需耗費約連續60~80小時才能查完)。因此特別設計、改進此程式，讓大家自由貼上任意文本資料，程式將自動從每一行資料中，將 IP 抽取出來彙整，並以「即時更新離線資料庫」搭配精心設計的「二分搜尋演算法 (Binary search algorithm)」來加速，自動進行 IP Whois 查詢(若係臺灣 IP 還會再進一步自動查詢 TWNIC 資料)，最後將結果整理成「Excel 一覽表」+「臺灣 IP 基資投單格式 TXT 檔」，其中惱人的 IPv6 也會自動幫大家轉換成符合投單系統可以吃的格式。力求從各種面向，以最貼心的方式，大量節約同仁查詢所需耗費的寶貴時間與精力。
   * 解壓縮密碼：`htciu`
   * [![](https://chiakai-chang.github.io/CKTools/img/ipwhois_poc.png)](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
 
