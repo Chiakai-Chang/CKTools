@@ -4,7 +4,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 溫馨提醒您 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 溫馨提醒您 ☆☆☆ </span>
 * 本軍火庫內之各項 **Colab** 或 **Google Sheet** 之工具，相關程式碼或設定全部都係開源透明的，歡迎取用、修改或[回饋改進意見](https://forms.gle/euDVcKwk7QsiHgsz8)。
 * <span style="color:red;">**請先記得將工具複製到您的帳號再運作唷!**</span>
   * ### Colab 複製方法:
@@ -14,7 +14,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 重磅推薦 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 重磅推薦 ☆☆☆ </span>
 * ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
 [![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
   * [**AI Insight Seeker**](https://chiakai.pse.is/AIInsightSeeker) 是一款專為網路犯罪偵查而設計的創新工具，旨在透過專為資訊爆炸時代科技犯罪偵查之設計，實現對網路犯罪偵查活動的深入洞察、一站式偵查資源快速取用和偵查作為之有效追蹤管理。結合了 Google Sheets 的靈活性和易用性，提供了一個統一的管理平台，使偵查人員能夠有效記錄、追蹤和分享偵查知識和經驗。
@@ -31,7 +31,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 科技偵查指令秘笈 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 科技偵查指令秘笈 ☆☆☆ </span>
 * ## [現場勘查參考(操作系統Log與指令)](https://hackmd.io/@chiakai/OSnCMD)
 * ## 網頁勘查_DevTools Console 可用指令
   * ### [必須先做] 請先「手動」輸入以下指令，才會被允許在 DevTools 的 Console 內貼上程式碼:
@@ -64,7 +64,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
 * ## 全新! [CrossCaseSolver 跨境偵查小助手](https://chiakai.pse.is/CrossCaseSolver_POE)
   * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://chiakai.pse.is/CrossCaseSolver_POE)
   * 因網路犯罪愈發頻繁，使用境外IP如 VPN、Web Hosting 等躲避查緝的情形也愈發常見。為貫徹刑案偵查並尋求突破可能，特別開發此工具協助同仁在跨國調閱資料時，幫忙提醒應注意事項、提供調閱之建議，並以該國適當的用詞用語協助撰寫資料調閱之 Email，藉以降低同仁跨境追查之協調困難，提升同仁突破困境之意願。
@@ -132,7 +132,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (點擊程式名稱即可下載) ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (點擊程式名稱即可下載) ☆☆☆ </span>
 * ## [IPwhois好好查](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
   * 當前版本： 20240403_2 [點我下載](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
   * 一般案件偵查時，針對 IP 使用紀錄通常有幾十到上百的 IP 要逐筆手動查詢 Whois，再轉貼到 Excel 中，往往查完到整理好可以申請投單調閱就已耗時2小時以上；甚至在從事 log 分析時，還可能面臨有多達百萬、甚至上千萬行的資料與 IP，以人力是不可能完成的困境(以舊版的 IP Whois 好好查仍需耗費約連續60~80小時才能查完)。因此特別設計、改進此程式，讓大家自由貼上任意文本資料，程式將自動從每一行資料中，將 IP 抽取出來彙整，並以「即時更新離線資料庫」搭配精心設計的「二分搜尋演算法 (Binary search algorithm)」來加速，自動進行 IP Whois 查詢(若係臺灣 IP 還會再進一步自動查詢 TWNIC 資料)，最後將結果整理成「Excel 一覽表」+「臺灣 IP 基資投單格式 TXT 檔」，其中惱人的 IPv6 也會自動幫大家轉換成符合投單系統可以吃的格式。力求從各種面向，以最貼心的方式，大量節約同仁查詢所需耗費的寶貴時間與精力。
@@ -247,7 +247,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 資料分析處理工具區 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 資料分析處理工具區 ☆☆☆ </span>
 * ## Google Sheet: [RE正規表達式套用範本](https://docs.google.com/spreadsheets/d/1qwhzTBiAizzCirTtNPr507Ub5mL4vfr85oOp86BVY5w/edit?usp=sharing)
    * 請參考教學: [使用指引](https://drive.google.com/file/d/1sC3xvlGxVF_IHNsWb78kqXjeRQyLfHHQ/view?usp=sharing)
    * 你可以透過這個範本，並參考相關的「正規表達式」，即能幫您從一行一行的文字資料中(例如: 165案情描述、log檔等等)，批次快速地自動化擷取出例如: 身分證號、手機號碼、市內電話、Email、URL、通訊軟體 ID (Username)等您所需要的關鍵資訊出來。
@@ -259,7 +259,7 @@
 
 ---
 
-## <span style="background-color:yellow;"> ☆☆☆ 再次溫馨提醒您 ☆☆☆ </span>
+# <span style="background-color:yellow;"> ☆☆☆ 再次溫馨提醒您 ☆☆☆ </span>
 * 本軍火庫內之各項 **Colab** 或 **Google Sheet** 之工具，相關程式碼或設定全部都係開源透明的，歡迎取用、修改或[回饋改進意見](https://forms.gle/euDVcKwk7QsiHgsz8)。
 * <span style="color:red;">**請先記得將工具複製到您的帳號再運作唷!**</span>
   * ### Colab 複製方法:
