@@ -1,5 +1,5 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-04-10
+* 更新至 2024-05-02
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 
 ---
@@ -256,6 +256,25 @@
      * 只要設定好表達式，並貼上一批您要分析的資料，就會一行一行很快速地幫您擷取出來
    * 缺點:
      * 受限於 Google Sheet 的 REGEXEXTRACT 函數，一次只能從您給的分析資料中擷取出第一個符合表達式的關鍵資訊，例如您的給資料中有出現 3 個 IP，就只能擷取出第一個  IP。
+
+---
+
+# <span style="background-color:yellow;"> ☆☆☆ 開源實用工具分享 ☆☆☆ </span>
+* ## OpenAI [WhisperDesktop]()
+   * 請參考: [使用教學](https://notesstartup.com/youtube-ai-subtitle-tutorial/)
+   * 已經為大家打包好實測最好用的模型+程式介面
+     * [點我下載(WhisperDesktop.zip)](https://drive.google.com/file/d/1h9Bg9BpWooZMna8ZEieBhokfJJ6b6vXq/view?usp=sharing)
+     * 解壓縮密碼: htciu
+   * WhisperDesktop 是一款免費、開源的語音轉文字軟體，適用於 Windows 系統。它使用 OpenAI 的 Whisper 語音辨識模型來轉錄音訊和影片。WhisperDesktop 的優點是速度快、準確率高，而且可以支援多種語言，廣東話國語及英語。
+   * 小評：
+     * 用來快速產生錄音譯文、會議譯文應該是是蠻有幫助的唷！
+     * 有學長提到在需要通譯陪同的筆錄，未來也許也可以藉由此開源模型去做初步的翻譯，藉以確認通譯所翻譯的譯文是否有正確傳達被詢問者的意思。這部分因為比較需要即時的翻譯，就不適用 WhisperDesktop 這個軟體，只能藉用 OpenAI 開發的 Whisper 語音辨識模型再另外開發，或尋找另外的介面軟體。
+   * WhisperDesktop 優點
+     * 速度快：WhisperDesktop 可以快速地轉錄音訊和影片。
+     * 準確率高：WhisperDesktop 的準確率較高，可以滿足一般需求。
+     * 支援多語言：WhisperDesktop 支援多種語言，可以滿足不同使用者的需求。
+   * WhisperDesktop 及 OpenAI 的關係
+     * WhisperDesktop 是基於 OpenAI 開發的 Whisper 語音辨識模型。OpenAI 是一家非營利性研究機構，致力於開發安全的人工智慧。Whisper 是 OpenAI 開發的一種大型語言模型，可用於語音轉文字、語言翻譯等。
 
 ---
 
