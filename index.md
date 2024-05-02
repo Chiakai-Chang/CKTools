@@ -260,7 +260,7 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 開源實用工具分享 ☆☆☆ </span>
-* ## OpenAI [WhisperDesktop]()
+* ## [WhisperDesktop](https://github.com/Const-me/Whisper) 錄音轉文字軟體
    * 請參考: [使用教學](https://notesstartup.com/youtube-ai-subtitle-tutorial/)
    * 已經為大家打包好實測最好用的模型+程式介面
      * [點我下載(WhisperDesktop.zip)](https://drive.google.com/file/d/1h9Bg9BpWooZMna8ZEieBhokfJJ6b6vXq/view?usp=sharing)
@@ -268,6 +268,7 @@
    * WhisperDesktop 是一款免費、開源的語音轉文字軟體，適用於 Windows 系統。它使用 OpenAI 的 Whisper 語音辨識模型來轉錄音訊和影片。WhisperDesktop 的優點是速度快、準確率高，而且可以支援多種語言，廣東話國語及英語。
    * 小評：
      * 用來快速產生錄音譯文、會議譯文應該是是蠻有幫助的唷！
+     * 若錄音檔不在軟體本身預設支援的副檔名內(例如: .agg)而找不到檔案的話，可以先嘗試直接將副檔名改成 .wav 試試看，不行再轉檔就好。
      * 有學長提到在需要通譯陪同的筆錄，未來也許也可以藉由此開源模型去做初步的翻譯，藉以確認通譯所翻譯的譯文是否有正確傳達被詢問者的意思。這部分因為比較需要即時的翻譯，就不適用 WhisperDesktop 這個軟體，只能藉用 OpenAI 開發的 Whisper 語音辨識模型再另外開發，或尋找另外的介面軟體。
    * WhisperDesktop 優點
      * 速度快：WhisperDesktop 可以快速地轉錄音訊和影片。
