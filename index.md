@@ -1,5 +1,5 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-05-06
+* 更新至 2024-05-27
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 
 ---
@@ -15,10 +15,11 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 重磅推薦 ☆☆☆ </span>
-* ## [AI Insight Seeker 網路偵查智慧型管理系統](https://chiakai.pse.is/AIInsightSeeker)
+* ## [AI Insight Seeker 智慧偵查筆記系統](https://chiakai.pse.is/AIInsightSeeker)
 [![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
-  * 隨著網路犯罪案件激增，傳統偵查模式面臨挑戰。本作品設計並實作一套以協作為基礎的偵查管理平台，旨在解決資訊過載及知識碎片化問題。該系統平臺藉由 Google Sheets 強大的共用協作功能，適用於跨區域、跨國偵查，實現偵查工作的即時分配、進度追蹤及資料結構化等管理。透過高度整合且自動化的管理工具，有效提升自身偵查小隊或跨團隊間的協同合作、偵查過程情資共享透明度、同步協作效率及資訊共享準確性。
-  * ※ 相關學術論文撰寫中。
+  * <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://chiakai.pse.is/AIInsightSeeker">AI Insight Seeker 智慧偵查筆記系統</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.linkedin.com/in/chiakai-chang-htciu">Chang, Chia-kai</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
+  * 隨著資訊爆炸、新興科技飛速演進，致使網路犯罪案件激增，員警負荷過載，傳統偵查模式面臨挑戰。本作品設計並實作一套以協作為基礎的偵查管理平台，旨在解決資訊過載及知識碎片化問題。該系統平臺藉由 Google Sheets 強大的共用協作功能，適用於跨區域、跨國偵查，實現偵查工作的即時分配、進度追蹤及資料結構化等管理。透過高度整合且自動化的管理工具，有效提升自身偵查小隊或跨團隊間的協同合作、偵查過程情資共享透明度、同步協作效率及資訊共享準確性。
+    * ※ 相關學術論文撰寫中。
   * **核心特色**
     * **智慧型洞察與管理**：<br>
       透過整合的儀表板，AI Insight Seeker 為同一偵查團隊除提供整體案件進度、活動完成情況和任務逾期提醒的即時概覽；亦可由偵查團隊人員分配偵查工作，細部查看個別偵查人員工作負載量與個別偵處進度，支持偵查活動的全面管理。
