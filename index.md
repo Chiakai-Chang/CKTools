@@ -52,7 +52,7 @@
     ```
   * ### 列舉出網頁中「所有連結」(即\<a\>) 
     ```javascript
-    document.querySelectorAll('a').forEach(target_tag => {console.log(target_tag.src);});
+    document.querySelectorAll('a').forEach(target_tag => {console.log(target_tag.href);});
     ```
 * ## ☆ 快速點「簿冊傳閱」(勤教) 密技 ☆
   * 步驟:
