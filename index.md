@@ -1,5 +1,5 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-05-27
+* 更新至 2024-06-11
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 
 ---
@@ -63,7 +63,21 @@
     ```javascript
     document.querySelectorAll('#btnDetail').forEach(button => button.click());
     ```
-
+* ## ☆ 下載「PDF」簡報檔密技 ☆
+  * 步驟:
+    * 1. 使用 Chrome 到教育訓練網站，選擇你的課程，直到打開簡報檔的網頁
+    * 2. 點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
+    * 3. 「開發人員工具」(即 DevTools) 跳到「Network」頁籤，點上方「∅」符號清空目前封包
+    * 4. 回到網頁，按 F5 重新整理
+    * 5. 「Network」頁籤會攔到「getPDF.php?id=...」的封包，請看該封包的「Request URL」，其中的「id=...」跟「&ticket=...」中的...就是我們需要的資料
+    * 6. 請將以下指令中的 id=... 跟 ticket=... 中的 ... 替換成你取到的資料
+        * 指令:
+           ```javascript
+           var link = document.createElement('a'); link.href = "getPDF.php?id=...&ticket=..."; link.download = 'document.pdf'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+           ```
+    * 7. 將上述指令修改後，貼到 Console 執行，稍等一下就會跳出視窗問你 PDF 要下載到哪了 
+  * 例圖:
+    * ![](https://chiakai-chang.github.io/tempHTML/img/downloadPDFpng.png)
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
