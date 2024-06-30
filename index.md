@@ -298,7 +298,7 @@
 
 # <span style="background-color:yellow;"> ☆☆☆ 人生與職場的心靈雞湯 ☆☆☆ </span>
 * ## [智慧心境．蛻變領航．Wisdom Mindset Evolution Navigator](https://chiakai.pse.is/WMEN)
-   * ![](https://chiakai-chang.github.io/tempHTML/Icons/WMEN.png)
+   * [![](https://chiakai-chang.github.io/tempHTML/Icons/WMEN.png)](https://chiakai.pse.is/WMEN)
    * ※ 這是一個基於 ChatGPT4o的GPT 
    * 🌟 提升心靈智慧，解答人生疑惑！ 🌟
        * 親愛的朋友們，我是 Chiakai，誠摯邀請您體驗我獨立設計的智慧心境導師：「智慧心境．蛻變領航．Wisdom Mindset Evolution Navigator」。
