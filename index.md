@@ -1,5 +1,5 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-06-11
+* 更新至 2024-06-30
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 
 ---
@@ -293,6 +293,26 @@
    * WhisperDesktop 及 OpenAI 的關係
      * WhisperDesktop 是基於 OpenAI 開發的 Whisper 語音辨識模型。OpenAI 是一家非營利性研究機構，致力於開發安全的人工智慧。Whisper 是 OpenAI 開發的一種大型語言模型，可用於語音轉文字、語言翻譯等。
 
+
+---
+
+# <span style="background-color:yellow;"> ☆☆☆ 人生與職場的心靈雞湯 ☆☆☆ </span>
+* ## [智慧心境．蛻變領航．Wisdom Mindset Evolution Navigator](https://chiakai.pse.is/WMEN)
+   * ![](https://chiakai-chang.github.io/tempHTML/Icons/WMEN.png)
+   * ※ 這是一個基於 ChatGPT4o的GPT 
+   * 🌟 提升心靈智慧，解答人生疑惑！ 🌟
+       * 親愛的朋友們，我是 Chiakai，誠摯邀請您體驗我獨立設計的智慧心境導師：「智慧心境．蛻變領航．Wisdom Mindset Evolution Navigator」。
+無論您遇到什麼困惑，或是需要人生建議，都將為您提供深入的洞察和個性化的指導，助您找到方向。
+       * ✨ 功能亮點 ✨
+           * 🔍 解答各種人生疑問
+           * 🧠 提供專業的心靈指導
+           * 🌟 給予實用的人生建議
+       * 立即點擊以下連結，開始您的智慧之旅：
+           * 👉 https://chiakai.pse.is/WMEN
+       * **提醒您**：
+           * 由於此智慧心境導師需連線查資料，若出現連線許可請點選「**允許**」，以確保能為您提供最佳服務。
+       * #智慧解惑 #心靈指導 #人生建議 #提升智慧
+       
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 再次溫馨提醒您 ☆☆☆ </span>
