@@ -1,7 +1,7 @@
 # Chiakai's 科偵軍火庫
-* 更新至 2024-06-30
+* [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
+* 更新至 2024-06-03
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
-
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 溫馨提醒您 ☆☆☆ </span>
