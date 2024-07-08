@@ -146,6 +146,25 @@
       * 次數限制：40筆/天
       * 免費
 
+* ## 全新改版! [Insight Profiling Detective Assistant (智慧剖繪偵查助手)](https://chiakai.pse.is/IPDA)
+   * [<img src="https://chiakai-chang.github.io/tempHTML/Icons/InsightProfilingDetectiveAssistant.png" width="200" height="200">](https://chiakai.pse.is/IPDA)
+   * 緣起:
+     * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [IKnowWhatYouDownload.com](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
+     * 原本 Colab 版:  [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
+       * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
+       * 而且下載後，還有需要分析該 IP 使用者作息時間與下載內容剖繪。
+       * 故設計這個小幫手幫忙，除自動下載以外，並利用 AI 幫忙分析(由 Chat-GPT 幫忙的唷，感謝 g4f 套件的開發團隊，但是他們是逆向人家的 API，好像也不太適合推崇，大家默默的...使用就好)，讓大家輕鬆偵查。
+   * 「**ＮＥＷ 新版！**」專業的科技犯罪偵查專家，幫助員警分析IP下載BT紀錄，快速掌握目標對象的活動規律、興趣偏好和潛在犯罪風險。簡單操作，高效偵查，助你迅速破解案件。
+     **功能亮點：**
+     - **數據整理**：自動生成互動式表格，清晰呈現下載紀錄。
+     - **作息分析**：統計每日、每周作息時間，推測目標行為規律。
+     - **偏好剖析**：分析下載內容，揭示興趣偏好與技術能力。
+     - **風險評估**：檢查非法下載，判斷犯罪傾向。
+     - **深入剖繪**：全面剖析目標對象的人格特徵和人口屬性。
+   * 立即免費使用 [Insight Profiling Detective Assistant](https://chiakai.pse.is/IPDA)，讓偵查工作更輕鬆、更高效！
+     * ### [ChatGPT4o 版連結](https://chiakai.pse.is/IPDA)
+     * ### [POE 版連結](https://chiakai.pse.is/IPDA_POE)
+
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (點擊程式名稱即可下載) ☆☆☆ </span>
@@ -158,17 +177,6 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (Colab 即取即用，點擊程式名稱即可開啟) ☆☆☆ </span>
-* ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
-   * 緣起:
-     * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
-     * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
-     * 而且下載後，還有需要分析該 IP 使用者作息時間與下載內容剖繪。
-     * 故設計這個小幫手幫忙，除自動下載以外，並利用 AI 幫忙分析(由 Chat-GPT 幫忙的唷，感謝 g4f 套件的開發團隊，但是他們是逆向人家的 API，好像也不太適合推崇，大家默默的...使用就好)，讓大家輕鬆偵查。
-   * \[**重要提醒**\] 請務必將本小幫手按以下步驟複製到您的雲端硬碟，再開始執行唷
-     * 1. 請按左上角「檔案」
-     * 2. 請選「在雲端硬碟中儲存副本」
-     * 3. 恭喜，你已經將本小幫手複製到您的雲端硬碟囉
-
 * ## [網路檔案下載取證小幫手](https://chiakai.pse.is/DigitalForensicsFileDownloader)
   * 此小幫手旨在協助您從指定網址下載檔案。主要步驟包括：
     1. 下載並保存檔案。
