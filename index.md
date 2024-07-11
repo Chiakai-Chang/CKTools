@@ -30,7 +30,7 @@
     * **一站式管理與深度整合工具**：<br>
       將常用的網路偵查工具如 WHOIS、PingFromEverywhere 等整合於單一平台，方便快速使用和記錄偵查結果，提升偵查效率。
   * 同仁可搭配 [**Chiakai's CyberSleuths: Digital Detective Challenge**](https://chiakai.pse.is/CyberSleuths) 這個專為訓練網路科技犯罪偵查而設計之事件擬真遊戲，透過各種隨機生成之網路犯罪事件，逐一學習如何進行相關調查與管理相關偵查作為。
-  * 說明動畫：
+  * 說明GIF動畫(載入需一些時間)：
     * ![](https://chiakai-chang.github.io/tempHTML/img/AIInsightSeeker.gif) 
 
 ---
