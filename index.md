@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-07-08
+* 更新至 2024-07-11
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -30,6 +30,8 @@
     * **一站式管理與深度整合工具**：<br>
       將常用的網路偵查工具如 WHOIS、PingFromEverywhere 等整合於單一平台，方便快速使用和記錄偵查結果，提升偵查效率。
   * 同仁可搭配 [**Chiakai's CyberSleuths: Digital Detective Challenge**](https://chiakai.pse.is/CyberSleuths) 這個專為訓練網路科技犯罪偵查而設計之事件擬真遊戲，透過各種隨機生成之網路犯罪事件，逐一學習如何進行相關調查與管理相關偵查作為。
+  * 說明動畫：
+    * ![](https://chiakai-chang.github.io/tempHTML/img/AIInsightSeeker.gif) 
 
 ---
 
@@ -177,6 +179,17 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (Colab 即取即用，點擊程式名稱即可開啟) ☆☆☆ </span>
+* ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
+   * 緣起:
+     * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
+     * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
+     * 而且下載後，還有需要分析該 IP 使用者作息時間與下載內容剖繪。
+     * 故設計這個小幫手幫忙，除自動下載以外，並利用 AI 幫忙分析(由 Chat-GPT 幫忙的唷，感謝 g4f 套件的開發團隊，但是他們是逆向人家的 API，好像也不太適合推崇，大家默默的...使用就好)，讓大家輕鬆偵查。
+   * \[**重要提醒**\] 請務必將本小幫手按以下步驟複製到您的雲端硬碟，再開始執行唷
+     * 1. 請按左上角「檔案」
+     * 2. 請選「在雲端硬碟中儲存副本」
+     * 3. 恭喜，你已經將本小幫手複製到您的雲端硬碟囉
+
 * ## [網路檔案下載取證小幫手](https://chiakai.pse.is/DigitalForensicsFileDownloader)
   * 此小幫手旨在協助您從指定網址下載檔案。主要步驟包括：
     1. 下載並保存檔案。
