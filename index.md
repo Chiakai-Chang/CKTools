@@ -343,3 +343,43 @@
     * 左上角「**檔案**」->「**在雲端硬碟中儲存副本**」
   * ### Google Sheet 複製方法:
     * 左上角「**檔案**」->「**建立副本**」
+   
+
+<script>
+    async function getVisitorInfo() {
+        try {
+            const response = await fetch('https://www.myip.com/');
+            const text = await response.text();
+            
+            // 創建一個DOM解析器
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            
+            // 使用選擇器提取所需的信息
+            const ip = doc.querySelector('#ip').textContent.trim();
+            const host = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('Host:')).textContent.trim();
+            const port = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('Remote Port:')).textContent.trim();
+            const isp = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('ISP:')).textContent.trim();
+
+            const userAgent = navigator.userAgent;
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const language = navigator.language || navigator.userLanguage;
+            const url = window.location.href;
+
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+            const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
+
+            fetch(fullUrl)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.error('Error:', error));
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    getVisitorInfo();
+</script>
