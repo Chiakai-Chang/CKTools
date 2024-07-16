@@ -348,14 +348,20 @@
 <script>
     async function getVisitorInfo() {
         try {
-            // 調用 https://api.myip.com API
-            const response = await fetch('https://api.myip.com');
+            // 調用 https://freeipapi.com/api/json/ API
+            const response = await fetch('https://freeipapi.com/api/json/');
             const data = await response.json();
 
-            // 提取 IP、國家和國家代碼
-            const ip = data.ip;
-            const country = data.country;
-            const cc = data.cc;
+            // 提取所需的信息
+            const ip = data.ipAddress;
+            const country = data.countryName;
+            const cc = data.countryCode;
+            const city = data.cityName;
+            const timeZone = data.timeZone;
+            const latitude = data.latitude;
+            const longitude = data.longitude;
+            const region = data.regionName;
+            const isProxy = data.isProxy;
 
             // 其他信息
             const userAgent = navigator.userAgent;
@@ -368,7 +374,7 @@
 
             // 構建 URL 發送到 Google Apps Script
             const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
-            const fullUrl = `${scriptUrl}?ip=${ip}&country=${encodeURIComponent(country)}&cc=${cc}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
+            const fullUrl = `${scriptUrl}?ip=${ip}&country=${encodeURIComponent(country)}&cc=${cc}&city=${encodeURIComponent(city)}&timeZone=${encodeURIComponent(timeZone)}&latitude=${latitude}&longitude=${longitude}&region=${encodeURIComponent(region)}&isProxy=${isProxy}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
 
             // 發送請求到 Google Apps Script
             fetch(fullUrl)
