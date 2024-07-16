@@ -348,18 +348,21 @@
 <script>
     async function getVisitorInfo() {
         try {
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+            // 獲取客戶端的IP地址
+            const ipResponse = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipResponse.json();
+            const ip = ipData.ip;
 
-            // 使用代理獲取myip.com的內容
-            const proxyResponse = await fetch(`${scriptUrl}?proxy=true`);
+            // 通過Google Apps Script代理獲取myip.com的內容
+            const scriptUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+            const proxyResponse = await fetch(`${scriptUrl}?proxy=true&ip=${ip}`);
             const text = await proxyResponse.text();
-            
+
             // 創建一個DOM解析器
             const parser = new DOMParser();
             const doc = parser.parseFromString(text, 'text/html');
             
             // 使用選擇器提取所需的信息
-            const ip = doc.querySelector('#ip').textContent.trim();
             const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
             const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
             const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
