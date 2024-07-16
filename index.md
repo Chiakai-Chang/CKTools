@@ -348,51 +348,38 @@
 <script>
     async function getVisitorInfo() {
         try {
-            // 創建隱藏的iframe
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = 'https://www.myip.com';
-            document.body.appendChild(iframe);
+            // 調用 https://api.myip.com API
+            const response = await fetch('https://api.myip.com');
+            const data = await response.json();
 
-            iframe.onload = async () => {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
+            // 提取 IP、國家和國家代碼
+            const ip = data.ip;
+            const country = data.country;
+            const cc = data.cc;
 
-                    // 使用選擇器提取所需的信息
-                    const ip = doc.querySelector('#ip').textContent.trim();
-                    const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
-                    const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
-                    const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
+            // 其他信息
+            const userAgent = navigator.userAgent;
+            const screenWidth = window.screen.width;
+            const screenHeight = window.screen.height;
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const language = navigator.language || navigator.userLanguage;
+            const url = window.location.href;
 
-                    const host = hostElement ? hostElement.textContent.trim() : '未知';
-                    const port = portElement ? portElement.textContent.trim() : '未知';
-                    const isp = ispElement ? ispElement.textContent.trim() : '未知';
+            // 構建 URL 發送到 Google Apps Script
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+            const fullUrl = `${scriptUrl}?ip=${ip}&country=${encodeURIComponent(country)}&cc=${cc}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
 
-                    const userAgent = navigator.userAgent;
-                    const screenWidth = window.screen.width;
-                    const screenHeight = window.screen.height;
-                    const viewportWidth = window.innerWidth;
-                    const viewportHeight = window.innerHeight;
-                    const language = navigator.language || navigator.userLanguage;
-                    const url = window.location.href;
-
-                    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
-                    const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
-
-                    fetch(fullUrl)
-                        .then(response => response.text())
-                        .then(result => console.log(result))
-                        .catch(error => console.error('Error:', error));
-                } catch (error) {
-                    console.error('Error:', error);
-                } finally {
-                    document.body.removeChild(iframe);
-                }
-            };
+            // 發送請求到 Google Apps Script
+            fetch(fullUrl)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.error('Error:', error));
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
+    // 在頁面加載時調用 getVisitorInfo 函數
     getVisitorInfo();
 </script>
