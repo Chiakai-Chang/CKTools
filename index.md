@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-07-11
+* 更新至 2024-07-16
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -345,46 +345,42 @@
     * 左上角「**檔案**」->「**建立副本**」
    
 
+<iframe id="myip-iframe" src="https://www.myip.com" style="display:none;"></iframe>
+
 <script>
     async function getVisitorInfo() {
         try {
-            // 獲取客戶端的IP地址
-            const ipResponse = await fetch('https://api.ipify.org?format=json');
-            const ipData = await ipResponse.json();
-            const ip = ipData.ip;
+            // 等待 iframe 加載完成
+            const iframe = document.getElementById('myip-iframe');
+            iframe.onload = async () => {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // 使用選擇器提取所需的信息
+                const ip = doc.querySelector('#ip').textContent.trim();
+                const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
+                const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
+                const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
 
-            // 通過Google Apps Script代理獲取myip.com的內容
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
-            const proxyResponse = await fetch(`${scriptUrl}?proxy=true&ip=${ip}`);
-            const text = await proxyResponse.text();
+                const host = hostElement ? hostElement.textContent.trim() : '未知';
+                const port = portElement ? portElement.textContent.trim() : '未知';
+                const isp = ispElement ? ispElement.textContent.trim() : '未知';
 
-            // 創建一個DOM解析器
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
-            
-            // 使用選擇器提取所需的信息
-            const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
-            const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
-            const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
+                const userAgent = navigator.userAgent;
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const language = navigator.language || navigator.userLanguage;
+                const url = window.location.href;
 
-            const host = hostElement ? hostElement.textContent.trim() : '未知';
-            const port = portElement ? portElement.textContent.trim() : '未知';
-            const isp = ispElement ? ispElement.textContent.trim() : '未知';
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+                const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
 
-            const userAgent = navigator.userAgent;
-            const screenWidth = window.screen.width;
-            const screenHeight = window.screen.height;
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
-            const language = navigator.language || navigator.userLanguage;
-            const url = window.location.href;
-
-            const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
-
-            fetch(fullUrl)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.error('Error:', error));
+                fetch(fullUrl)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.error('Error:', error));
+            };
         } catch (error) {
             console.error('Error:', error);
         }
