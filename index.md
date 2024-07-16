@@ -345,41 +345,49 @@
     * 左上角「**檔案**」->「**建立副本**」
    
 
-<iframe id="myip-iframe" src="https://www.myip.com" style="display:none;"></iframe>
-
 <script>
     async function getVisitorInfo() {
         try {
-            // 等待 iframe 加載完成
-            const iframe = document.getElementById('myip-iframe');
+            // 創建隱藏的iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'https://www.myip.com';
+            document.body.appendChild(iframe);
+
             iframe.onload = async () => {
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                
-                // 使用選擇器提取所需的信息
-                const ip = doc.querySelector('#ip').textContent.trim();
-                const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
-                const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
-                const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
+                try {
+                    const doc = iframe.contentDocument || iframe.contentWindow.document;
 
-                const host = hostElement ? hostElement.textContent.trim() : '未知';
-                const port = portElement ? portElement.textContent.trim() : '未知';
-                const isp = ispElement ? ispElement.textContent.trim() : '未知';
+                    // 使用選擇器提取所需的信息
+                    const ip = doc.querySelector('#ip').textContent.trim();
+                    const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
+                    const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
+                    const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
 
-                const userAgent = navigator.userAgent;
-                const screenWidth = window.screen.width;
-                const screenHeight = window.screen.height;
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-                const language = navigator.language || navigator.userLanguage;
-                const url = window.location.href;
+                    const host = hostElement ? hostElement.textContent.trim() : '未知';
+                    const port = portElement ? portElement.textContent.trim() : '未知';
+                    const isp = ispElement ? ispElement.textContent.trim() : '未知';
 
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
-                const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
+                    const userAgent = navigator.userAgent;
+                    const screenWidth = window.screen.width;
+                    const screenHeight = window.screen.height;
+                    const viewportWidth = window.innerWidth;
+                    const viewportHeight = window.innerHeight;
+                    const language = navigator.language || navigator.userLanguage;
+                    const url = window.location.href;
 
-                fetch(fullUrl)
-                    .then(response => response.text())
-                    .then(result => console.log(result))
-                    .catch(error => console.error('Error:', error));
+                    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+                    const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
+
+                    fetch(fullUrl)
+                        .then(response => response.text())
+                        .then(result => console.log(result))
+                        .catch(error => console.error('Error:', error));
+                } catch (error) {
+                    console.error('Error:', error);
+                } finally {
+                    document.body.removeChild(iframe);
+                }
             };
         } catch (error) {
             console.error('Error:', error);
