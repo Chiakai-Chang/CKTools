@@ -354,7 +354,7 @@
             const ip = ipData.ip;
 
             // 通過Google Apps Script代理獲取myip.com的內容
-            const scriptUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
             const proxyResponse = await fetch(`${scriptUrl}?proxy=true&ip=${ip}`);
             const text = await proxyResponse.text();
 
