@@ -348,8 +348,11 @@
 <script>
     async function getVisitorInfo() {
         try {
-            const response = await fetch('https://www.myip.com/');
-            const text = await response.text();
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
+
+            // 使用代理獲取myip.com的內容
+            const proxyResponse = await fetch(`${scriptUrl}?proxy=true`);
+            const text = await proxyResponse.text();
             
             // 創建一個DOM解析器
             const parser = new DOMParser();
@@ -357,9 +360,13 @@
             
             // 使用選擇器提取所需的信息
             const ip = doc.querySelector('#ip').textContent.trim();
-            const host = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('Host:')).textContent.trim();
-            const port = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('Remote Port:')).textContent.trim();
-            const isp = [...doc.querySelectorAll('.texto_1')].find(element => element.previousElementSibling.textContent.includes('ISP:')).textContent.trim();
+            const hostElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Host:'));
+            const portElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('Remote Port:'));
+            const ispElement = Array.from(doc.querySelectorAll('.texto_1')).find(el => el.previousElementSibling && el.previousElementSibling.textContent.includes('ISP:'));
+
+            const host = hostElement ? hostElement.textContent.trim() : '未知';
+            const port = portElement ? portElement.textContent.trim() : '未知';
+            const isp = ispElement ? ispElement.textContent.trim() : '未知';
 
             const userAgent = navigator.userAgent;
             const screenWidth = window.screen.width;
@@ -369,7 +376,6 @@
             const language = navigator.language || navigator.userLanguage;
             const url = window.location.href;
 
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwnwH1v8B0FkxSIoS8eFWQOtJxbx3LfgPzv2LePqQOf1wYQDUoQgc7UEv0284pO-kpX9A/exec';
             const fullUrl = `${scriptUrl}?ip=${ip}&host=${encodeURIComponent(host)}&port=${port}&isp=${encodeURIComponent(isp)}&userAgent=${encodeURIComponent(userAgent)}&screenWidth=${screenWidth}&screenHeight=${screenHeight}&viewportWidth=${viewportWidth}&viewportHeight=${viewportHeight}&language=${language}&url=${encodeURIComponent(url)}`;
 
             fetch(fullUrl)
