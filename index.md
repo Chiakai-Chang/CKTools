@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-07-16
+* 更新至 2024-08-01
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -246,6 +246,23 @@
     2. KeyLines 則需要在公務系統內使用，要比較注意資安稽核等等疑慮。
   * 加上有時候只是單純想要「顯示」情資之間的關聯，用來幫助判斷、分析資料。
   * 所以撰寫了個小程式，讓大家可以隨時隨地「免費的」視覺化自己資料之間的關聯。
+
+* ## [Google IP 確認小幫手](https://colab.research.google.com/drive/1_o9xbFMjlFk1l4VF_7m67gtM9A9IYEjF?usp=sharing)
+   * 這個小工具可以幫助您確認某個 IP 位址是否屬於 Google 或 Google Cloud 的服務範圍，並提供該 IP 的相關資訊。
+   * 主要功能：
+     * **即時資料來源**：此程式會從 Google 官方下載最新的 IP 資訊，包括 [Google API IP address ranges](https://www.gstatic.com/ipranges/goog.json) 和 [Google Cloud IP address ranges](https://www.gstatic.com/ipranges/cloud.json)，確保資料的即時性和準確性。
+     * **詳細區域資訊**：程式還會從 [Google Cloud Regions and Zones](https://cloud.google.com/compute/docs/regions-zones) 獲取更多區域和區域的詳細位置信息。
+     * **IPv4 和 IPv6 支援**：本程式能處理並查詢 IPv4 和 IPv6 位址。
+     * **查詢結果下載**：查詢結果可以下載為 Excel 檔案，方便保存和分享。
+   * 使用方法：
+     1. 請先按下方「**左側按鈕**」啟動程式，待程式載入即會出現IP輸入框。
+     2. 輸入您要查詢的 IP 位址。
+     3. 按「查詢」按鈕，等待結果顯示。
+     4. 如有需要，可下載查詢結果。
+   * 為什麼不直接使用 Whois 查詢？
+     * Whois 查詢確實能提供 IP 位址的擁有者資訊，但無法詳細區分 Google 提供的各種服務和區域。這個小工具能讓您：
+       * 更精確地識別 IP 是否屬於 Google 或 Google Cloud 的特定服務範圍。
+       * 獲得 IP 所屬區域的詳細地理位置信息，便於理解和管理。
 
 * ## [AWS IP 確認小幫手](https://colab.research.google.com/drive/1T7vX0L2gs9VCNzwzSpvsI84rGTFRXl3R?usp=sharing)
    *  若大家有遇到 ip 是 amazon (亞馬遜) 的，可以使用這個小幫手來確認 IP 是 AWS 的什麼雲端服務。
