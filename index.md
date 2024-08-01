@@ -95,13 +95,11 @@
   * 趕快來試用看看吧!!
   * 當前有兩個版本：
     * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CrossCaseSolver)
-      * 語言模型：GPT-4 turbo (數一數二強大)
-      * 次數限制：40筆/3小時
-      * 收費：需有 ChatGPT Plus 資格(20美元/月)
+      * 語言模型：GPT-4o
+      * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
     * ### (免費!) [POE 平臺](https://chiakai.pse.is/CrossCaseSolver_POE)
-      * 基於 Claude-instant-100k 語言模型
-      * 次數限制：40筆/天
-      * 免費
+      * 語言模型：GPT-4o-Mini 
+      * 次數限制：15點/訊息 (POE提供每日免費3000點)
   * 範例:
     <table>
       <tr>
@@ -140,13 +138,11 @@
   * 趕快來試用看看吧!!
   * 當前有兩個版本：
     * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CodeInvestigatorAI)
-      * 語言模型：GPT-4 turbo (數一數二強大)
-      * 次數限制：40筆/3小時
-      * 收費：需有 ChatGPT Plus 資格(20美元/月)
-    * ### (免費! 但結果較不穩定) [POE 平臺](https://chiakai.pse.is/CodeInvestigatorPOE)
-      * 基於 Claude-instant-100k 語言模型
-      * 次數限制：40筆/天
-      * 免費
+      * 語言模型：GPT-4o
+      * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
+    * ### (免費!) [POE 平臺](https://chiakai.pse.is/CodeInvestigatorPOE)
+      * 語言模型：GPT-4o-Mini-128k 
+      * 次數限制：75點/訊息 (POE提供每日免費3000點)
 
 * ## 全新改版! [Insight Profiling Detective Assistant (智慧剖繪偵查助手)](https://chiakai.pse.is/IPDA)
    * [<img src="https://chiakai-chang.github.io/tempHTML/Icons/InsightProfilingDetectiveAssistant.png" width="200" height="200">](https://chiakai.pse.is/IPDA)
@@ -164,8 +160,12 @@
      - **風險評估**：檢查非法下載，判斷犯罪傾向。
      - **深入剖繪**：全面剖析目標對象的人格特徵和人口屬性。
    * 立即免費使用 [Insight Profiling Detective Assistant](https://chiakai.pse.is/IPDA)，讓偵查工作更輕鬆、更高效！
-     * ### [ChatGPT4o 版連結](https://chiakai.pse.is/IPDA)
+     * ### [ChatGPT 版連結](https://chiakai.pse.is/IPDA)
+       * 語言模型：GPT-4o
+       * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
      * ### [POE 版連結](https://chiakai.pse.is/IPDA_POE)
+       * 語言模型：GPT-4o-Mini 
+       * 次數限制：15點/訊息 (POE提供每日免費3000點)
 
 ---
 
