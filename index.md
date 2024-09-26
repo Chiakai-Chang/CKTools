@@ -88,7 +88,7 @@
       * 2. 點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
       * 3. 「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
       * 4. 請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
-          * 指令:
+        * 指令:
            ```javascript
            function autoExpandContent() {
                // 定義需要點擊的文字模式 (使用正則表達式模糊匹配)
