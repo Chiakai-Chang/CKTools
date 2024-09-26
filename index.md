@@ -58,21 +58,21 @@
     ```
 * ## ☆ 快速點「簿冊傳閱」(勤教) 密技 ☆
   * 步驟:
-    * 1. 開啟到「值班臺應勤簿冊電子化系統」-「簿冊傳閱」的網頁
-    * 2. 按「F12」開啟DevTools，選「Console」頁籤
-    * 3. 在「>」後面輸入以下指令，然後按 「Enter」鍵，瞬間就可以幫你全部點完
+    * 1、開啟到「值班臺應勤簿冊電子化系統」-「簿冊傳閱」的網頁
+    * 2、按「F12」開啟DevTools，選「Console」頁籤
+    * 3、在「>」後面輸入以下指令，然後按 「Enter」鍵，瞬間就可以幫你全部點完
   * 指令:
     ```javascript
     document.querySelectorAll('#btnDetail').forEach(button => button.click());
     ```
 * ## ☆ 下載「PDF」簡報檔密技 ☆
   * 步驟:
-    * 1. 使用 Chrome 到教育訓練網站，選擇你的課程，直到打開簡報檔的網頁
-    * 2. 點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
-    * 3. 「開發人員工具」(即 DevTools) 跳到「Network」頁籤，點上方「∅」符號清空目前封包
-    * 4. 回到網頁，按 F5 重新整理
-    * 5. 「Network」頁籤會攔到「getPDF.php?id=...」的封包，請看該封包的「Request URL」，其中的「id=...」跟「&ticket=...」中的...就是我們需要的資料
-    * 6. 請將以下指令中的 id=... 跟 ticket=... 中的 ... 替換成你取到的資料
+    * 1、使用 Chrome 到教育訓練網站，選擇你的課程，直到打開簡報檔的網頁
+    * 2、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
+    * 3、「開發人員工具」(即 DevTools) 跳到「Network」頁籤，點上方「∅」符號清空目前封包
+    * 4、回到網頁，按 F5 重新整理
+    * 5、「Network」頁籤會攔到「getPDF.php?id=...」的封包，請看該封包的「Request URL」，其中的「id=...」跟「&ticket=...」中的...就是我們需要的資料
+    * 6、請將以下指令中的 id=... 跟 ticket=... 中的 ... 替換成你取到的資料
         * 指令:
            ```javascript
            var link = document.createElement('a'); link.href = "getPDF.php?id=...&ticket=..."; link.download = 'document.pdf'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
@@ -84,11 +84,11 @@
 * ## ☆ 臉書貼文自動無限展開留言密技 ☆
   * 透過這段小小的代碼，就可以輕鬆展開臉書貼文中所有的留言跟留言中的留言，以及需要展開的長留言內容，完成後，即可很便利的透過 Chrome 來將該則貼文以及全部留言內容，列印成 PDF 保存
   * 步驟:
-      * 1. 使用 Chrome 到瀏覽到你的目標臉書貼文
-      * 2. 記得將「最相關」留言的選項，改成「所有留言」，才能截到完整留言
-      * 3. 點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
-      * 4. 「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
-      * 5. 請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
+      * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
+      * 2、記得將「最相關」留言的選項，改成「所有留言」，才能截到完整留言
+      * 3、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
+      * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
+      * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
 
 ```javascript
 function autoExpandContent() {
@@ -123,8 +123,8 @@ function autoExpandContent() {
         autoScroll();
         scrollAttempts++;
 
-        if (hasClicked || scrollAttempts < 10) { // 至少下滑10次，以防漏掉
-            setTimeout(executeActions, 3000); // 3 秒後繼續檢查
+        if (hasClicked || scrollAttempts < 5) { // 至少下滑5次，以防漏掉
+            setTimeout(executeActions, 1000); // 1 秒後繼續檢查
         } else {
             alert('執行完畢');
         }
