@@ -4,6 +4,12 @@
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
+## ☆☆☆ 本軍火庫各時段使用情形分布熱度圖 ☆☆☆ 
+
+<iframe width="600" height="450" src="https://lookerstudio.google.com/embed/reporting/494c202f-7727-4a3e-9964-f2b1870946f8/page/gIeDE" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+
+---
+
 # <span style="background-color:yellow;"> ☆☆☆ 溫馨提醒您 ☆☆☆ </span>
 * 本軍火庫內之各項 **Colab** 或 **Google Sheet** 之工具，相關程式碼或設定全部都係開源透明的，歡迎取用、修改或[回饋改進意見](https://forms.gle/euDVcKwk7QsiHgsz8)。
 * <span style="color:red;">**請先記得將工具複製到您的帳號再運作唷!**</span>
