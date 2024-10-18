@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-10-01
+* 更新至 2024-10-18
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -98,48 +98,68 @@
 
 ```javascript
 function autoExpandContent() {
-    // 定義需要點擊的文字模式 (使用正則表達式模糊匹配)
-    const replyPattern = /查看.*回覆/;
-    const morePattern = /查看更多/;
-    let scrollAttempts = 0; // 記錄下滑次數
+    // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
+    const replyPattern = /查看.*回覆|View \d+ replies/;
+    const morePattern = /查看更多|See more/;
+    let previousHeight = 0; // 紀錄目前的網頁高度
+    let attempts = 0; // 追蹤嘗試次數
+    const maxAttempts = 5; // 最多嘗試5次
 
-    // 自動點擊包含關鍵字的元素
+    // 自動點擊符合條件的元素
     function clickElements() {
-        // 獲取所有 span 或 div 中匹配正則表達式的元素
-        const elements = [...document.querySelectorAll('span, div')].filter(el => {
-            return replyPattern.test(el.textContent) || morePattern.test(el.textContent);
+        // 選擇所有可能包含“查看更多”或“查看回覆”文字的元素
+        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
+            // 濾掉不可見的元素（避免點擊隱藏的按鈕）
+            if (!el.offsetParent) return false;
+            const text = el.innerText || el.textContent; // 獲取元素的文字內容
+            // 檢查文字內容是否符合回覆或查看更多的模式
+            return text && (replyPattern.test(text) || morePattern.test(text));
         });
 
+        // 遍歷所有符合條件的元素並進行點擊
         elements.forEach(el => {
-            el.click();
+            el.click(); // 執行點擊操作
         });
 
-        // 返回是否有需要點擊的元素
+        // 回傳是否找到需要點擊的元素，供後續判斷是否繼續執行
         return elements.length > 0;
     }
 
-    // 每次將畫面下滑到頁面底部
+    // 將頁面捲動至底部，讓更多內容加載出來
     function autoScroll() {
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight); // 捲動到頁面底部
     }
 
-    // 定時執行點擊與下滑
+    // 持續執行點擊與捲動操作，直到所有內容展開
     function executeActions() {
-        const hasClicked = clickElements();
-        autoScroll();
-        scrollAttempts++;
+        const hasClicked = clickElements(); // 點擊需要展開的元素
+        autoScroll(); // 捲動頁面
 
-        if (hasClicked || scrollAttempts < 5) { // 至少下滑5次，以防漏掉
-            setTimeout(executeActions, 1000); // 1 秒後繼續檢查
-        } else {
-            alert('執行完畢');
-        }
+        // 設置一段延遲時間，等待新內容加載
+        setTimeout(() => {
+            const currentHeight = document.body.scrollHeight; // 取得目前頁面的高度
+            // 如果頁面高度變高或有新元素被點擊，表示有新內容出現
+            if (currentHeight > previousHeight || hasClicked) {
+                previousHeight = currentHeight; // 更新頁面高度
+                attempts = 0; // 重置嘗試次數
+                executeActions(); // 繼續執行點擊與捲動
+            } else {
+                attempts++; // 若無新內容則增加嘗試次數
+                // 若達到最大嘗試次數，則視為所有內容已展開
+                if (attempts < maxAttempts) {
+                    executeActions(); // 繼續執行直到達到最大次數
+                } else {
+                    alert('所有內容已展開'); // 提示使用者已完成所有展開
+                }
+            }
+        }, 1000); // 每次等待1秒以確保新內容加載完成
     }
 
+    // 開始執行自動展開的動作
     executeActions();
 }
 
-// 啟動自動展開內容
+// 啟動自動展開Facebook貼文與留言的功能
 autoExpandContent();
 ```
 
