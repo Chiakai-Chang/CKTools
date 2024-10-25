@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-10-18
+* 更新至 2024-10-25
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -262,6 +262,18 @@ autoExpandContent();
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (Colab 即取即用，點擊程式名稱即可開啟) ☆☆☆ </span>
+* ## [Pimeyes 以圖搜人神器](https://chiakai.pse.is/Pic2UserSearch)
+   * 參考: [Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC)。
+   * 若手頭上的圖檔太小或解析度不夠，可以下載開源免費的軟體: [Upscayl](https://github.com/upscayl/upscayl) 來進行超解析處理。
+     * [下載連結](https://upscayl.org/download)
+   * 使用時注意:
+     * 上傳的圖片最好裁切到只剩1個人，若圖片同時存在多人，透過API的方式去搜尋，可能會不知道針對哪個對象在查找，出來的結果會比較不好解釋。
+     * 本來每次要解開 Pimeyes 搜尋結果都需要付費 **US$15.74** (約新臺幣 **505** 元，參考:[Pricing](https://pimeyes.com/en/premium))，剛好發現有人分享可以利用的漏洞([Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC))，目前可以免費獲得搜尋結果中「沒有打馬賽克的圖片的網址」(原本搜尋結果會有馬賽克)，但，其實最重要的是圖片「所在網站網址」還是沒有給完整。儘管如此，有未馬賽克的圖片就還可以另外用其他 Reverse Image Search 的工具以圖搜圖(例如: [Google Lens](https://www.google.com/)、[TinEye](https://www.tineye.com/)、[FaceCheck.ID](https://facecheck.id)等)增加更多線索來源，算是還蠻有幫助了。
+   * 免責聲明:
+     * 本程式僅供學術研究及合法測試用途。請勿將本程式用於未經授權的攻擊行為、入侵行為或其他違法活動。使用本程式所造成的任何後果，使用者須自行承擔風險及責任。
+     * 開發者不對使用本程式引起的任何直接或間接損失、損害、數據遺失或其他損害負責。使用者應遵守所屬法律法規，並確保在合法的範圍內進行測試及研究。
+     * 如有違反當地法律規定，請自行負擔一切法律責任。使用本程式即表示您已同意本免責聲明中的所有條款。
+
 * ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
    * 緣起:
      * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
