@@ -267,8 +267,8 @@ autoExpandContent();
    * 若手頭上的圖檔太小或解析度不夠，可以下載開源免費的軟體: [Upscayl](https://github.com/upscayl/upscayl) 來進行超解析處理。
      * [下載連結](https://upscayl.org/download)
    * 使用時注意:
-     * 上傳的圖片最好裁切到只剩1個人，若圖片同時存在多人，透過API的方式去搜尋，可能會不知道針對哪個對象在查找，出來的結果會比較不好解釋。
-     * 本來每次要解開 Pimeyes 搜尋結果都需要付費 **US$15.74** (約新臺幣 **505** 元，參考:[Pricing](https://pimeyes.com/en/premium))，剛好發現有人分享可以利用的漏洞([Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC))，目前可以免費獲得搜尋結果中「沒有打馬賽克的圖片的網址」(原本搜尋結果會有馬賽克)，但，其實最重要的是圖片「所在網站網址」還是沒有給完整。儘管如此，有未馬賽克的圖片就還可以另外用其他 Reverse Image Search 的工具以圖搜圖(例如: [Google Lens](https://www.google.com/)、[TinEye](https://www.tineye.com/)、[FaceCheck.ID](https://facecheck.id)等)增加更多線索來源，算是還蠻有幫助了。
+     * 上傳的圖片最好裁切到只剩1個人，若圖片同時存在多人，透過 API 的方式去搜尋可能會不知道針對哪個對象在查找，出來的結果會比較不好解釋。
+     * 本來每次要解開 Pimeyes 搜尋結果都需要付費 **US$15.74** (約新臺幣 **505** 元，參考:[Pricing](https://pimeyes.com/en/premium))，剛好發現有人分享可以利用的漏洞([Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC))，目前可以免費獲得搜尋結果中「**沒有打馬賽克的圖片的網址**」(原本搜尋結果會有馬賽克)，但，其實最重要的是圖片「**所在網站網址**」還是沒有給完整。儘管如此，有未馬賽克的圖片就還可以另外用其他 Reverse Image Search 的工具以圖搜圖(例如: [Google Lens](https://www.google.com/)、[TinEye](https://www.tineye.com/)、[FaceCheck.ID](https://facecheck.id)等)增加更多線索來源，算是還蠻有幫助了。
    * 免責聲明:
      * 本程式僅供學術研究及合法測試用途。請勿將本程式用於未經授權的攻擊行為、入侵行為或其他違法活動。使用本程式所造成的任何後果，使用者須自行承擔風險及責任。
      * 開發者不對使用本程式引起的任何直接或間接損失、損害、數據遺失或其他損害負責。使用者應遵守所屬法律法規，並確保在合法的範圍內進行測試及研究。
