@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-10-25
+* 更新至 2024-10-29
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -87,7 +87,7 @@
   * 例圖:
     * ![](https://chiakai-chang.github.io/tempHTML/img/downloadPDFpng.png)
 
-* ## ☆ 臉書貼文自動無限展開留言密技 ☆
+* ## ☆ 臉書「自動留言展開」密技 ☆
   * 透過這段小小的代碼，就可以輕鬆展開臉書貼文中所有的留言跟留言中的留言，以及需要展開的長留言內容，完成後，即可很便利的透過 Chrome 來將該則貼文以及全部留言內容，列印成 PDF 保存
   * 步驟:
       * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
@@ -96,7 +96,11 @@
       * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
       * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
 
-```javascript
+<details>
+  <summary>顯示程式碼</summary>
+  
+  <pre id="codeBlock">
+<code>
 function autoExpandContent() {
     // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
     const replyPattern = /查看.*回覆|View \d+ replies/;
@@ -161,8 +165,163 @@ function autoExpandContent() {
 
 // 啟動自動展開Facebook貼文與留言的功能
 autoExpandContent();
-```
+</code>
+  </pre>
 
+  <!-- 複製到剪貼簿的按鈕 -->
+  <button onclick="copyToClipboard()">複製到剪貼簿</button>
+</details>
+
+* ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
+  * 這段代碼可以幫忙將臉書貼文的留言類型改成「所有留言」，接著會快速自動下滑與展開臉書貼文所有的留言跟留言中的留言，完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你所設定的關鍵字是否存在(**記得要去修改！！**)，若有存在會跳窗告知你
+  * 步驟:
+      * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
+      * 2、你可以按「分享」按鈕，選「複製連結」，到另一個視窗去開這篇貼文
+      * 3、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
+      * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
+      * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
+
+<details>
+  <summary>顯示程式碼</summary>
+  
+  <pre id="codeBlock">
+<code>
+  <summary>顯示程式碼</summary>
+function autoExpandContent() {
+    // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
+    const replyPattern = /查看.*回覆|View \d+ replies/;
+    const morePattern = /查看更多|See more/;
+    let previousHeight = 0; // 紀錄目前的網頁高度
+    let attempts = 0; // 追蹤嘗試次數
+    const maxAttempts = 5; // 最多嘗試5次
+    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
+    let foundMatches = []; // 儲存找到的匹配結果
+
+    // 檢查是否存在 "最相關" 按鈕並嘗試點擊，切換為 "所有留言"
+    function switchToAllComments() {
+        const mostRelevantButton = [...document.querySelectorAll('div[role="button"]')]
+            .find(el => el.innerText.includes("最相關"));
+        if (mostRelevantButton) {
+            mostRelevantButton.click(); // 點擊 "最相關" 按鈕
+            
+            setTimeout(() => {
+                // 等待選單出現後，查找更精確的 "所有留言" 選項並點擊
+                const menuItems = document.querySelectorAll('div[role="menuitem"]');
+                const allCommentsOption = [...menuItems].find(el => {
+                    const text = el.innerText || el.textContent;
+                    // 使用更精確的條件來識別 "所有留言"，並排除其他選項
+                    return text.includes("所有留言") && !text.includes("由新到舊");
+                });
+                
+                if (allCommentsOption) {
+                    allCommentsOption.click(); // 點擊 "所有留言" 選項
+                    console.log("已自動切換至 '所有留言'");
+                    executeActions(); // 切換成功後執行內容展開
+                } else {
+                    alert("未找到 '所有留言' 選項，請手動切換後重新執行程式。");
+                }
+            }, 500); // 延遲以確保選單已加載
+            return true; // 表示已嘗試切換
+        }
+        return false; // 無需切換
+    }
+
+    // 自動點擊符合條件的元素
+    function clickElements() {
+        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
+            if (!el.offsetParent) return false;
+            const text = el.innerText || el.textContent;
+            return text && (replyPattern.test(text) || morePattern.test(text));
+        });
+
+        elements.forEach(el => {
+            el.click();
+        });
+
+        return elements.length > 0;
+    }
+
+    // 搜索關鍵字並收集匹配的內容
+    function searchForKeywords() {
+        const textElements = [...document.querySelectorAll('div, p, span')];
+        
+        textElements.forEach(el => {
+            const text = el.innerText || el.textContent;
+            searchKeywords.forEach(keyword => {
+                if (text.includes(keyword) && !foundMatches.includes(keyword)) {
+                    foundMatches.push(keyword);
+                }
+            });
+        });
+    }
+
+    // 自動滾動頁面底部並處理浮動滾動元素
+    function autoScroll() {
+        window.scrollTo(0, document.body.scrollHeight); // 滾動到頁面底部
+
+        const scrollableElements = document.querySelectorAll('*');
+        const scrollDistance = 200;
+        const scrollInterval = 100;
+
+        scrollableElements.forEach((element) => {
+            if (element.scrollHeight > element.clientHeight) { // 若元素可滾動
+                const interval = setInterval(() => {
+                    element.scrollBy(0, scrollDistance);
+                    if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
+                        clearInterval(interval);
+                        console.log("已到達元素底部");
+                    }
+                }, scrollInterval);
+            }
+        });
+    }
+
+    // 持續執行點擊與捲動操作，直到所有內容展開
+    function executeActions() {
+        const hasClicked = clickElements();
+        autoScroll(); 
+
+        setTimeout(() => {
+            const currentHeight = document.body.scrollHeight;
+            if (currentHeight > previousHeight || hasClicked) {
+                previousHeight = currentHeight;
+                attempts = 0;
+                executeActions();
+            } else {
+                attempts++;
+                if (attempts < maxAttempts) {
+                    executeActions();
+                } else {
+                    // 若有設定關鍵字，則進行關鍵字搜尋，否則顯示已全部展開
+                    if (searchKeywords.length > 0) {
+                        searchForKeywords();
+                        if (foundMatches.length > 0) {
+                            alert(`找到以下匹配的關鍵字:\n${foundMatches.join('\n')}`);
+                        } else {
+                            alert('未找到匹配的關鍵字');
+                        }
+                    } else {
+                        alert('所有內容已展開');
+                    }
+                }
+            }
+        }, 1000);
+    }
+
+    // 首先檢查是否需要切換至 "所有留言"，若無法自動切換則提示使用者手動操作
+    if (!switchToAllComments()) {
+        executeActions(); // 若不需要切換或已完成切換，則執行展開內容
+    }
+}
+
+// 啟動自動展開Facebook貼文與留言的功能並搜尋關鍵字
+autoExpandContent();
+</code>
+  </pre>
+
+  <!-- 複製到剪貼簿的按鈕 -->
+  <button onclick="copyToClipboard()">複製到剪貼簿</button>
+</details>
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
@@ -500,4 +659,16 @@ autoExpandContent();
 
     // 在頁面加載時調用 getVisitorInfo 函數
     getVisitorInfo();
+</script>
+
+<!-- JavaScript 功能，將程式碼複製到剪貼簿 -->
+<script>
+function copyToClipboard() {
+    const code = document.getElementById("codeBlock").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        alert("程式碼已複製到剪貼簿！");
+    }).catch(err => {
+        alert("無法複製程式碼: " + err);
+    });
+}
 </script>
