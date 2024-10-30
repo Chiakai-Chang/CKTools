@@ -4,6 +4,10 @@
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
 ## <span style="background-color:yellow;"> ☆☆☆ 本軍火庫各時段使用情形分布熱度圖 ☆☆☆ </span>
 
 <iframe width="75%" height="100%" src="https://lookerstudio.google.com/embed/reporting/494c202f-7727-4a3e-9964-f2b1870946f8/page/gIeDE" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
@@ -87,70 +91,10 @@
   * 例圖:
     * ![](https://chiakai-chang.github.io/tempHTML/img/downloadPDFpng.png)
 
-* ## ☆ 臉書「自動留言展開」密技 ☆
-  * 透過這段小小的代碼，就可以輕鬆展開臉書貼文中所有的留言跟留言中的留言，以及需要展開的長留言內容，完成後，即可很便利的透過 Chrome 來將該則貼文以及全部留言內容，列印成 PDF 保存
-  * 步驟:
-      * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
-      * 2、記得將「最相關」留言的選項，改成「從新到舊」(按時間序比較好核對留言內容，或「所有留言」也可以)，才能截到完整留言
-      * 3、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
-      * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
-      * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
-
-```javascript
-function autoExpandContent() {
-    // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
-    const replyPattern = /查看.*回覆|View \d+ replies/;
-    const morePattern = /查看更多|See more/;
-    let previousHeight = 0; // 紀錄目前的網頁高度
-    let attempts = 0; // 追蹤嘗試次數
-    const maxAttempts = 5; // 最多嘗試5次
-
-    function clickElements() {
-        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
-            if (!el.offsetParent) return false;
-            const text = el.innerText || el.textContent;
-            return text && (replyPattern.test(text) || morePattern.test(text));
-        });
-
-        elements.forEach(el => {
-            el.click();
-        });
-
-        return elements.length > 0;
-    }
-
-    function autoScroll() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function executeActions() {
-        const hasClicked = clickElements();
-        autoScroll();
-
-        setTimeout(() => {
-            const currentHeight = document.body.scrollHeight;
-            if (currentHeight > previousHeight || hasClicked) {
-                previousHeight = currentHeight;
-                attempts = 0;
-                executeActions();
-            } else {
-                attempts++;
-                if (attempts < maxAttempts) {
-                    executeActions();
-                } else {
-                    alert('所有內容已展開');
-                }
-            }
-        }, 1000);
-    }
-
-    executeActions();
-}
-autoExpandContent(();
-```
-
 * ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
   * 這段代碼可以幫忙將臉書貼文的留言類型改成「所有留言」，接著會快速自動下滑與展開臉書貼文所有的留言跟留言中的留言，完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你所設定的關鍵字是否存在(**記得要去修改！！**)，若有存在會跳窗告知你
+  * 若只是要「自動留言展開」，可以將 `const searchKeywords = ["某甲", "某乙", "某丙"]` 這句改成 `const searchKeywords = []` 即可。
+  * 完全展開後，可以參考使用「[臉書留言整理神器](https://chiakai-chang.github.io/CKTools/#%E8%87%89%E6%9B%B8%E7%95%99%E8%A8%80%E6%95%B4%E7%90%86%E7%A5%9E%E5%99%A8)」([介紹](https://chiakai-chang.github.io/CKTools/#%E8%87%89%E6%9B%B8%E7%95%99%E8%A8%80%E6%95%B4%E7%90%86%E7%A5%9E%E5%99%A8)) 來將留言解析匯出成 XLSX 檔下載保存。
   * 步驟:
       * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
       * 2、按「分享」按鈕，選「複製連結」，到另一個視窗去開這篇貼文
