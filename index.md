@@ -4,10 +4,6 @@
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
-
 ## <span style="background-color:yellow;"> ☆☆☆ 本軍火庫各時段使用情形分布熱度圖 ☆☆☆ </span>
 
 <iframe width="75%" height="100%" src="https://lookerstudio.google.com/embed/reporting/494c202f-7727-4a3e-9964-f2b1870946f8/page/gIeDE" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
