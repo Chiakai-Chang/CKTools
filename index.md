@@ -164,46 +164,58 @@ autoExpandContent(();
 
 ```javascript
 function autoExpandContent() {
+    // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
     const replyPattern = /查看.*回覆|View \d+ replies/;
     const morePattern = /查看更多|See more/;
-    let previousHeight = 0;
-    let attempts = 0;
-    const maxAttempts = 5;
-    const searchKeywords = ["某甲", "某乙", "某丙"];
-    let foundMatches = [];
-
+    let previousHeight = 0; // 紀錄目前的網頁高度
+    let attempts = 0; // 追蹤嘗試次數
+    const maxAttempts = 5; // 最多嘗試5次
+    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
+    let foundMatches = []; // 儲存找到的匹配結果
+    // 檢查是否存在 "最相關" 按鈕並嘗試點擊，切換為 "所有留言"
     function switchToAllComments() {
         const mostRelevantButton = [...document.querySelectorAll('div[role="button"]')]
             .find(el => el.innerText.includes("最相關"));
         if (mostRelevantButton) {
-            mostRelevantButton.click();
+            mostRelevantButton.click(); // 點擊 "最相關" 按鈕
+            
             setTimeout(() => {
+                // 等待選單出現後，查找更精確的 "所有留言" 選項並點擊
                 const menuItems = document.querySelectorAll('div[role="menuitem"]');
-                const allCommentsOption = [...menuItems].find(el => el.innerText.includes("所有留言"));
+                const allCommentsOption = [...menuItems].find(el => {
+                    const text = el.innerText || el.textContent;
+                    // 使用更精確的條件來識別 "所有留言"，並排除其他選項
+                    return text.includes("所有留言") && !text.includes("由新到舊");
+                });
+                
                 if (allCommentsOption) {
-                    allCommentsOption.click();
-                    executeActions();
+                    allCommentsOption.click(); // 點擊 "所有留言" 選項
+                    console.log("已自動切換至 '所有留言'");
+                    executeActions(); // 切換成功後執行內容展開
                 } else {
-                    alert("未找到 '所有留言' 選項");
+                    alert("未找到 '所有留言' 選項，請手動切換後重新執行程式。");
                 }
-            }, 500);
-            return true;
+            }, 500); // 延遲以確保選單已加載
+            return true; // 表示已嘗試切換
         }
-        return false;
+        return false; // 無需切換
     }
-
+    // 自動點擊符合條件的元素
     function clickElements() {
         const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
             if (!el.offsetParent) return false;
             const text = el.innerText || el.textContent;
             return text && (replyPattern.test(text) || morePattern.test(text));
         });
-        elements.forEach(el => el.click());
+        elements.forEach(el => {
+            el.click();
+        });
         return elements.length > 0;
     }
-
+    // 搜索關鍵字並收集匹配的內容
     function searchForKeywords() {
         const textElements = [...document.querySelectorAll('div, p, span')];
+        
         textElements.forEach(el => {
             const text = el.innerText || el.textContent;
             searchKeywords.forEach(keyword => {
@@ -213,14 +225,28 @@ function autoExpandContent() {
             });
         });
     }
-
+    // 自動滾動頁面底部並處理浮動滾動元素
     function autoScroll() {
-        window.scrollTo(0, document.body.scrollHeight);
+        window.scrollTo(0, document.body.scrollHeight); // 滾動到頁面底部
+        const scrollableElements = document.querySelectorAll('*');
+        const scrollDistance = 200;
+        const scrollInterval = 100;
+        scrollableElements.forEach((element) => {
+            if (element.scrollHeight > element.clientHeight) { // 若元素可滾動
+                const interval = setInterval(() => {
+                    element.scrollBy(0, scrollDistance);
+                    if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
+                        clearInterval(interval);
+                        console.log("已到達元素底部");
+                    }
+                }, scrollInterval);
+            }
+        });
     }
-
+    // 持續執行點擊與捲動操作，直到所有內容展開
     function executeActions() {
         const hasClicked = clickElements();
-        autoScroll();
+        autoScroll(); 
         setTimeout(() => {
             const currentHeight = document.body.scrollHeight;
             if (currentHeight > previousHeight || hasClicked) {
@@ -232,6 +258,7 @@ function autoExpandContent() {
                 if (attempts < maxAttempts) {
                     executeActions();
                 } else {
+                    // 若有設定關鍵字，則進行關鍵字搜尋，否則顯示已全部展開
                     if (searchKeywords.length > 0) {
                         searchForKeywords();
                         if (foundMatches.length > 0) {
@@ -246,11 +273,12 @@ function autoExpandContent() {
             }
         }, 1000);
     }
-
+    // 首先檢查是否需要切換至 "所有留言"，若無法自動切換則提示使用者手動操作
     if (!switchToAllComments()) {
-        executeActions();
+        executeActions(); // 若不需要切換或已完成切換，則執行展開內容
     }
 }
+// 啟動自動展開Facebook貼文與留言的功能並搜尋關鍵字
 autoExpandContent();
 ```
 
