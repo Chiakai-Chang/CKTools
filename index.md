@@ -4,6 +4,10 @@
 * [**【建議與問題回饋請點我】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
 ## <span style="background-color:yellow;"> ☆☆☆ 本軍火庫各時段使用情形分布熱度圖 ☆☆☆ </span>
 
 <iframe width="75%" height="100%" src="https://lookerstudio.google.com/embed/reporting/494c202f-7727-4a3e-9964-f2b1870946f8/page/gIeDE" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
@@ -96,14 +100,7 @@
       * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
       * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
 
-<!-- 複製到剪貼簿的按鈕 -->
-<button onclick="copyToClipboard('codeBlock_facebook_comment')" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">將程式碼複製到剪貼簿</button>
-
-<details>
-  <summary>顯示程式碼</summary>
-  
-  <pre id="codeBlock_facebook_comment">
-<code>
+```javascript
 function autoExpandContent() {
     // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
     const replyPattern = /查看.*回覆|View \d+ replies/;
@@ -153,10 +150,8 @@ function autoExpandContent() {
 
     executeActions();
 }
-autoExpandContent();
-</code>
-  </pre>
-</details>
+autoExpandContent(();
+```
 
 * ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
   * 這段代碼可以幫忙將臉書貼文的留言類型改成「所有留言」，接著會快速自動下滑與展開臉書貼文所有的留言跟留言中的留言，完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你所設定的關鍵字是否存在(**記得要去修改！！**)，若有存在會跳窗告知你
@@ -167,14 +162,7 @@ autoExpandContent();
       * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
       * 5、將以下指令貼上後按 enter 執行即可 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
 
-<!-- 複製到剪貼簿的按鈕 -->
-<button onclick="copyToClipboard('codeBlock_facebook_comment_key')" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">將程式碼複製到剪貼簿</button>
-
-<details>
-  <summary>顯示程式碼</summary>
-  
-  <pre id="codeBlock_facebook_comment_key">
-<code>
+```javascript
 function autoExpandContent() {
     const replyPattern = /查看.*回覆|View \d+ replies/;
     const morePattern = /查看更多|See more/;
@@ -264,9 +252,7 @@ function autoExpandContent() {
     }
 }
 autoExpandContent();
-</code>
-  </pre>
-</details>
+```
 
 ---
 
@@ -618,19 +604,4 @@ autoExpandContent();
 
     // 在頁面加載時調用 getVisitorInfo 函數
     getVisitorInfo();
-</script>
-
-<!-- JavaScript 功能，將程式碼複製到剪貼簿 -->
-<script>
-function copyToClipboard(codeBlockId) {
-    const codeElement = document.getElementById(codeBlockId);
-    const code = codeElement.innerText.trim();
-
-    navigator.clipboard.writeText(code).then(() => {
-        alert("程式碼已複製到剪貼簿！");
-    }).catch(err => {
-        console.error("無法複製程式碼:", err);
-        alert("無法複製程式碼，請手動複製。");
-    });
-}
 </script>
