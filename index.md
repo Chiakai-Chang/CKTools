@@ -96,10 +96,13 @@
       * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
       * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
 
+<!-- 複製到剪貼簿的按鈕 -->
+<button onclick="copyToClipboard('codeBlock_facebook_comment')" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">將程式碼複製到剪貼簿</button>
+
 <details>
   <summary>顯示程式碼</summary>
   
-  <pre id="codeBlock">
+  <pre id="codeBlock_facebook_comment">
 <code>
 function autoExpandContent() {
     // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
@@ -109,124 +112,6 @@ function autoExpandContent() {
     let attempts = 0; // 追蹤嘗試次數
     const maxAttempts = 5; // 最多嘗試5次
 
-    // 自動點擊符合條件的元素
-    function clickElements() {
-        // 選擇所有可能包含“查看更多”或“查看回覆”文字的元素
-        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
-            // 濾掉不可見的元素（避免點擊隱藏的按鈕）
-            if (!el.offsetParent) return false;
-            const text = el.innerText || el.textContent; // 獲取元素的文字內容
-            // 檢查文字內容是否符合回覆或查看更多的模式
-            return text && (replyPattern.test(text) || morePattern.test(text));
-        });
-
-        // 遍歷所有符合條件的元素並進行點擊
-        elements.forEach(el => {
-            el.click(); // 執行點擊操作
-        });
-
-        // 回傳是否找到需要點擊的元素，供後續判斷是否繼續執行
-        return elements.length > 0;
-    }
-
-    // 將頁面捲動至底部，讓更多內容加載出來
-    function autoScroll() {
-        window.scrollTo(0, document.body.scrollHeight); // 捲動到頁面底部
-    }
-
-    // 持續執行點擊與捲動操作，直到所有內容展開
-    function executeActions() {
-        const hasClicked = clickElements(); // 點擊需要展開的元素
-        autoScroll(); // 捲動頁面
-
-        // 設置一段延遲時間，等待新內容加載
-        setTimeout(() => {
-            const currentHeight = document.body.scrollHeight; // 取得目前頁面的高度
-            // 如果頁面高度變高或有新元素被點擊，表示有新內容出現
-            if (currentHeight > previousHeight || hasClicked) {
-                previousHeight = currentHeight; // 更新頁面高度
-                attempts = 0; // 重置嘗試次數
-                executeActions(); // 繼續執行點擊與捲動
-            } else {
-                attempts++; // 若無新內容則增加嘗試次數
-                // 若達到最大嘗試次數，則視為所有內容已展開
-                if (attempts < maxAttempts) {
-                    executeActions(); // 繼續執行直到達到最大次數
-                } else {
-                    alert('所有內容已展開'); // 提示使用者已完成所有展開
-                }
-            }
-        }, 1000); // 每次等待1秒以確保新內容加載完成
-    }
-
-    // 開始執行自動展開的動作
-    executeActions();
-}
-
-// 啟動自動展開Facebook貼文與留言的功能
-autoExpandContent();
-</code>
-  </pre>
-
-  <!-- 複製到剪貼簿的按鈕 -->
-  <button onclick="copyToClipboard()">複製到剪貼簿</button>
-</details>
-
-* ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
-  * 這段代碼可以幫忙將臉書貼文的留言類型改成「所有留言」，接著會快速自動下滑與展開臉書貼文所有的留言跟留言中的留言，完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你所設定的關鍵字是否存在(**記得要去修改！！**)，若有存在會跳窗告知你
-  * 步驟:
-      * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
-      * 2、你可以按「分享」按鈕，選「複製連結」，到另一個視窗去開這篇貼文
-      * 3、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
-      * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
-      * 5、請將以下指令貼上後按 enter 執行即可，完成後會跳出視窗 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
-
-<details>
-  <summary>顯示程式碼</summary>
-  
-  <pre id="codeBlock">
-<code>
-  <summary>顯示程式碼</summary>
-function autoExpandContent() {
-    // 定義需要點擊的文字模式（包含中文與英文的常見狀況）
-    const replyPattern = /查看.*回覆|View \d+ replies/;
-    const morePattern = /查看更多|See more/;
-    let previousHeight = 0; // 紀錄目前的網頁高度
-    let attempts = 0; // 追蹤嘗試次數
-    const maxAttempts = 5; // 最多嘗試5次
-    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
-    let foundMatches = []; // 儲存找到的匹配結果
-
-    // 檢查是否存在 "最相關" 按鈕並嘗試點擊，切換為 "所有留言"
-    function switchToAllComments() {
-        const mostRelevantButton = [...document.querySelectorAll('div[role="button"]')]
-            .find(el => el.innerText.includes("最相關"));
-        if (mostRelevantButton) {
-            mostRelevantButton.click(); // 點擊 "最相關" 按鈕
-            
-            setTimeout(() => {
-                // 等待選單出現後，查找更精確的 "所有留言" 選項並點擊
-                const menuItems = document.querySelectorAll('div[role="menuitem"]');
-                const allCommentsOption = [...menuItems].find(el => {
-                    const text = el.innerText || el.textContent;
-                    // 使用更精確的條件來識別 "所有留言"，並排除其他選項
-                    return text.includes("所有留言") && !text.includes("由新到舊");
-                });
-                
-                if (allCommentsOption) {
-                    allCommentsOption.click(); // 點擊 "所有留言" 選項
-                    console.log("已自動切換至 '所有留言'");
-                    executeActions(); // 切換成功後執行內容展開
-                } else {
-                    alert("未找到 '所有留言' 選項，請手動切換後重新執行程式。");
-                }
-            }, 500); // 延遲以確保選單已加載
-            return true; // 表示已嘗試切換
-        }
-        return false; // 無需切換
-    }
-
-    // 自動點擊符合條件的元素
     function clickElements() {
         const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
             if (!el.offsetParent) return false;
@@ -241,45 +126,13 @@ function autoExpandContent() {
         return elements.length > 0;
     }
 
-    // 搜索關鍵字並收集匹配的內容
-    function searchForKeywords() {
-        const textElements = [...document.querySelectorAll('div, p, span')];
-        
-        textElements.forEach(el => {
-            const text = el.innerText || el.textContent;
-            searchKeywords.forEach(keyword => {
-                if (text.includes(keyword) && !foundMatches.includes(keyword)) {
-                    foundMatches.push(keyword);
-                }
-            });
-        });
-    }
-
-    // 自動滾動頁面底部並處理浮動滾動元素
     function autoScroll() {
-        window.scrollTo(0, document.body.scrollHeight); // 滾動到頁面底部
-
-        const scrollableElements = document.querySelectorAll('*');
-        const scrollDistance = 200;
-        const scrollInterval = 100;
-
-        scrollableElements.forEach((element) => {
-            if (element.scrollHeight > element.clientHeight) { // 若元素可滾動
-                const interval = setInterval(() => {
-                    element.scrollBy(0, scrollDistance);
-                    if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
-                        clearInterval(interval);
-                        console.log("已到達元素底部");
-                    }
-                }, scrollInterval);
-            }
-        });
+        window.scrollTo(0, document.body.scrollHeight);
     }
 
-    // 持續執行點擊與捲動操作，直到所有內容展開
     function executeActions() {
         const hasClicked = clickElements();
-        autoScroll(); 
+        autoScroll();
 
         setTimeout(() => {
             const currentHeight = document.body.scrollHeight;
@@ -292,7 +145,105 @@ function autoExpandContent() {
                 if (attempts < maxAttempts) {
                     executeActions();
                 } else {
-                    // 若有設定關鍵字，則進行關鍵字搜尋，否則顯示已全部展開
+                    alert('所有內容已展開');
+                }
+            }
+        }, 1000);
+    }
+
+    executeActions();
+}
+autoExpandContent();
+</code>
+  </pre>
+</details>
+
+* ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
+  * 這段代碼可以幫忙將臉書貼文的留言類型改成「所有留言」，接著會快速自動下滑與展開臉書貼文所有的留言跟留言中的留言，完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你所設定的關鍵字是否存在(**記得要去修改！！**)，若有存在會跳窗告知你
+  * 步驟:
+      * 1、使用 Chrome 到瀏覽到你的目標臉書貼文
+      * 2、按「分享」按鈕，選「複製連結」，到另一個視窗去開這篇貼文
+      * 3、點右上角的「⋮」 -> 選「更多工具」 -> 選「開發人員工具」(即 DevTools)
+      * 4、「開發人員工具」(即 DevTools) 跳到「Console」頁籤，點上方「∅」符號清空畫面以利觀看
+      * 5、將以下指令貼上後按 enter 執行即可 (若無法貼上，請參考 [allow pasting 的教學](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
+
+<!-- 複製到剪貼簿的按鈕 -->
+<button onclick="copyToClipboard('codeBlock_facebook_comment_key')" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">將程式碼複製到剪貼簿</button>
+
+<details>
+  <summary>顯示程式碼</summary>
+  
+  <pre id="codeBlock_facebook_comment_key">
+<code>
+function autoExpandContent() {
+    const replyPattern = /查看.*回覆|View \d+ replies/;
+    const morePattern = /查看更多|See more/;
+    let previousHeight = 0;
+    let attempts = 0;
+    const maxAttempts = 5;
+    const searchKeywords = ["某甲", "某乙", "某丙"];
+    let foundMatches = [];
+
+    function switchToAllComments() {
+        const mostRelevantButton = [...document.querySelectorAll('div[role="button"]')]
+            .find(el => el.innerText.includes("最相關"));
+        if (mostRelevantButton) {
+            mostRelevantButton.click();
+            setTimeout(() => {
+                const menuItems = document.querySelectorAll('div[role="menuitem"]');
+                const allCommentsOption = [...menuItems].find(el => el.innerText.includes("所有留言"));
+                if (allCommentsOption) {
+                    allCommentsOption.click();
+                    executeActions();
+                } else {
+                    alert("未找到 '所有留言' 選項");
+                }
+            }, 500);
+            return true;
+        }
+        return false;
+    }
+
+    function clickElements() {
+        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
+            if (!el.offsetParent) return false;
+            const text = el.innerText || el.textContent;
+            return text && (replyPattern.test(text) || morePattern.test(text));
+        });
+        elements.forEach(el => el.click());
+        return elements.length > 0;
+    }
+
+    function searchForKeywords() {
+        const textElements = [...document.querySelectorAll('div, p, span')];
+        textElements.forEach(el => {
+            const text = el.innerText || el.textContent;
+            searchKeywords.forEach(keyword => {
+                if (text.includes(keyword) && !foundMatches.includes(keyword)) {
+                    foundMatches.push(keyword);
+                }
+            });
+        });
+    }
+
+    function autoScroll() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function executeActions() {
+        const hasClicked = clickElements();
+        autoScroll();
+        setTimeout(() => {
+            const currentHeight = document.body.scrollHeight;
+            if (currentHeight > previousHeight || hasClicked) {
+                previousHeight = currentHeight;
+                attempts = 0;
+                executeActions();
+            } else {
+                attempts++;
+                if (attempts < maxAttempts) {
+                    executeActions();
+                } else {
                     if (searchKeywords.length > 0) {
                         searchForKeywords();
                         if (foundMatches.length > 0) {
@@ -308,20 +259,15 @@ function autoExpandContent() {
         }, 1000);
     }
 
-    // 首先檢查是否需要切換至 "所有留言"，若無法自動切換則提示使用者手動操作
     if (!switchToAllComments()) {
-        executeActions(); // 若不需要切換或已完成切換，則執行展開內容
+        executeActions();
     }
 }
-
-// 啟動自動展開Facebook貼文與留言的功能並搜尋關鍵字
 autoExpandContent();
 </code>
   </pre>
-
-  <!-- 複製到剪貼簿的按鈕 -->
-  <button onclick="copyToClipboard()">複製到剪貼簿</button>
 </details>
+
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
@@ -433,6 +379,30 @@ autoExpandContent();
      * 開發者不對使用本程式引起的任何直接或間接損失、損害、數據遺失或其他損害負責。使用者應遵守所屬法律法規，並確保在合法的範圍內進行測試及研究。
      * 如有違反當地法律規定，請自行負擔一切法律責任。使用本程式即表示您已同意本免責聲明中的所有條款。
 
+* ## [臉書留言整理神器](https://colab.research.google.com/drive/1t4xkYcXG0apHxFmjXqOPpR_cHpKwtfxV?usp=sharing)
+   * 最近網路相關案件越來越多，臉書上假消息、恐嚇、不當發文等等也是越發頻繁，若是假帳號或相關資料很少的帳號發文，或者由他人轉 PO 的文章，常常都有需要從該貼文的留言內容，嘗試看看有無其他線索的需求。但相關留言內容如果要一筆一筆手動瀏覽再複製貼上，實在是很費力，所以特別撰寫這個小程式來幫忙大家。
+   * 本程式會自動幫忙整理出以下臉書留言資訊：
+     * 1、留言者名稱
+     * 2、留言者臉書連結
+     * 3、留言者臉書ID
+     * 4、留言時間 (技術問題，暫時只能粗略時間，沒有準確時間)
+     * 5、留言內容
+     * 6、圖片URL (匯出的 xlsx 內會包含留言內的圖片) *新！
+     * 7、是否為頭號粉絲 *新！
+   * 使用方法：
+     * 1、用 Chrome 登入臉書瀏覽到你要爬取的臉書貼文
+     * 2、建議按「分享」>「複製連結」，到新的頁面貼上網址，打開該則貼文
+     * 3、參考：「[☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆](https://chiakai-chang.github.io/CKTools/#-%E8%87%89%E6%9B%B8%E8%87%AA%E5%8B%95%E7%95%99%E8%A8%80%E5%B1%95%E9%96%8B%E8%87%AA%E5%8B%95%E9%97%9C%E9%8D%B5%E5%AD%97%E6%90%9C%E5%B0%8B%E5%AF%86%E6%8A%80-)」將所有留言都自動展開
+     * 4、繼續使用 DevTools (開發者工具)，將網頁原始碼複製起來。
+     * 5、到下方啟動本程式，將網頁原始碼貼到「HTML內容」欄位
+     * 6、按下「解析並產出」按鈕就會自動開始解析與整理了
+     * 7、最後可以按「下載檔案」按鈕將本次整理好的 xlsx 檔案下載到您的電腦
+       * 若想改預設檔名前墜詞，可到「檔名前綴」欄位修改
+       * 預設檔名會是:「facebook_comments_{下載時間}.xlsx」
+   * ## [臉書好友整理神器](https://colab.research.google.com/drive/1JCgq0qmmsAtfuICuyk_CciQVjgSfKZ33?usp=sharing)
+      * 請參考教學: [使用指引](https://drive.google.com/file/d/1KI8intBMvUYx2rTMgFi2utGGM6oxEH0i/view)
+      * 整理大量以往難以人工彙整之臉書留言或按攢者資訊，並用以從事「交集分析」抓出關鍵犯嫌。
+
 * ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
    * 緣起:
      * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
@@ -454,17 +424,6 @@ autoExpandContent();
     1. 透過 Colab 的虛擬主機進行下載，有效隱藏下載者的 IP 地址和裝置資訊，保護您的隱私。
     2. 結合下載檔案、保存原始封包和雜湊值計算於一體的高效率操作。
     3. 小幫手的程式碼完全開源，無需安裝任何額外套件，使用透明安全。
-
-* ## [臉書好友整理神器](https://colab.research.google.com/drive/1JCgq0qmmsAtfuICuyk_CciQVjgSfKZ33?usp=sharing)
-   * 請參考教學: [使用指引](https://drive.google.com/file/d/1KI8intBMvUYx2rTMgFi2utGGM6oxEH0i/view)
-   * 整理大量以往難以人工彙整之臉書留言或按攢者資訊，並用以從事「交集分析」抓出關鍵犯嫌。
-
-* ## [臉書留言整理神器](https://colab.research.google.com/drive/1t4xkYcXG0apHxFmjXqOPpR_cHpKwtfxV?usp=sharing)
-   * 最近網路相關案件越來越多，臉書上假消息、恐嚇、不當發文等等也是越發頻繁，若是假帳號或相關資料很少的帳號發文，或者由他人轉 PO 的文章，常常都有需要從該貼文的留言內容，嘗試看看有無其他線索的需求。
-   * 手動瀏覽再複製貼上，實在是很費力，所以特別撰寫這個小程式，只要會取得「留言部份」的網頁原始碼，貼給本程式，就會自動幫忙整理出以下資訊：
-      * 1、留言者
-      * 2、留言者臉書連結
-      * 3、留言內容
 
 * ## [IPv6 格式轉換小幫手](https://colab.research.google.com/drive/1we5ASiwmo9hfpVU9fNz0b115R-c0VPL5?usp=sharing)
    * 鑒於 IPv6 位址表示法太長，因此有所謂的以下「省略規則」：
@@ -663,12 +622,15 @@ autoExpandContent();
 
 <!-- JavaScript 功能，將程式碼複製到剪貼簿 -->
 <script>
-function copyToClipboard() {
-    const code = document.getElementById("codeBlock").innerText;
+function copyToClipboard(codeBlockId) {
+    const codeElement = document.getElementById(codeBlockId);
+    const code = codeElement.innerText.trim();
+
     navigator.clipboard.writeText(code).then(() => {
         alert("程式碼已複製到剪貼簿！");
     }).catch(err => {
-        alert("無法複製程式碼: " + err);
+        console.error("無法複製程式碼:", err);
+        alert("無法複製程式碼，請手動複製。");
     });
 }
 </script>
