@@ -107,11 +107,11 @@
 
 ```javascript
 function autoExpandContent() {
-    const replyPattern = /查看.*回覆|View \d+ replies/; // 匹配 "查看回覆" 的文字模式
-    const morePattern = /查看更多|See more/; // 匹配 "查看更多" 的文字模式
-    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
+    const replyPattern = /查看.*回覆|View \d+ replies/; // 用來對照 "查看回覆" 的文字模式
+    const morePattern = /查看更多|See more/; // 用來對照 "查看更多" 的文字模式
+    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表（可依需求修改）
     let foundMatches = []; // 儲存找到的關鍵字
-    let previousArticleCount = 0; // 上一次檢查時的留言數量
+    let previousArticleCount = 0; // 前一次的留言數量
     let articleCountUnchangedTimes = 0; // 留言數量無變化的次數
     const maxArticleCountUnchangedTimes = 2; // 留言數量無變化的最大次數
 
@@ -149,7 +149,7 @@ function autoExpandContent() {
     function clickElements() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
         const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
-            if (!el.offsetParent) return false;
+            if (!el.offsetParent) return false; // 過濾不可見的元素
             const text = el.innerText || el.textContent;
             return text && (replyPattern.test(text) || morePattern.test(text));
         });
@@ -176,33 +176,31 @@ function autoExpandContent() {
         });
     }
 
-    // 同時嘗試多種自動滾動到頁面底部的方法，並在滾動期間點擊元素
+    // 加入多種滾動方法來提高相容性
     function autoScrollAndClick(callback) {
         console.log("開始同時嘗試多種自動滾動方法，並在滾動期間點擊元素...");
         let isScrolling = true;
 
-        // 定義滾動方法
+        // 定義多種滾動方法
         function scrollMethod1() {
             return new Promise(resolve => {
                 console.log("使用方法1：window.scrollTo");
                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                setTimeout(resolve, 500);
+                setTimeout(resolve, 300);
             });
         }
 
         function scrollMethod2() {
             return new Promise(resolve => {
                 console.log("使用方法2：window.scrollBy");
-                let totalHeight = 0;
-                const distance = 200;
+                const distance = 500; // 增大滾動距離
                 const timer = setInterval(() => {
                     window.scrollBy(0, distance);
-                    totalHeight += distance;
                     if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
                         clearInterval(timer);
                         resolve();
                     }
-                }, 100);
+                }, 100); // 適當縮短滾動間隔
             });
         }
 
@@ -212,10 +210,26 @@ function autoExpandContent() {
                 const lastElement = document.body.lastElementChild;
                 if (lastElement) {
                     lastElement.scrollIntoView({ behavior: 'smooth' });
-                    setTimeout(resolve, 500);
+                    setTimeout(resolve, 300);
                 } else {
                     resolve();
                 }
+            });
+        }
+
+        function scrollMethod4() {
+            return new Promise(resolve => {
+                console.log("使用方法4：連續遞迴滾動");
+                const distance = 500; // 增大每次滾動的距離
+                const scroll = () => {
+                    window.scrollBy(0, distance);
+                    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+                        resolve();
+                    } else {
+                        setTimeout(scroll, 100);
+                    }
+                };
+                scroll();
             });
         }
 
@@ -227,11 +241,11 @@ function autoExpandContent() {
                 } else {
                     clickElements();
                 }
-            }, 500);
+            }, 300); // 頻率適當加快
         }
 
         // 同時執行所有滾動方法和點擊動作
-        let scrollPromises = [scrollMethod1(), scrollMethod2(), scrollMethod3()];
+        let scrollPromises = [scrollMethod1(), scrollMethod2(), scrollMethod3(), scrollMethod4()];
         clickDuringScroll();
 
         Promise.all(scrollPromises).then(() => {
@@ -241,13 +255,13 @@ function autoExpandContent() {
         });
     }
 
-    // 獲取當前頁面中的留言（article 元素）數量
+    // 取得當前頁面中的留言（article 元素）數量
     function getArticleCount() {
         const articles = document.querySelectorAll('div[role="article"]');
         return articles.length;
     }
 
-    // 執行點擊和滾動動作，直到所有內容展開
+    // 執行點擊與滾動操作，直到所有內容展開
     function executeActions() {
         console.log("執行點擊與滾動操作...");
         autoScrollAndClick(() => {
