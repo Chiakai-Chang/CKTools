@@ -92,11 +92,11 @@
     * ![](https://chiakai-chang.github.io/tempHTML/img/downloadPDFpng.png)
 
 * ## ☆ 臉書「自動留言展開」+「自動關鍵字搜尋」密技 ☆
-  * 以下這段代碼會全自動幫忙:
+  * 以下這段程式碼會全自動幫忙：
     * 1、將臉書貼文的留言類型改成「**所有留言**」
-    * 2、快速自動下滑與展開臉書貼文所有的留言，以及跟留言中的留言
-    * 3、完成後，還會自動幫忙比對程式碼中「searchKeywords」裡面你下的關鍵字是否存在 (**使用前記得要去修改關鍵字！！**)，若有存在會跳窗告知你
-      * 若只是要「**自動留言展開**」，可以將 `const searchKeywords = ["某甲", "某乙", "某丙"]` 這句改成 `const searchKeywords = []` 即可。
+    * 2、快速自動下滑與展開臉書貼文所有的留言，以及留言中的留言
+    * 3、完成後，還會自動幫忙比對程式碼中「**searchKeywords**」裡面你下的關鍵字是否存在 (**使用前記得要去修改關鍵字！！**)，若有存在會跳窗告知你
+      * 若只是要「**自動留言展開**」，請將 `const searchKeywords = ["某甲", "某乙", "某丙"]` 這句改成 `const searchKeywords = []` 即可。
     * 4、完全展開後，可以參考使用「[**臉書留言整理神器**](https://chiakai-chang.github.io/CKTools/#%E8%87%89%E6%9B%B8%E7%95%99%E8%A8%80%E6%95%B4%E7%90%86%E7%A5%9E%E5%99%A8)」([**介紹**](https://chiakai-chang.github.io/CKTools/#%E8%87%89%E6%9B%B8%E7%95%99%E8%A8%80%E6%95%B4%E7%90%86%E7%A5%9E%E5%99%A8)) 來將留言解析匯出成 XLSX 檔下載保存。
   * 使用步驟:
       * 1、使用 **Chrome** 到瀏覽到你的目標臉書貼文
@@ -114,7 +114,7 @@ function autoExpandContent() {
     const maxAttempts = 5; // 最多嘗試5次展開操作
     const maxNoChangeScrolls = 5; // 若頁面無高度變化時，最多再檢查5次
     let noChangeScrolls = 0; // 計算無高度變化的次數
-    const searchKeywords = ["王奕鑫","謝大俠","Prince Su","Chun Chen","林嵩傑","Yunyun Huang","徐浩凱","Eason Lin","曾小騰","黎真衛","任楊","賴韋成","史艷文","Lien Chihheng","Bo-Zhi Jhang","黃建皓","黃耀德","Jessica Tsai","廖悅安","Chen Tai-Chuen"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
+    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
     let foundMatches = []; // 儲存找到的關鍵字
     let isScrolling = false; // 用來判斷是否正在進行滾動動作
 
