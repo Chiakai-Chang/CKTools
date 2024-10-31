@@ -109,39 +109,36 @@
 function autoExpandContent() {
     const replyPattern = /查看.*回覆|View \d+ replies/; // 匹配 "查看回覆" 的文字模式
     const morePattern = /查看更多|See more/; // 匹配 "查看更多" 的文字模式
-    let previousHeight = 0; // 記錄網頁之前的高度
-    let attempts = 0; // 計算重複展開的次數
-    const maxAttempts = 5; // 最多嘗試5次展開操作
-    const maxNoChangeScrolls = 5; // 若頁面無高度變化時，最多再檢查5次
-    let noChangeScrolls = 0; // 計算無高度變化的次數
     const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表 (記得要修改，都不需要也可以刪掉留 [] 就好，就是單純展開留言)
     let foundMatches = []; // 儲存找到的關鍵字
-    let isScrolling = false; // 用來判斷是否正在進行滾動動作
+    let previousArticleCount = 0; // 上一次檢查時的留言數量
+    let articleCountUnchangedTimes = 0; // 留言數量無變化的次數
+    const maxArticleCountUnchangedTimes = 2; // 留言數量無變化的最大次數
 
     // 切換至 "所有留言" 功能
     function switchToAllComments() {
         console.log("檢查是否需要切換至 '所有留言'...");
         const mostRelevantButton = [...document.querySelectorAll('div[role="button"]')]
-            .find(el => el.innerText.includes("最相關")); // 找到 "最相關" 按鈕
+            .find(el => el.innerText.includes("最相關") || el.innerText.includes("Most relevant"));
         if (mostRelevantButton) {
             console.log("'最相關' 按鈕找到，開始切換...");
-            mostRelevantButton.click(); // 點擊 "最相關" 按鈕
+            mostRelevantButton.click();
             setTimeout(() => {
                 console.log("等待選單出現以點擊 '所有留言' 選項...");
                 const menuItems = document.querySelectorAll('div[role="menuitem"]');
                 const allCommentsOption = [...menuItems].find(el => {
                     const text = el.innerText || el.textContent;
-                    return text.includes("所有留言") && !text.includes("由新到舊");
+                    return (text.includes("所有留言") || text.includes("All comments")) && !text.includes("由新到舊");
                 });
                 if (allCommentsOption) {
                     console.log("找到 '所有留言' 選項，點擊切換...");
-                    allCommentsOption.click(); // 點擊 "所有留言" 選項
+                    allCommentsOption.click();
                     console.log("已自動切換至 '所有留言'");
-                    executeActions(); // 開始執行主要的展開內容動作
+                    executeActions();
                 } else {
                     alert("未找到 '所有留言' 選項，請手動切換後重新執行程式。");
                 }
-            }, 500); // 延遲0.5秒，確保選單已加載
+            }, 1000);
             return true;
         }
         console.log("無需切換 '所有留言'。");
@@ -152,109 +149,162 @@ function autoExpandContent() {
     function clickElements() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
         const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
-            if (!el.offsetParent) return false; // 過濾不可見的元素
+            if (!el.offsetParent) return false;
             const text = el.innerText || el.textContent;
             return text && (replyPattern.test(text) || morePattern.test(text));
         });
-        elements.forEach(el => el.click()); // 點擊符合條件的元素
-        console.log(`點擊了 ${elements.length} 個符合條件的元素。`);
+        elements.forEach(el => {
+            el.click();
+            console.log(`點擊了元素：${el.innerText.trim()}`);
+        });
+        console.log(`總共點擊了 ${elements.length} 個符合條件的元素。`);
         return elements.length > 0;
     }
 
     // 搜尋關鍵字並記錄結果
     function searchForKeywords() {
         console.log("正在搜尋關鍵字...");
-        const textElements = [...document.querySelectorAll('div, p, span')]; // 搜尋所有文字元素
+        const textElements = [...document.querySelectorAll('div, p, span')];
         textElements.forEach(el => {
             const text = el.innerText || el.textContent;
             searchKeywords.forEach(keyword => {
                 if (text.includes(keyword) && !foundMatches.includes(keyword)) {
-                    foundMatches.push(keyword); // 若找到關鍵字則記錄
+                    foundMatches.push(keyword);
                     console.log(`找到匹配的關鍵字: ${keyword}`);
                 }
             });
         });
     }
 
-    // 自動滾動到頁面底部
-    function autoScroll() {
-        console.log("開始自動滾動頁面...");
-        window.scrollTo(0, document.body.scrollHeight); // 滾動到頁面底部
-        let lastScrollHeight = document.body.scrollHeight; // 記錄最後一次的頁面高度
-        const scrollDistance = 200; // 每次滾動距離
-        const scrollInterval = 100; // 滾動間隔時間
+    // 同時嘗試多種自動滾動到頁面底部的方法，並在滾動期間點擊元素
+    function autoScrollAndClick(callback) {
+        console.log("開始同時嘗試多種自動滾動方法，並在滾動期間點擊元素...");
+        let isScrolling = true;
 
-        // 使用定時器進行間歇式滾動，直到達到頁面底部
-        const interval = setInterval(() => {
-            isScrolling = true;
-            window.scrollBy(0, scrollDistance); // 滾動頁面
-            console.log(`當前滾動位置: ${window.scrollY}, 頁面高度: ${document.body.scrollHeight}`);
+        // 定義滾動方法
+        function scrollMethod1() {
+            return new Promise(resolve => {
+                console.log("使用方法1：window.scrollTo");
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                setTimeout(resolve, 500);
+            });
+        }
 
-            // 檢查是否達到頁面底部
-            if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-                console.log("偵測到頁面底部...");
+        function scrollMethod2() {
+            return new Promise(resolve => {
+                console.log("使用方法2：window.scrollBy");
+                let totalHeight = 0;
+                const distance = 200;
+                const timer = setInterval(() => {
+                    window.scrollBy(0, distance);
+                    totalHeight += distance;
+                    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
 
-                if (document.body.scrollHeight === lastScrollHeight) {
-                    clearInterval(interval); // 停止滾動
-                    isScrolling = false;
-                    console.log("已到達頁面底部，停止滾動。");
-                    executeActions(); // 繼續執行主要展開操作
+        function scrollMethod3() {
+            return new Promise(resolve => {
+                console.log("使用方法3：element.scrollIntoView");
+                const lastElement = document.body.lastElementChild;
+                if (lastElement) {
+                    lastElement.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(resolve, 500);
                 } else {
-                    lastScrollHeight = document.body.scrollHeight; // 更新高度紀錄
-                    console.log("頁面高度改變，繼續滾動...");
+                    resolve();
                 }
-            }
-        }, scrollInterval);
+            });
+        }
 
-        // 若滾動超過指定次數，強制清除 interval
-        setTimeout(() => {
-            if (isScrolling) {
-                clearInterval(interval);
-                isScrolling = false;
-                console.log("強制停止滾動，避免無限循環。");
-                executeActions(); // 確保滾動停止後繼續執行主要操作
-            }
-        }, 5000); // 設置 5 秒強制停止滾動
+        // 在滾動期間定時點擊元素
+        function clickDuringScroll() {
+            const clickInterval = setInterval(() => {
+                if (!isScrolling) {
+                    clearInterval(clickInterval);
+                } else {
+                    clickElements();
+                }
+            }, 500);
+        }
+
+        // 同時執行所有滾動方法和點擊動作
+        let scrollPromises = [scrollMethod1(), scrollMethod2(), scrollMethod3()];
+        clickDuringScroll();
+
+        Promise.all(scrollPromises).then(() => {
+            console.log("所有滾動方法執行完畢。");
+            isScrolling = false;
+            callback();
+        });
+    }
+
+    // 獲取當前頁面中的留言（article 元素）數量
+    function getArticleCount() {
+        const articles = document.querySelectorAll('div[role="article"]');
+        return articles.length;
     }
 
     // 執行點擊和滾動動作，直到所有內容展開
     function executeActions() {
         console.log("執行點擊與滾動操作...");
-        const hasClicked = clickElements(); // 嘗試點擊 "查看更多" 或 "查看回覆"
-        if (hasClicked) {
-            console.log("有新的內容展開，開始滾動頁面...");
-            autoScroll();
-        } else {
-            console.log("沒有更多內容需要展開，檢查頁面高度...");
-            const currentHeight = document.body.scrollHeight;
+        autoScrollAndClick(() => {
+            const currentArticleCount = getArticleCount();
+            console.log(`當前留言數量：${currentArticleCount}`);
 
-            // 檢查頁面高度變化來判斷是否到底部
-            if (currentHeight === previousHeight) {
-                noChangeScrolls++; // 無高度變化次數 +1
-                console.log(`頁面高度未變化，無變化次數：${noChangeScrolls}`);
-            } else {
-                previousHeight = currentHeight; // 更新頁面高度
-                noChangeScrolls = 0; // 重置計數
-                console.log("頁面高度改變，繼續檢查...");
-            }
+            if (currentArticleCount === previousArticleCount) {
+                articleCountUnchangedTimes++;
+                console.log(`留言數量無變化次數：${articleCountUnchangedTimes}`);
 
-            // 若頁面無高度變化已達到最大次數，結束滾動並搜尋關鍵字
-            if (noChangeScrolls >= maxNoChangeScrolls) {
-                console.log("已確認頁面底部或無新增內容，停止滾動。");
-                if (searchKeywords.length > 0) {
-                    searchForKeywords(); // 搜尋關鍵字
-                    if (foundMatches.length > 0) {
-                        alert(`找到以下匹配的關鍵字:\n${foundMatches.join('\n')}`);
-                    } else {
-                        alert('未找到匹配的關鍵字');
-                    }
+                if (articleCountUnchangedTimes === 1) {
+                    console.log("留言數量無變化，等待一下再嘗試滾動...");
+                    setTimeout(() => {
+                        autoScrollAndClick(() => {
+                            const newArticleCount = getArticleCount();
+                            console.log(`再次檢查留言數量：${newArticleCount}`);
+
+                            if (newArticleCount === currentArticleCount) {
+                                articleCountUnchangedTimes++;
+                                if (articleCountUnchangedTimes >= maxArticleCountUnchangedTimes) {
+                                    console.log("留言數量仍無變化，停止操作。");
+                                    finishExecution();
+                                } else {
+                                    executeActions();
+                                }
+                            } else {
+                                previousArticleCount = newArticleCount;
+                                articleCountUnchangedTimes = 0;
+                                executeActions();
+                            }
+                        });
+                    }, 1000); // 等待一下再嘗試滾動
+                } else if (articleCountUnchangedTimes >= maxArticleCountUnchangedTimes) {
+                    console.log("留言數量無變化達到最大次數，停止操作。");
+                    finishExecution();
                 } else {
-                    alert('所有內容已展開');
+                    executeActions();
                 }
             } else {
-                // 若未達到最大嘗試次數，繼續檢查
-                setTimeout(executeActions, 1000);
+                previousArticleCount = currentArticleCount;
+                articleCountUnchangedTimes = 0;
+                setTimeout(executeActions, 500); // 短暫等待後繼續執行
             }
+        });
+    }
+
+    // 結束執行並進行關鍵字搜尋
+    function finishExecution() {
+        if (searchKeywords.length > 0) {
+            searchForKeywords();
+            if (foundMatches.length > 0) {
+                alert(`找到以下匹配的關鍵字:\n${foundMatches.join('\n')}`);
+            } else {
+                alert('未找到匹配的關鍵字');
+            }
+        } else {
+            alert('所有內容已展開');
         }
     }
 
