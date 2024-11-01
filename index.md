@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-10-31 
+* 更新至 2024-11-01 
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -107,9 +107,7 @@
 
 ```javascript
 function autoExpandContent() {
-    const replyPattern = /查看.*回覆|View \d+ replies/; // 用來對照 "查看回覆" 的文字模式
-    const morePattern = /查看更多|See more/; // 用來對照 "查看更多" 的文字模式
-    const searchKeywords = ["某甲", "某乙", "某丙"]; // 關鍵字列表（可依需求修改）
+    const searchKeywords = ["某甲","某乙","某丙"]; // 關鍵字列表（可依需求修改）
     let foundMatches = []; // 儲存找到的關鍵字
     let previousArticleCount = 0; // 前一次的留言數量
     let articleCountUnchangedTimes = 0; // 留言數量無變化的次數
@@ -148,6 +146,8 @@ function autoExpandContent() {
     // 點擊 "查看更多" 或 "查看回覆" 按鈕來展開內容
     function clickElements() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
+        const replyPattern = /查看.*回覆|View \d+ replies/; // 用來對照 "查看回覆" 的文字模式
+        const morePattern = /查看更多|See more/; // 用來對照 "查看更多" 的文字模式
         const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
             if (!el.offsetParent) return false; // 過濾不可見的元素
             const text = el.innerText || el.textContent;
@@ -175,7 +175,32 @@ function autoExpandContent() {
             });
         });
     }
-
+    
+    function clickCenterOfDialog() {
+        console.log("查找帶有 role='dialog' 的元素...");
+        // 查找 role="dialog" 的元素
+        const dialogElement = document.querySelector('div[role="dialog"]');
+        if (dialogElement) {
+            // 獲取元素的位置信息
+            const rect = dialogElement.getBoundingClientRect();
+            // 計算元素的中心點
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            // 創建並觸發點擊事件
+            const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+                clientX: centerX,
+                clientY: centerY
+            });
+            dialogElement.dispatchEvent(clickEvent);
+            console.log("已在 dialog 元素的中心點觸發點擊事件。");
+        } else {
+            console.log("未找到 role='dialog' 的元素。");
+        }
+    }
+    
     // 加入多種滾動方法來提高相容性
     function autoScrollAndClick(callback) {
         console.log("開始同時嘗試多種自動滾動方法，並在滾動期間點擊元素...");
@@ -233,6 +258,14 @@ function autoExpandContent() {
             });
         }
 
+        function scrollMethod5() {
+            return new Promise(resolve => {
+                console.log("使用方法5：滾動所有滾動條");
+                findAndScrollAllScrollbars();
+                setTimeout(resolve, 500); // 等待滾動完成
+            });
+        }
+
         // 在滾動期間定時點擊元素
         function clickDuringScroll() {
             const clickInterval = setInterval(() => {
@@ -244,14 +277,52 @@ function autoExpandContent() {
             }, 300); // 頻率適當加快
         }
 
+        // 先點畫面中間
+        clickCenterOfDialog();
+        
         // 同時執行所有滾動方法和點擊動作
-        let scrollPromises = [scrollMethod1(), scrollMethod2(), scrollMethod3(), scrollMethod4()];
+        let scrollPromises = [scrollMethod1(), scrollMethod2(), scrollMethod3(), scrollMethod4(), scrollMethod5()];
         clickDuringScroll();
 
         Promise.all(scrollPromises).then(() => {
             console.log("所有滾動方法執行完畢。");
             isScrolling = false;
             callback();
+        });
+    }
+
+    // 新增滾動所有滾動條的方法
+    function findAndScrollAllScrollbars() {
+        // 查找所有的 `div`，並過濾出具有合理高度且有滾動條的元素
+        const scrollBars = [...document.querySelectorAll('div')].filter(el => {
+            const style = window.getComputedStyle(el);
+            return el.clientHeight > 50 && el.clientHeight < window.innerHeight &&
+                   (style.overflowY === 'scroll' || style.overflowY === 'auto') && el.scrollHeight > el.clientHeight;
+        });
+
+        if (scrollBars.length === 0) {
+            console.log("未找到符合條件的滾動條。");
+            return;
+        }
+
+        console.log(`找到 ${scrollBars.length} 個符合條件的滾動條。`);
+
+        // 對所有找到的滾動條進行滾動操作
+        scrollBars.forEach((scrollBar, index) => {
+            let scrollAmount = 0;
+            console.log(`開始滾動第 ${index + 1} 個滾動條。`);
+
+            // 使用 setInterval 模擬滾動條下拉
+            const scrollInterval = setInterval(() => {
+                scrollAmount += 1000; // 每次向下拉 1000 像素
+                scrollBar.scrollTop = scrollAmount;
+
+                // 檢查滾動是否到達底部
+                if (scrollAmount >= scrollBar.scrollHeight - scrollBar.clientHeight) {
+                    clearInterval(scrollInterval);
+                    console.log(`第 ${index + 1} 個滾動條已到達底部，停止滾動。`);
+                }
+            }, 50); // 每 50 毫秒滾動一次
         });
     }
 
