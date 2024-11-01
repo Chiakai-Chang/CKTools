@@ -390,9 +390,11 @@ function autoExpandContent() {
         if (searchKeywords.length > 0) {
             searchForKeywords();
             if (foundMatches.length > 0) {
+                console.log(`找到以下匹配的關鍵字: ${foundMatches.join(',')}`);
                 alert(`找到以下匹配的關鍵字:\n${foundMatches.join('\n')}`);
             } else {
                 alert('未找到匹配的關鍵字');
+                console.log('未找到匹配的關鍵字');
             }
         } else {
             alert('所有內容已展開');
