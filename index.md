@@ -146,14 +146,14 @@ function autoExpandContent() {
     // 點擊 "查看更多" 或 "查看回覆" 按鈕來展開內容
     function clickElements() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
-        const replyPattern = /^(查看.*回覆|查看全部\d+則回覆|View \d+ replies)$/; // 用來對照 "查看回覆" 的文字模式
-        const morePattern = /^(查看更多|See more)$/; // 用來對照 "查看更多" 的文字模式
+        const replyPattern = /(查看.*回覆|查看全部\d+則回覆|View \d+ replies|View previous replies)/; // 用來對照 "查看回覆" 的文字模式
+        const morePattern = /(查看更多.*|See more.*)/; // 用來對照 "查看更多" 的文字模式
 
         const elements = [...document.querySelectorAll('span, a')].filter(el => {
             if (!el.offsetParent) return false; // 過濾不可見的元素
             const text = el.innerText || el.textContent;
             if (!text) return false;
-            if (text.length > 15) return false; // 如果文字太長，跳過
+            if (text.length > 30) return false; // 如果文字太長，跳過
             // 排除不相關的元素，例如 "未讀聊天訊息"、"Facebook 功能表"
             if (/未讀聊天訊息|已讀|訊息請求|Facebook 功能表|顯示更多/.test(text)) return false;
             return replyPattern.test(text.trim()) || morePattern.test(text.trim());
