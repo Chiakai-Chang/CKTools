@@ -146,7 +146,7 @@ function autoExpandContent() {
     // 點擊 "查看更多" 或 "查看回覆" 按鈕來展開內容
     function clickElements() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
-        const replyPattern = /(查看.*回覆|查看全部\d+則回覆|View \d+ replies|View previous replies)/; // 用來對照 "查看回覆" 的文字模式
+        const replyPattern = /(查看.*回覆|查看全部\d+則回覆|檢視另\d+則留言|View \d+ replies|View previous replies)/; // 用來對照 "查看回覆" 的文字模式
         const morePattern = /(查看更多.*|See more.*)/; // 用來對照 "查看更多" 的文字模式
 
         const elements = [...document.querySelectorAll('span, a')].filter(el => {
