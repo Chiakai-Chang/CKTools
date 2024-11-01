@@ -148,11 +148,22 @@ function autoExpandContent() {
         console.log("嘗試點擊 '查看更多' 和 '查看回覆'...");
         const replyPattern = /查看.*回覆|View \d+ replies/; // 用來對照 "查看回覆" 的文字模式
         const morePattern = /查看更多|See more/; // 用來對照 "查看更多" 的文字模式
-        const elements = [...document.querySelectorAll('a, button, span, div')].filter(el => {
-            if (!el.offsetParent) return false; // 過濾不可見的元素
-            const text = el.innerText || el.textContent;
-            return text && (replyPattern.test(text) || morePattern.test(text));
+
+        // 只在留言區域內搜尋
+        const commentSections = document.querySelectorAll('div[aria-label="留言"], div[aria-label="Comments"]');
+        const elements = [];
+
+        commentSections.forEach(section => {
+            const clickableElements = section.querySelectorAll('a, button, span, div');
+            clickableElements.forEach(el => {
+                if (!el.offsetParent) return; // 過濾不可見的元素
+                const text = el.innerText || el.textContent;
+                if (text && (replyPattern.test(text) || morePattern.test(text))) {
+                    elements.push(el);
+                }
+            });
         });
+
         elements.forEach(el => {
             el.click();
             console.log(`點擊了元素：${el.innerText.trim()}`);
