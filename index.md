@@ -559,7 +559,7 @@ autoExpandContent();
      * 3. 恭喜，你已經將本小幫手複製到您的雲端硬碟囉
       
 * ## [批量 URL DNS 解析小幫手](https://colab.research.google.com/drive/1WKUFuOXQinG_4qAmU5dV57fknse_Dmyy?usp=sharing)
-  * 若您有一批 URL，想瞭解其背後實際對應的 IP 與所屬國家
+  * 如果您有一批 URL 網址，想瞭解其背後網站實際對應的 IP 以及是屬於哪一個國家
   * 這個小程式可以：
     1. **自訂多個 DNS server** (以逗號分隔)，依序嘗試進行解析  
     2. **批量解析** (一行一個 URL)  
