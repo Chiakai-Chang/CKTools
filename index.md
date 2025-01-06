@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2024-11-01 
+* 更新至 2025-01-06 
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -557,6 +557,16 @@ autoExpandContent();
      * 1. 請按左上角「檔案」
      * 2. 請選「在雲端硬碟中儲存副本」
      * 3. 恭喜，你已經將本小幫手複製到您的雲端硬碟囉
+      
+* ## [批量 URL DNS 解析小幫手](https://colab.research.google.com/drive/1WKUFuOXQinG_4qAmU5dV57fknse_Dmyy?usp=sharing)
+  * 若您有一批 URL，想瞭解其背後實際對應的 IP 與所屬國家
+  * 這個小程式可以：
+    1. **自訂多個 DNS server** (以逗號分隔)，依序嘗試進行解析  
+    2. **批量解析** (一行一個 URL)  
+    3. **同一個 URL 有多個 IP** 時，會顯示多行  
+    4. 會顯示每個 IP 對應的 **國家** (透過 ipdeny.com 資料庫)  
+    5. 自動產生 ".xlsx" 檔並提供瀏覽  
+  * 適合在執法辦案、資安分析或網路調查時，快速查詢大量 URL 對應的 IP 與其國家分布
 
 * ## [網路檔案下載取證小幫手](https://chiakai.pse.is/DigitalForensicsFileDownloader)
   * 此小幫手旨在協助您從指定網址下載檔案。主要步驟包括：
