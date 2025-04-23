@@ -707,7 +707,7 @@ autoExpandContent();
    * 官網:
      * [https://tabula.technology/](https://tabula.technology/)
    * 如何使用 Tabula
-     * 下載適合您的作業系統的 Tabula 版本並解壓縮 zip 檔案。
+     * 到[官網下載](https://tabula.technology/)適合您的作業系統的 Tabula 版本並解壓縮 zip 檔案。
      * 進入剛剛解壓縮的資料夾。運行裡面的 `Tabula` 程式。
      * 程式運行一陣子以後會顯示一大堆資訊，等其中出現: `Launching web browser to http://127.0.0.1:8080` 之資訊後，將會開啟一個網頁瀏覽器。如果沒有，請開啟網頁瀏覽器(如: Chrome)，並手動輸入網址前往 http://localhost:8080。
      * 上傳包含資料表的 PDF 檔案。
