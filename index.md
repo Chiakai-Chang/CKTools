@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-01-06 
+* 更新至 2025-04-23
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -698,6 +698,29 @@ autoExpandContent();
    * WhisperDesktop 及 OpenAI 的關係
      * WhisperDesktop 是基於 OpenAI 開發的 Whisper 語音辨識模型。OpenAI 是一家非營利性研究機構，致力於開發安全的人工智慧。Whisper 是 OpenAI 開發的一種大型語言模型，可用於語音轉文字、語言翻譯等。
 
+* ## [Tabula](https://tabula.technology/) 永遠免費且開源之 PDF 轉 CSV 工具
+   * Tabula 啟動後會在本地架設一個網頁程式 ( http://127.0.0.1:8080 ) ，讓您使用簡單易用的網頁介面，將 PDF 內的表格資料，自動提取到 CSV 中。
+   * Tabula 可在 Mac、Windows 和 Linux 上運作。
+     * Windows 和 Linux 使用者需要安裝Java (您可以在此處[下載](https://www.java.com/download/))。（Mac 版本包含 Java。）
+   * GitHub 連結:
+     * [https://github.com/tabulapdf/tabula](https://github.com/tabulapdf/tabula)
+   * 官網:
+     * [https://tabula.technology/](https://tabula.technology/)
+   * 如何使用 Tabula
+     * 下載適合您的作業系統的 Tabula 版本並解壓縮 zip 檔案。
+     * 進入剛剛解壓縮的資料夾。運行裡面的 `Tabula` 程式。
+     * 程式運行一陣子以後會顯示一大堆資訊，等其中出現: `Launching web browser to http://127.0.0.1:8080` 之資訊後，將會開啟一個網頁瀏覽器。如果沒有，請開啟網頁瀏覽器(如: Chrome)，並手動輸入網址前往 http://localhost:8080。
+     * 上傳包含資料表的 PDF 檔案。
+     * 瀏覽到您想要的頁面，然後點上方按鈕「Autodetect Tables」就會自動選取 PDF 內全部的表格。
+     * 點擊「Preview & Export Extracted Data」， Tabula 將嘗試提取資料並顯示預覽。(檢查數據以確保其看起來正確。如果資料缺失，您可以返回調整您的選擇。)
+     * 確認資料後，上方  Export Format 選擇要輸出的格式(預設應該是: CSV)，然後點選「Export」按鈕。
+     * 選擇你要將 CSV 資料放在哪裡即可。
+     * 建議:
+       * 輸出的 CSV 用 Excel 直接打開可能會有編碼錯誤，中文變成亂碼的問題
+       * 建議可以先打開 Excel，開一個空白活頁簿。
+       * 然後在上方「資料」>「從文字/CSV」這裡選擇剛剛輸出的 CSV 檔案匯入，中文就可以正常顯示了。
+       * 確認後按「載入」就可以了。
+   * 注意：Tabula 僅適用於文字為主的 PDF，**不適用於掃描文件**。
 
 ---
 
