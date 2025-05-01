@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-04-23
+* 更新至 2025-05-01
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -511,18 +511,6 @@ autoExpandContent();
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (Colab 即取即用，點擊程式名稱即可開啟) ☆☆☆ </span>
-* ## [Pimeyes 以圖搜人神器](https://chiakai.pse.is/Pic2UserSearch)
-   * 參考: [Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC)。
-   * 若手頭上的圖檔太小或解析度不夠，可以下載開源免費的軟體: [Upscayl](https://github.com/upscayl/upscayl) 來進行超解析處理。
-     * [下載連結](https://upscayl.org/download)
-   * 使用時注意:
-     * 上傳的圖片最好裁切到只剩1個人，若圖片同時存在多人，透過 API 的方式去搜尋可能會不知道針對哪個對象在查找，出來的結果會比較不好解釋。
-     * 本來每次要解開 Pimeyes 搜尋結果都需要付費 **US$15.74** (約新臺幣 **505** 元，參考:[Pricing](https://pimeyes.com/en/premium))，剛好發現有人分享可以利用的漏洞([Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC))，目前可以免費獲得搜尋結果中「**沒有打馬賽克的圖片的網址**」(原本搜尋結果會有馬賽克)，但，其實最重要的是圖片「**所在網站網址**」還是沒有給完整。儘管如此，有未馬賽克的圖片就還可以另外用其他 Reverse Image Search 的工具以圖搜圖(例如: [Google Lens](https://www.google.com/)、[TinEye](https://www.tineye.com/)、[FaceCheck.ID](https://facecheck.id)等)增加更多線索來源，算是還蠻有幫助了。
-   * 免責聲明:
-     * 本程式僅供學術研究及合法測試用途。請勿將本程式用於未經授權的攻擊行為、入侵行為或其他違法活動。使用本程式所造成的任何後果，使用者須自行承擔風險及責任。
-     * 開發者不對使用本程式引起的任何直接或間接損失、損害、數據遺失或其他損害負責。使用者應遵守所屬法律法規，並確保在合法的範圍內進行測試及研究。
-     * 如有違反當地法律規定，請自行負擔一切法律責任。使用本程式即表示您已同意本免責聲明中的所有條款。
-
 * ## [臉書留言整理神器](https://colab.research.google.com/drive/1t4xkYcXG0apHxFmjXqOPpR_cHpKwtfxV?usp=sharing)
    * 最近網路相關案件越來越多，臉書上假消息、恐嚇、不當發文等等也是越發頻繁，若是假帳號或相關資料很少的帳號發文，或者由他人轉 PO 的文章，常常都有需要從該貼文的留言內容，嘗試看看有無其他線索的需求。但相關留言內容如果要一筆一筆手動瀏覽再複製貼上，實在是很費力，所以特別撰寫這個小程式來幫忙大家。
    * 本程式會自動幫忙整理出以下臉書留言資訊：
@@ -666,6 +654,18 @@ autoExpandContent();
       * 凱撒加密
       * 二進制轉換 (資安社群常用)
 
+* ## ~[Pimeyes 以圖搜人神器](https://chiakai.pse.is/Pic2UserSearch)~(目前已失效，有興趣可以持續追蹤以下POC專案看有無更新)
+   * 參考: [Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC)。
+   * 若手頭上的圖檔太小或解析度不夠，可以下載開源免費的軟體: [Upscayl](https://github.com/upscayl/upscayl) 來進行超解析處理。
+     * [下載連結](https://upscayl.org/download)
+   * 使用時注意:
+     * 上傳的圖片最好裁切到只剩1個人，若圖片同時存在多人，透過 API 的方式去搜尋可能會不知道針對哪個對象在查找，出來的結果會比較不好解釋。
+     * 本來每次要解開 Pimeyes 搜尋結果都需要付費 **US$15.74** (約新臺幣 **505** 元，參考:[Pricing](https://pimeyes.com/en/premium))，剛好發現有人分享可以利用的漏洞([Pimeyes_Free_POC](https://github.com/addycb/Pimeyes-Free-POC))，目前可以免費獲得搜尋結果中「**沒有打馬賽克的圖片的網址**」(原本搜尋結果會有馬賽克)，但，其實最重要的是圖片「**所在網站網址**」還是沒有給完整。儘管如此，有未馬賽克的圖片就還可以另外用其他 Reverse Image Search 的工具以圖搜圖(例如: [Google Lens](https://www.google.com/)、[TinEye](https://www.tineye.com/)、[FaceCheck.ID](https://facecheck.id)等)增加更多線索來源，算是還蠻有幫助了。
+   * 免責聲明:
+     * 本程式僅供學術研究及合法測試用途。請勿將本程式用於未經授權的攻擊行為、入侵行為或其他違法活動。使用本程式所造成的任何後果，使用者須自行承擔風險及責任。
+     * 開發者不對使用本程式引起的任何直接或間接損失、損害、數據遺失或其他損害負責。使用者應遵守所屬法律法規，並確保在合法的範圍內進行測試及研究。
+     * 如有違反當地法律規定，請自行負擔一切法律責任。使用本程式即表示您已同意本免責聲明中的所有條款。
+       
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 資料分析處理工具區 ☆☆☆ </span>
