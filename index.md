@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-05-01
+* 更新至 2025-06-12
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -25,9 +25,9 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 重磅推薦 ☆☆☆ </span>
-* ## [AI Insight Seeker 智慧偵查筆記系統](https://chiakai.pse.is/AIInsightSeeker)
-[![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://chiakai.pse.is/AIInsightSeeker)
-  * <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://chiakai.pse.is/AIInsightSeeker">AI Insight Seeker 智慧偵查筆記系統</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.linkedin.com/in/chiakai-chang-htciu">Chang, Chia-kai</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
+* ## [AI Insight Seeker 智慧偵查筆記系統](https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing)
+[![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing)
+  * <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing">AI Insight Seeker 智慧偵查筆記系統</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.linkedin.com/in/chiakai-chang-htciu">Chang, Chia-kai</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
   * 隨著資訊爆炸、新興科技飛速演進，致使網路犯罪案件激增，員警負荷過載，傳統偵查模式面臨挑戰。本作品設計並實作一套以協作為基礎的偵查管理平台，旨在解決資訊過載及知識碎片化問題。該系統平臺藉由 Google Sheets 強大的共用協作功能，適用於跨區域、跨國偵查，實現偵查工作的即時分配、進度追蹤及資料結構化等管理。透過高度整合且自動化的管理工具，有效提升自身偵查小隊或跨團隊間的協同合作、偵查過程情資共享透明度、同步協作效率及資訊共享準確性。
     * ※ 相關學術論文撰寫中。
   * **核心特色**
@@ -39,7 +39,7 @@
       專門設計來記錄偵查過程中遇到的障礙和延遲原因，這一功能強調了在面對挑戰時的透明度和問題解決策略，促進了團隊間的溝通和協作。
     * **一站式管理與深度整合工具**：<br>
       將常用的網路偵查工具如 WHOIS、PingFromEverywhere 等整合於單一平台，方便快速使用和記錄偵查結果，提升偵查效率。
-  * 同仁可搭配 [**Chiakai's CyberSleuths: Digital Detective Challenge**](https://chiakai.pse.is/CyberSleuths) 這個專為訓練網路科技犯罪偵查而設計之事件擬真遊戲，透過各種隨機生成之網路犯罪事件，逐一學習如何進行相關調查與管理相關偵查作為。
+  * 同仁可搭配 [**Chiakai's CyberSleuths: Digital Detective Challenge**](https://poe.com/CK_CyberSleuths) 這個專為訓練網路科技犯罪偵查而設計之事件擬真遊戲，透過各種隨機生成之網路犯罪事件，逐一學習如何進行相關調查與管理相關偵查作為。
   * 說明GIF動畫(載入需一些時間)：
     * ![](https://chiakai-chang.github.io/tempHTML/img/AIInsightSeeker.gif) 
 
@@ -415,8 +415,8 @@ autoExpandContent();
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種線上 AI 智慧偵查小幫手 ☆☆☆ </span>
-* ## 全新! [CrossCaseSolver 跨境偵查小助手](https://chiakai.pse.is/CrossCaseSolver_POE)
-  * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://chiakai.pse.is/CrossCaseSolver_POE)
+* ## 全新! [CrossCaseSolver 跨境偵查小助手](https://poe.com/CrossCaseSolver)
+  * [![](https://chiakai-chang.github.io/tempHTML/img/CBIA.png)](https://poe.com/CrossCaseSolver)
   * 因網路犯罪愈發頻繁，使用境外IP如 VPN、Web Hosting 等躲避查緝的情形也愈發常見。為貫徹刑案偵查並尋求突破可能，特別開發此工具協助同仁在跨國調閱資料時，幫忙提醒應注意事項、提供調閱之建議，並以該國適當的用詞用語協助撰寫資料調閱之 Email，藉以降低同仁跨境追查之協調困難，提升同仁突破困境之意願。
   * 特色:
     * 1、協助偵辦跨國案件的 Email 撰寫。
@@ -426,10 +426,10 @@ autoExpandContent();
     * 5、還會幫你使用跨國適當的用詞用語。
   * 趕快來試用看看吧!!
   * 當前有兩個版本：
-    * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CrossCaseSolver)
+    * ### (新!) [Open AI 平臺](https://chat.openai.com/g/g-NIJPramum-crosscasesolver-kua-jing-zhen-cha-xiao-zhu-shou)
       * 語言模型：GPT-4o
       * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
-    * ### (免費!) [POE 平臺](https://chiakai.pse.is/CrossCaseSolver_POE)
+    * ### (免費!) [POE 平臺](https://poe.com/CrossCaseSolver)
       * 語言模型：GPT-4o-Mini 
       * 次數限制：15點/訊息 (POE提供每日免費3000點)
   * 範例:
@@ -448,8 +448,8 @@ autoExpandContent();
       </tr>
     </table>
 
-* ## 全新改版! [Code Investigater AI 隨身程式碼鑑識小幫手](https://chiakai.pse.is/CodeInvestigatorAI)
-  * [![](https://chiakai-chang.github.io/tempHTML/img/Cute_CODE_INVESTIGATOR_AI.png)](https://chiakai.pse.is/CodeInvestigatorAI)
+* ## 全新改版! [Code Investigater AI 隨身程式碼鑑識小幫手](https://chat.openai.com/g/g-WI7Hi6y5j-code-investigater-ai-sui-shen-cheng-shi-ma-jian-shi-xiao-bang-shou)
+  * [![](https://chiakai-chang.github.io/tempHTML/img/Cute_CODE_INVESTIGATOR_AI.png)](https://chat.openai.com/g/g-WI7Hi6y5j-code-investigater-ai-sui-shen-cheng-shi-ma-jian-shi-xiao-bang-shou)
   * 為解決執行數位鑑識現場勘查時，遇到「開發人員」相關現場充斥複雜難懂之各種程式碼的問題，該問題令現場查緝人員難以快速瞭解掌握涉案情形或釐清現場人員所言是否真實，特別開發此工具，提供快速分析程式碼並產出報告的功能，協助現場快速掌握涉案狀況。
   * 特色:
     * 1、可以直接將程式文檔上傳(如 .html、.py、.bat、.sh、.ps1等)，不用複製貼上。
@@ -469,18 +469,18 @@ autoExpandContent();
       * (13) 提供偵查建議
   * 趕快來試用看看吧!!
   * 當前有兩個版本：
-    * ### (新!) [Open AI 平臺](https://chiakai.pse.is/CodeInvestigatorAI)
+    * ### (新!) [Open AI 平臺](https://chat.openai.com/g/g-WI7Hi6y5j-code-investigater-ai-sui-shen-cheng-shi-ma-jian-shi-xiao-bang-shou)
       * 語言模型：GPT-4o
       * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
-    * ### (免費!) [POE 平臺](https://chiakai.pse.is/CodeInvestigatorPOE)
+    * ### (免費!) [POE 平臺](https://poe.com/CodeInvestigater)
       * 語言模型：GPT-4o-Mini-128k 
       * 次數限制：75點/訊息 (POE提供每日免費3000點)
 
-* ## 全新改版! [Insight Profiling Detective Assistant (智慧剖繪偵查助手)](https://chiakai.pse.is/IPDA)
-   * [<img src="https://chiakai-chang.github.io/tempHTML/Icons/InsightProfilingDetectiveAssistant.png" width="200" height="200">](https://chiakai.pse.is/IPDA)
+* ## 全新改版! [Insight Profiling Detective Assistant (智慧剖繪偵查助手)](https://chatgpt.com/g/g-FEz5xusJT-insight-profiling-detective-assistant-zhi-hui-pou-hui-zhen-cha-zhu-shou)
+   * [<img src="https://chiakai-chang.github.io/tempHTML/Icons/InsightProfilingDetectiveAssistant.png" width="200" height="200">](https://chatgpt.com/g/g-FEz5xusJT-insight-profiling-detective-assistant-zhi-hui-pou-hui-zhen-cha-zhu-shou)
    * 緣起:
      * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [IKnowWhatYouDownload.com](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
-     * 原本 Colab 版:  [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
+     * 原本 Colab 版:  [洞察 IP 下載 BT 紀錄 AI 小幫手](https://colab.research.google.com/drive/1RU5U7NlONlwYZ8dFhC8eovEF9i5F6VC_?usp=sharing)
        * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
        * 而且下載後，還有需要分析該 IP 使用者作息時間與下載內容剖繪。
        * 故設計這個小幫手幫忙，除自動下載以外，並利用 AI 幫忙分析(由 Chat-GPT 幫忙的唷，感謝 g4f 套件的開發團隊，但是他們是逆向人家的 API，好像也不太適合推崇，大家默默的...使用就好)，讓大家輕鬆偵查。
@@ -491,11 +491,11 @@ autoExpandContent();
      - **偏好剖析**：分析下載內容，揭示興趣偏好與技術能力。
      - **風險評估**：檢查非法下載，判斷犯罪傾向。
      - **深入剖繪**：全面剖析目標對象的人格特徵和人口屬性。
-   * 立即免費使用 [Insight Profiling Detective Assistant](https://chiakai.pse.is/IPDA)，讓偵查工作更輕鬆、更高效！
-     * ### [ChatGPT 版連結](https://chiakai.pse.is/IPDA)
+   * 立即免費使用 [Insight Profiling Detective Assistant](https://chatgpt.com/g/g-FEz5xusJT-insight-profiling-detective-assistant-zhi-hui-pou-hui-zhen-cha-zhu-shou)，讓偵查工作更輕鬆、更高效！
+     * ### [ChatGPT 版連結](https://chatgpt.com/g/g-FEz5xusJT-insight-profiling-detective-assistant-zhi-hui-pou-hui-zhen-cha-zhu-shou)
        * 語言模型：GPT-4o
        * 收費：(可能)需有 ChatGPT Plus 資格(20美元/月)
-     * ### [POE 版連結](https://chiakai.pse.is/IPDA_POE)
+     * ### [POE 版連結](https://poe.com/InsightProfiling)
        * 語言模型：GPT-4o-Mini 
        * 次數限制：15點/訊息 (POE提供每日免費3000點)
 
@@ -535,7 +535,7 @@ autoExpandContent();
       * 請參考教學: [使用指引](https://drive.google.com/file/d/1KI8intBMvUYx2rTMgFi2utGGM6oxEH0i/view)
       * 整理大量以往難以人工彙整之臉書留言或按攢者資訊，並用以從事「交集分析」抓出關鍵犯嫌。
 
-* ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://chiakai.pse.is/AIBTinsight)
+* ## [洞察 IP 下載 BT 紀錄 AI 小幫手](https://colab.research.google.com/drive/1RU5U7NlONlwYZ8dFhC8eovEF9i5F6VC_?usp=sharing)
    * 緣起:
      * 執行網路案件偵查時，IP 的追查有時候是境外的大家就自動忽略了，但其實 [I Know What You Download](https://iknowwhatyoudownload.com) 網站有提供 IP 對應下載過的 BT 紀錄，還是可以幫忙了解一下該 IP 使用者的一些習性，包括上網時間(是否比較屬於哪個時區的人)、下載的檔案是比較偏哪個語系、是不是都是很專業的工具軟體、是哪方面的專業，還是只是影音娛樂等等。
      * 因為該網站沒有提供下載成 Excel 或 CSV 格式，且複製到 Excel 都無法正確對應。
@@ -556,7 +556,7 @@ autoExpandContent();
     5. 自動產生 ".xlsx" 檔並提供瀏覽  
   * 適合在執法辦案、資安分析或網路調查時，快速查詢大量 URL 對應的 IP 與其國家分布
 
-* ## [網路檔案下載取證小幫手](https://chiakai.pse.is/DigitalForensicsFileDownloader)
+* ## [網路檔案下載取證小幫手](https://colab.research.google.com/drive/1J0N9pcIxhq9XnSW9QGUpQPJfXGbd9lik?usp=sharing)
   * 此小幫手旨在協助您從指定網址下載檔案。主要步驟包括：
     1. 下載並保存檔案。
     2. 同時保存該檔案的「原始封包」。
