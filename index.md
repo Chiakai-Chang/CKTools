@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-06-12
+* 更新至 2025-08-13
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -70,10 +70,49 @@
   * 步驟:
     * 1、開啟到「值班臺應勤簿冊電子化系統」-「簿冊傳閱」的網頁
     * 2、按「F12」開啟DevTools，選「Console」頁籤
-    * 3、在「>」後面輸入以下指令，然後按 「Enter」鍵，瞬間就可以幫你全部點完
+    * 3、在「>」後面輸入以下指令，然後按「Enter」鍵，瞬間就可以幫你全部點完
   * 指令:
     ```javascript
     document.querySelectorAll('#btnDetail').forEach(button => button.click());
+    ```
+* ## ☆ 快速批次點「簿冊審閱」密技 ☆
+  * 步驟:
+    * 1、開啟到「值班臺應勤簿冊電子化系統」-「簿冊審閱」的網頁
+    * 2、按 **F12** 開啟 **DevTools**，切換到 **Console** 頁籤
+    * 3、在「>」後面輸入以下指令，然後按「Enter」鍵，就會自動依序點擊所有「詳」→「同意」→「Ok」按鈕
+  * 指令:
+    ```javascript
+    (async () => {
+      const detailButtons = Array.from(document.querySelectorAll('button#btnDetail'));
+      for (let i = 0; i < detailButtons.length; i++) {
+        console.log(`處理第 ${i + 1} 個詳按鈕`);
+        detailButtons[i].click();
+
+        // 等待並點擊「同意」按鈕
+        await new Promise(resolve => {
+          const checkAgree = setInterval(() => {
+            const agreeBtn = document.querySelector('button#BtnDutyAgree');
+            if (agreeBtn) {
+              clearInterval(checkAgree);
+              agreeBtn.click();
+              console.log(`已點擊第 ${i + 1} 個同意`);
+
+              // 等待並點擊「Ok」按鈕
+              const checkOk = setInterval(() => {
+                const okBtn = document.querySelector('.smartAlertButton.smartAlertActive[data-id="ok"]');
+                if (okBtn) {
+                  clearInterval(checkOk);
+                  okBtn.click();
+                  console.log(`已點擊第 ${i + 1} 個 Ok`);
+                  setTimeout(resolve, 500); // 延遲後進入下一輪
+                }
+              }, 200);
+            }
+          }, 200);
+        });
+      }
+      console.log("全部處理完成");
+    })();
     ```
 * ## ☆ 下載「PDF」簡報檔密技 ☆
   * 步驟:
