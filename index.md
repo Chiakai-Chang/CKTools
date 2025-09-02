@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-08-25
+* 更新至 2025-09-02
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -83,36 +83,42 @@
   * 指令:
     ```javascript
     (async () => {
-      const detailButtons = Array.from(document.querySelectorAll('button#btnDetail'));
-      for (let i = 0; i < detailButtons.length; i++) {
-        console.log(`處理第 ${i + 1} 個詳按鈕`);
-        detailButtons[i].click();
-
-        // 等待並點擊「同意」按鈕
+      let count = 0;
+    
+      while (true) {
+        // 每次都只抓第一個「詳」按鈕
+        const detailBtn = document.querySelector('button#btnDetail');
+        if (!detailBtn) break; // 沒有了就跳出
+    
+        count++;
+        console.log(`處理第 ${count} 個詳按鈕`);
+        detailBtn.click();
+    
         await new Promise(resolve => {
           const checkAgree = setInterval(() => {
             const agreeBtn = document.querySelector('button#BtnDutyAgree');
             if (agreeBtn) {
               clearInterval(checkAgree);
               agreeBtn.click();
-              console.log(`已點擊第 ${i + 1} 個同意`);
-
-              // 等待並點擊「Ok」按鈕
+              console.log(`已點擊第 ${count} 個同意`);
+    
               const checkOk = setInterval(() => {
                 const okBtn = document.querySelector('.smartAlertButton.smartAlertActive[data-id="ok"]');
                 if (okBtn) {
                   clearInterval(checkOk);
                   okBtn.click();
-                  console.log(`已點擊第 ${i + 1} 個 Ok`);
-                  setTimeout(resolve, 500); // 延遲後進入下一輪
+                  console.log(`已點擊第 ${count} 個 Ok`);
+                  setTimeout(resolve, 1200); // 延遲再抓下一筆
                 }
-              }, 200);
+              }, 300);
             }
-          }, 200);
+          }, 300);
         });
       }
+    
       console.log("全部處理完成");
     })();
+
     ```
 * ## ☆ 下載「PDF」簡報檔密技 ☆
   * 步驟:
