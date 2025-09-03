@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-09-02
+* 更新至 2025-09-03
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -553,17 +553,18 @@ autoExpandContent();
   * 解壓縮密碼：`htciu`
   * [![](https://chiakai-chang.github.io/CKTools/img/ipwhois_poc.png)](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
 
-# [HAR Replay GUI (封包回放小幫手)](https://github.com/Chiakai-Chang/HAR_Replay/releases/tag/v20250823.01)
-* 當前版本：20250823.01 [點我下載](https://github.com/Chiakai-Chang/HAR_Replay/releases/download/v20250823.01/HAR_Replay.exe)
+# [HAR Replay GUI (封包回放小幫手)](https://github.com/Chiakai-Chang/HAR_Replay/releases/latest)
+* 當前版本：20250823.01 [點我下載](https://github.com/Chiakai-Chang/HAR_Replay/releases/latest)
 * **為什麼需要它？**
     * 在網路偵查中，瀏覽器內建的「開發者工具 (DevTools)」可以錄下上網過程的封包紀錄 (HAR)，這是最直接、簡單、基層同仁也能操作的存證方法。  
     * 但 HAR 檔本身很複雜，一般人打不開看不懂。這個小幫手能把 HAR 檔重播成「當時看到的網頁畫面」，讓案件檢視、報告與法庭展示更直觀。
 * **主要用途**
-    * **取證**： 搭配錄影、PDF 輸出，保存完整證據鏈。
-    * **還原**： 可直接打開 HAR，看到「最終合成畫面」或「特定時間點畫面」。
-    * **親切**： 提供簡單教學、快速複製指令（如 `copy(document.documentElement.outerHTML);`），方便基層員警快速操作。
+    * 🔒 **取證**： 搭配錄影、PDF 輸出，保存完整證據鏈。
+    * 🔎 **還原**： 可直接打開 HAR，看到「最終合成畫面」或「特定時間點畫面」。
+    * 👨‍🏫 **親切**： 提供簡單教學、快速複製指令（如 `copy(document.documentElement.outerHTML);`），方便基層員警快速操作。
 * 提醒
     * HAR 只是「證據的呈現輔助」，最終證據仍以 HAR 原檔為主。本工具的角色是 降低門檻、幫助理解。
+    * 本工具的角色是 **降低門檻、幫助理解、提升展示效果**。  
 * [![](https://chiakai-chang.github.io/CKTools/img/HarReplayPreview.png)](https://github.com/Chiakai-Chang/HAR_Replay/releases/tag/v20250823.01)
 
 ---
