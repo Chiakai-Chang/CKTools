@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網路巡邏情資分析系統</title>
+    <title>網路巡邏情資分析系統 v3.7</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -20,11 +20,13 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; background-color: #020617; }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .risk-row:hover { background: rgba(239, 68, 68, 0.05); }
+        /* 讓詞雲可以橫向捲動查看全景 */
+        .canvas-container { min-width: 1200px; height: 350px; }
     </style>
 </head>
 <body class="text-slate-200 overflow-hidden">
@@ -33,7 +35,6 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- 核心字典與強化威脅配置 (加入歷史情資) ---
         const THREAT_SINGLE_CHARS = new Set(['砍', '炸', '殺', '死', '槍', '彈', '刀', '血', '恨', '仇', '爆', '捅', '刺']);
         const CORE_DICT = [
             '隨機殺人', '恐怖攻擊', '丟煙霧彈', '完成任務', '精神傳承', '第五縱隊', '射殺人群', '割喉', '燃燒瓶', '塑膠炸彈', 
@@ -44,7 +45,6 @@
             '國有器官', '直播', 'Youtube', 'Facebook', 'TikTok'
         ];
 
-        // 提高凶器與犯罪宣告權重
         const SENTIMENT_MAP = {
             '隨機殺人': 100, '恐怖攻擊': 100, '炸死': 100, '砍死': 100, '射殺': 100, '割喉': 100, '捅刺': 100,
             '塑膠炸彈': 100, '定時炸彈': 100, '遙控炸彈': 100, '爆裂物': 100, 'C4': 100, '手雷': 100, '手槍': 100, '土製炸彈': 100,
@@ -149,19 +149,39 @@
                 }, 600);
             };
 
+            const downloadCanvas = (canvasRef, fileName) => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                const link = document.createElement('a');
+                link.download = fileName;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            const downloadNetwork = () => {
+                if (!networkInstance.current) return;
+                const canvas = networkRef.current.getElementsByTagName('canvas')[0];
+                if (!canvas) return;
+                const link = document.createElement('a');
+                link.download = 'network_topology.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
             useEffect(() => {
                 if (analysisData.words.length > 0) {
                     if (cloudCanvasRef.current && window.WordCloud) {
                         const canvas = cloudCanvasRef.current;
-                        canvas.width = canvas.parentElement.clientWidth;
+                        // 設定較寬的寬度以實現全景滾動
+                        canvas.width = 1600; 
                         canvas.height = 350;
                         window.WordCloud(canvas, {
-                            list: analysisData.words.slice(0, 150).map(w => [w.text, Math.sqrt(w.count) * 20 + 8]),
+                            list: analysisData.words.slice(0, 200).map(w => [w.text, Math.sqrt(w.count) * 25 + 8]),
                             fontFamily: 'Noto Sans TC',
                             color: (w) => (SENTIMENT_MAP[w] >= 95 || THREAT_SINGLE_CHARS.has(w)) ? '#ef4444' : '#60a5fa',
                             rotateRatio: 0,
                             backgroundColor: 'transparent',
-                            gridSize: 10,
+                            gridSize: 12,
                             weightFactor: 1.2
                         });
                     }
@@ -195,25 +215,18 @@
                     {/* Header */}
                     <header className="flex-none flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-900/80 p-5 rounded-2xl border border-white/5 shadow-2xl">
                         <div className="flex items-center gap-4">
-                            <div className="bg-red-600 p-2.5 rounded-xl shadow-lg shadow-red-500/20">
+                            <div className="bg-red-600 p-2.5 rounded-xl shadow-lg">
                                 <i data-lucide="shield-alert" className="w-6 h-6 text-white"></i>
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold text-white tracking-tight">網路巡邏：高風險威脅監測系統</h1>
-                                <p className="text-slate-500 text-[11px] uppercase tracking-wider">v3.6 Intelligence Reinforced | Weapon Weight: 100%</p>
+                                <p className="text-slate-500 text-[11px] uppercase tracking-wider">v3.7 Visual Reinforced | Report Top 50 | Panorama WordCloud</p>
                             </div>
                         </div>
                         <div className="flex gap-4">
-                            <div className="text-right hidden sm:block">
-                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">系統概況</p>
-                                <div className="flex gap-3 mt-1">
-                                    <div className="text-xs font-bold text-red-500">{analysisData.stats.highRisk || 0} 高危對象</div>
-                                    <div className="text-xs font-bold text-blue-400">平均風險 {analysisData.stats.avgThreat || 0}%</div>
-                                </div>
-                            </div>
                             <button onClick={performAnalysis} className="px-6 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 transition transform active:scale-95 flex items-center gap-2 text-sm">
                                 <i data-lucide="zap" className="w-4 h-4"></i>
-                                {isAnalyzing ? "正在處理情資..." : "啟動全景掃描"}
+                                {isAnalyzing ? "正在處理..." : "啟動全景掃描"}
                             </button>
                         </div>
                     </header>
@@ -223,102 +236,114 @@
                         
                         {/* LEFT: Input (3 cols) */}
                         <div className="lg:col-span-3 flex flex-col overflow-hidden">
-                            <div className="glass-panel rounded-2xl p-5 flex-1 flex flex-col">
-                                <h2 className="font-bold flex items-center gap-2 mb-3 text-slate-400 text-xs uppercase"><i data-lucide="file-text" className="text-blue-500 w-3 h-3"></i> 情資來源</h2>
+                            <div className="glass-panel rounded-2xl p-5 flex-1 flex flex-col shadow-xl">
+                                <h2 className="font-bold flex items-center gap-2 mb-3 text-slate-400 text-xs uppercase border-b border-white/5 pb-2"><i data-lucide="file-text" className="text-blue-500 w-3 h-3"></i> 情資來源</h2>
                                 <textarea
                                     value={inputText}
                                     onChange={(e) => setInputText(e.target.value)}
                                     className="flex-1 w-full bg-slate-950/50 border border-white/5 rounded-xl p-4 text-sm focus:ring-1 focus:ring-red-600 outline-none transition resize-none placeholder-slate-800 font-mono custom-scrollbar"
-                                    placeholder="貼上以前或現在的可疑留言內容..."
+                                    placeholder="在此輸入文本..."
                                 />
-                                <div className="mt-3 flex justify-between items-center">
-                                    <button onClick={() => setInputText('')} className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1"><i data-lucide="trash-2" className="w-3 h-3"></i> 清除</button>
-                                    <span className="text-[10px] text-slate-700 font-mono tracking-widest italic font-bold">DATA_INPUT_READY</span>
+                                <div className="mt-3 flex justify-between items-center text-[10px] text-slate-600">
+                                    <button onClick={() => setInputText('')} className="hover:text-red-400 flex items-center gap-1"><i data-lucide="trash-2" className="w-3 h-3"></i> 清除</button>
+                                    <span className="font-mono">INPUT_READY</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* MIDDLE: Top 50 Report (4 cols) */}
-                        <div className="lg:col-span-4 glass-panel rounded-2xl flex flex-col overflow-hidden">
+                        {/* MIDDLE: Top 50 Report (3 cols) - 調窄 */}
+                        <div className="lg:col-span-3 glass-panel rounded-2xl flex flex-col overflow-hidden shadow-xl">
                             <div className="p-4 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
-                                <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="table" className="text-red-500 w-3 h-3"></i> 高風險關鍵字 (Top 50)</h2>
-                                <span className="bg-red-900/30 text-red-400 text-[9px] px-2 py-0.5 rounded border border-red-500/20 font-bold uppercase tracking-widest">Live Alert</span>
+                                <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="table" className="text-red-500 w-3 h-3"></i> 風險排行 (Top 50)</h2>
                             </div>
                             <div className="flex-1 overflow-y-auto custom-scrollbar">
                                 <table className="w-full text-left text-[11px]">
                                     <thead className="text-slate-500 sticky top-0 bg-slate-900/95 z-10 shadow">
                                         <tr>
-                                            <th className="px-4 py-3 font-bold border-b border-white/5">關鍵詞</th>
-                                            <th className="px-4 py-3 font-bold border-b border-white/5">屬性分類</th>
-                                            <th className="px-4 py-3 font-bold border-b border-white/5 text-right">威脅權重</th>
+                                            <th className="px-3 py-3 font-bold border-b border-white/5">關鍵詞</th>
+                                            <th className="px-3 py-3 font-bold border-b border-white/5 text-right">權重</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5">
                                         {analysisData.words.length > 0 ? (
                                             analysisData.words.slice(0, 50).map((word, idx) => (
                                                 <tr key={idx} className="risk-row transition duration-75">
-                                                    <td className="px-4 py-3 flex items-center gap-2">
-                                                        <span className="text-slate-700 font-mono text-[9px] w-4">{idx+1}</span>
-                                                        <span className={`font-bold ${word.sentiment >= 95 ? "text-red-400" : "text-slate-300"}`}>{word.text}</span>
-                                                        {word.count > 1 && <span className="text-blue-500/60 text-[9px]">({word.count})</span>}
-                                                    </td>
-                                                    <td className="px-4 py-3">
-                                                        <span className={`px-2 py-0.5 rounded text-[9px] font-bold border ${
-                                                            word.category.includes('行動') ? 'bg-red-900/20 text-red-400 border-red-500/20' :
-                                                            word.category.includes('目標') ? 'bg-emerald-900/20 text-emerald-400 border-emerald-500/20' :
-                                                            word.category.includes('嫌疑') ? 'bg-indigo-900/20 text-indigo-400 border-indigo-500/20' : 'bg-slate-800 text-slate-500 border-white/5'
-                                                        }`}>
-                                                            {word.category}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-4 py-3 text-right">
-                                                        <div className="flex items-center justify-end gap-2">
-                                                            <span className={`font-mono font-bold text-[10px] ${word.sentiment >= 95 ? "text-red-500" : "text-slate-400"}`}>{word.sentiment}%</span>
+                                                    <td className="px-3 py-2.5 flex flex-col">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-slate-700 font-mono text-[8px] w-3">{idx+1}</span>
+                                                            <span className={`font-bold ${word.sentiment >= 95 ? "text-red-400" : "text-slate-300"}`}>{word.text}</span>
+                                                            {word.count > 1 && <span className="text-blue-500/50 text-[8px]">x{word.count}</span>}
                                                         </div>
+                                                        <span className="text-[8px] text-slate-500 mt-0.5 ml-5">{word.category}</span>
+                                                    </td>
+                                                    <td className="px-3 py-2.5 text-right font-mono font-bold">
+                                                        <span className={word.sentiment >= 95 ? "text-red-500" : "text-slate-400"}>{word.sentiment}%</span>
                                                     </td>
                                                 </tr>
                                             ))
                                         ) : (
-                                            <tr><td colSpan="3" className="py-40 text-center text-slate-700 italic text-xs tracking-widest font-bold">READY FOR INTELLIGENCE SCAN</td></tr>
+                                            <tr><td colSpan="2" className="py-40 text-center text-slate-700 italic text-xs uppercase tracking-tighter">Scan to list</td></tr>
                                         )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        {/* RIGHT: Visuals (5 cols) */}
-                        <div className="lg:col-span-5 flex flex-col gap-4 overflow-hidden">
-                            <div className="glass-panel rounded-2xl p-5 flex-1 flex flex-col overflow-hidden shadow-2xl">
-                                <h2 className="font-bold flex items-center gap-2 mb-2 text-slate-400 text-xs uppercase"><i data-lucide="cloud" className="text-blue-500 w-3 h-3"></i> 特徵語義分佈</h2>
-                                <div className="flex-1 flex items-center justify-center relative">
-                                    <canvas ref={cloudCanvasRef} className="max-w-full max-h-full"></canvas>
+                        {/* RIGHT: Visuals (6 cols) - 加寬 */}
+                        <div className="lg:col-span-6 flex flex-col gap-4 overflow-hidden">
+                            {/* Word Cloud with Panorama Scroll & Download */}
+                            <div className="glass-panel rounded-2xl p-5 h-[42%] flex flex-col overflow-hidden shadow-2xl relative group">
+                                <div className="flex justify-between items-center mb-2 border-b border-white/5 pb-2">
+                                    <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="cloud" className="text-blue-500 w-3 h-3"></i> 語義熱度分佈 (全景滾動)</h2>
+                                    <button 
+                                        onClick={() => downloadCanvas(cloudCanvasRef, 'word_cloud_panorama.png')}
+                                        className="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded flex items-center gap-1 transition"
+                                    >
+                                        <i data-lucide="download" className="w-3 h-3"></i> 下載圖片
+                                    </button>
+                                </div>
+                                <div className="flex-1 overflow-x-auto custom-scrollbar bg-slate-950/20 rounded-xl relative">
+                                    <div className="canvas-container">
+                                        <canvas ref={cloudCanvasRef}></canvas>
+                                    </div>
+                                    {analysisData.words.length === 0 && <div className="absolute inset-0 flex items-center justify-center text-slate-800 text-xs font-bold uppercase tracking-widest">Wait for analysis</div>}
                                 </div>
                             </div>
-                            <div className="glass-panel rounded-2xl p-5 flex-[1.5] flex flex-col overflow-hidden shadow-2xl">
-                                <h2 className="font-bold flex items-center gap-2 mb-2 text-slate-400 text-xs uppercase"><i data-lucide="share-2" className="text-indigo-400 w-3 h-3"></i> 情資拓撲關聯</h2>
+
+                            {/* Network Graph with Download */}
+                            <div className="glass-panel rounded-2xl p-5 h-[58%] flex flex-col overflow-hidden shadow-2xl">
+                                <div className="flex justify-between items-center mb-2 border-b border-white/5 pb-2">
+                                    <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="share-2" className="text-indigo-400 w-3 h-3"></i> 情資拓撲關聯 (交互式)</h2>
+                                    <button 
+                                        onClick={downloadNetwork}
+                                        className="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded flex items-center gap-1 transition"
+                                    >
+                                        <i data-lucide="download" className="w-3 h-3"></i> 下載拓撲
+                                    </button>
+                                </div>
                                 <div ref={networkRef} className="flex-1 bg-slate-950/30 rounded-xl border border-white/5"></div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Footer Stats & Info */}
-                    <div className="flex-none grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-red-950/20 border border-red-500/20 px-4 py-3 rounded-xl flex items-center gap-3">
-                            <i data-lucide="alert-circle" className="w-4 h-4 text-red-500"></i>
-                            <p className="text-[10px] text-slate-400">已自動標記歷史威脅對象（如：唐澤貴洋、粘孝帆）與特定的炸彈類型（C4、塑膠炸彈）為最高風險級別。</p>
+                    {/* Footer Info */}
+                    <footer className="flex-none grid grid-cols-1 md:grid-cols-3 gap-4 h-12">
+                        <div className="bg-red-950/10 border border-red-500/10 px-4 py-2 rounded-xl flex items-center gap-3">
+                            <i data-lucide="info" className="w-3 h-3 text-red-500"></i>
+                            <p className="text-[9px] text-slate-500 uppercase font-bold">歷史威脅、嫌疑人與特定凶器（C4、槍彈）已被標記為最高風險。</p>
                         </div>
-                        <div className="bg-emerald-950/20 border border-emerald-500/20 px-4 py-3 rounded-xl flex items-center gap-3">
-                            <i data-lucide="map-pin" className="w-4 h-4 text-emerald-500"></i>
-                            <p className="text-[10px] text-slate-400">目標場所已涵蓋台中歌劇院、科博館、機場、及大專院校考場等歷史受脅熱點。</p>
+                        <div className="bg-blue-950/10 border border-blue-500/10 px-4 py-2 rounded-xl flex items-center gap-3">
+                            <i data-lucide="crosshair" className="w-3 h-3 text-blue-500"></i>
+                            <p className="text-[9px] text-slate-500 uppercase font-bold">鎖定對象：台中捷運、台北101、科博館、各考場等重要熱點。</p>
                         </div>
-                        <div className="bg-slate-900/50 border border-white/5 px-4 py-3 rounded-xl flex items-center justify-between">
-                            <span className="text-[10px] text-slate-500 font-mono">STATUS: SCANNING_ACTIVE</span>
+                        <div className="bg-slate-900/50 border border-white/5 px-4 py-2 rounded-xl flex items-center justify-between">
+                            <span className="text-[9px] text-slate-600 font-mono">PANORAMA_SCAN_ENABLED</span>
                             <div className="flex items-center gap-2">
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                <span className="text-[9px] text-emerald-500 font-bold">SYSTEM_OK</span>
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                                <span className="text-[9px] text-emerald-500 font-bold uppercase">Ready</span>
                             </div>
                         </div>
-                    </div>
+                    </footer>
                 </div>
             );
         };
