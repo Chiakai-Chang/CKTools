@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網路巡邏情資分析系統 v3.7</title>
+    <title>網路巡邏情資分析系統 v3.8</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM -->
@@ -25,8 +25,8 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
         .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .risk-row:hover { background: rgba(239, 68, 68, 0.05); }
-        /* 讓詞雲可以橫向捲動查看全景 */
         .canvas-container { min-width: 1200px; height: 350px; }
+        .modal-overlay { background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(8px); }
     </style>
 </head>
 <body class="text-slate-200 overflow-hidden">
@@ -35,12 +35,13 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        // --- 核心字典與強化威脅配置 ---
         const THREAT_SINGLE_CHARS = new Set(['砍', '炸', '殺', '死', '槍', '彈', '刀', '血', '恨', '仇', '爆', '捅', '刺']);
         const CORE_DICT = [
             '隨機殺人', '恐怖攻擊', '丟煙霧彈', '完成任務', '精神傳承', '第五縱隊', '射殺人群', '割喉', '燃燒瓶', '塑膠炸彈', 
             '定時炸彈', '遙控炸彈', '爆裂物', '土製炸彈', '手雷', '手槍', 'C4', '塑化劑', '氯酸鉀', '匕首', '硝酸銨',
             '台中歌劇院', '自然科學博物館', '親親影城', '台北101', '桃園國際機場', '市政府站', '東海大學', '高鐵', 
-            '新光三越', '台中車站', '中港新光', '台中秀泰', '馬公基地', '國教院', '市政府', '榮總', 'BRT',
+            '新光三越', '台中車站', '中港新光', '台中秀泰', '豐原愛買', '中央公園', '麥當勞', '中山站', '市政府', '榮總', 'BRT',
             '唐澤貴洋', 'Karasawa', '粘孝帆', '蕭清淵', '蔡傑宏', '余福明', '賴志忠', '黑色豪門企業', '黑社會', '14514 BTC',
             '國有器官', '直播', 'Youtube', 'Facebook', 'TikTok'
         ];
@@ -59,6 +60,7 @@
             const [inputText, setInputText] = useState('');
             const [analysisData, setAnalysisData] = useState({ words: [], edges: [], stats: {} });
             const [isAnalyzing, setIsAnalyzing] = useState(false);
+            const [showAbout, setShowAbout] = useState(false);
             
             const cloudCanvasRef = useRef(null);
             const networkRef = useRef(null);
@@ -172,7 +174,6 @@
                 if (analysisData.words.length > 0) {
                     if (cloudCanvasRef.current && window.WordCloud) {
                         const canvas = cloudCanvasRef.current;
-                        // 設定較寬的寬度以實現全景滾動
                         canvas.width = 1600; 
                         canvas.height = 350;
                         window.WordCloud(canvas, {
@@ -211,7 +212,7 @@
             }, [analysisData]);
 
             return (
-                <div className="h-screen flex flex-col p-4 lg:p-6 space-y-4">
+                <div className="h-screen flex flex-col p-4 lg:p-6 space-y-4 relative">
                     {/* Header */}
                     <header className="flex-none flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-900/80 p-5 rounded-2xl border border-white/5 shadow-2xl">
                         <div className="flex items-center gap-4">
@@ -220,16 +221,85 @@
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold text-white tracking-tight">網路巡邏：高風險威脅監測系統</h1>
-                                <p className="text-slate-500 text-[11px] uppercase tracking-wider">v3.7 Visual Reinforced | Report Top 50 | Panorama WordCloud</p>
+                                <p className="text-slate-500 text-[11px] uppercase tracking-wider">v3.8 Intelligence Reinforced | Panorama WordCloud</p>
                             </div>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex gap-3">
+                            <button onClick={() => setShowAbout(true)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold border border-white/10 transition flex items-center gap-2">
+                                <i data-lucide="help-circle" className="w-4 h-4"></i> 分析說明
+                            </button>
                             <button onClick={performAnalysis} className="px-6 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold shadow-lg shadow-red-900/40 transition transform active:scale-95 flex items-center gap-2 text-sm">
                                 <i data-lucide="zap" className="w-4 h-4"></i>
-                                {isAnalyzing ? "正在處理..." : "啟動全景掃描"}
+                                {isAnalyzing ? "處理中..." : "啟動掃描"}
                             </button>
                         </div>
                     </header>
+
+                    {/* About Modal */}
+                    {showAbout && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 modal-overlay">
+                            <div className="glass-panel max-w-2xl w-full max-h-[85vh] rounded-3xl p-8 flex flex-col overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                                <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
+                                    <h3 className="text-xl font-bold text-blue-400 flex items-center gap-2">
+                                        <i data-lucide="info" className="w-5 h-5"></i> 系統分析方法論 (Methodology)
+                                    </h3>
+                                    <button onClick={() => setShowAbout(false)} className="p-2 hover:bg-white/5 rounded-full text-slate-500 transition">
+                                        <i data-lucide="x" className="w-6 h-6"></i>
+                                    </button>
+                                </div>
+                                <div className="flex-1 overflow-y-auto custom-scrollbar space-y-6 text-slate-300 text-sm leading-relaxed pr-2">
+                                    <section>
+                                        <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> 1. 文本預處理與斷詞引擎
+                                        </h4 >
+                                        <p>系統採用「字典優先最大匹配法 (FMM)」結合「正則表達式」進行分析：</p>
+                                        <ul className="list-disc ml-5 mt-2 space-y-1 text-slate-400">
+                                            <li><b>日期攔截：</b>優先透過 <code className="bg-slate-800 px-1 rounded">(\d{1,2}月\d{1,2}日)</code> 提取精確日期資訊。</li>
+                                            <li><b>字典匹配：</b>建立包含 100+ 個核心情資（如嫌疑人名、C4、科博館等）的詞庫，確保關鍵詞不被過度切分。</li>
+                                            <li><b>威脅單字保留：</b>針對單字動詞（如：砍、炸、殺）建立白名單，避免傳統 NLP 過濾虛詞時誤殺關鍵情資。</li>
+                                        </ul>
+                                    </section>
+
+                                    <section>
+                                        <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> 2. 威脅指數 (Risk Scoring) 計算公式
+                                        </h4>
+                                        <p>系統權重由「靜態專家權重」與「動態詞頻加成」組成：</p>
+                                        <div className="bg-slate-950/50 p-4 rounded-xl mt-2 font-mono text-[11px] border border-white/5">
+                                            IF word IN THREAT_MAP: <br/>
+                                            &nbsp;&nbsp;Score = 95 - 100 (固定高威脅權重) <br/>
+                                            ELSE: <br/>
+                                            &nbsp;&nbsp;Score = MIN(65 + (Count * 2), 85)
+                                        </div>
+                                        <p className="mt-2 text-slate-400">凶器詞（炸彈、手槍等）與歷史嫌疑人名被賦予 100% 最高權重。一般詞彙則隨出現次數線性增加風險值，最高上限為 85%。</p>
+                                    </section>
+
+                                    <section>
+                                        <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></span> 3. 情資關聯網分析
+                                        </h4>
+                                        <p>採用「共現矩陣 (Co-occurrence Matrix)」演算法：</p>
+                                        <ul className="list-disc ml-5 mt-2 space-y-1 text-slate-400">
+                                            <li><b>節點 (Nodes)：</b>代表單個關鍵詞，其大小由 <code className="bg-slate-800 px-1 rounded">log(Freq)</code> 決定。</li>
+                                            <li><b>連線 (Edges)：</b>當兩個詞出現在「同一行」留言內即建立連線。</li>
+                                            <li><b>權重 (Edge Weight)：</b>連線越粗，代表兩者在不同情資中被同時提及的次數越多，暗示目標與手段的關聯。</li>
+                                        </ul>
+                                    </section>
+
+                                    <div className="p-4 bg-blue-900/10 border border-blue-500/20 rounded-2xl">
+                                        <p className="text-xs text-blue-300 font-bold italic">
+                                            * 本系統之分析邏輯基於 2022-2025 年間歷史威脅樣本進行優化，旨在協助巡邏人員快速過濾海量留言內容。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="mt-6 pt-4 border-t border-white/5 text-center">
+                                    <button onClick={() => setShowAbout(false)} className="px-10 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition">
+                                        我了解了
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Dashboard Layout */}
                     <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 overflow-hidden">
@@ -246,13 +316,13 @@
                                 />
                                 <div className="mt-3 flex justify-between items-center text-[10px] text-slate-600">
                                     <button onClick={() => setInputText('')} className="hover:text-red-400 flex items-center gap-1"><i data-lucide="trash-2" className="w-3 h-3"></i> 清除</button>
-                                    <span className="font-mono">INPUT_READY</span>
+                                    <span className="font-mono uppercase tracking-tighter opacity-50">Data Monitor Ready</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* MIDDLE: Top 50 Report (3 cols) - 調窄 */}
-                        <div className="lg:col-span-3 glass-panel rounded-2xl flex flex-col overflow-hidden shadow-xl">
+                        {/* MIDDLE: Top 50 Report (3 cols) */}
+                        <div className="lg:col-span-3 glass-panel rounded-2xl flex flex-col overflow-hidden shadow-xl text-slate-300">
                             <div className="p-4 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
                                 <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="table" className="text-red-500 w-3 h-3"></i> 風險排行 (Top 50)</h2>
                             </div>
@@ -282,43 +352,41 @@
                                                 </tr>
                                             ))
                                         ) : (
-                                            <tr><td colSpan="2" className="py-40 text-center text-slate-700 italic text-xs uppercase tracking-tighter">Scan to list</td></tr>
+                                            <tr><td colSpan="2" className="py-40 text-center text-slate-700 italic text-xs uppercase tracking-tighter">Waiting for scan...</td></tr>
                                         )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
 
-                        {/* RIGHT: Visuals (6 cols) - 加寬 */}
+                        {/* RIGHT: Visuals (6 cols) */}
                         <div className="lg:col-span-6 flex flex-col gap-4 overflow-hidden">
-                            {/* Word Cloud with Panorama Scroll & Download */}
-                            <div className="glass-panel rounded-2xl p-5 h-[42%] flex flex-col overflow-hidden shadow-2xl relative group">
+                            <div className="glass-panel rounded-2xl p-5 h-[42%] flex flex-col overflow-hidden shadow-2xl relative">
                                 <div className="flex justify-between items-center mb-2 border-b border-white/5 pb-2">
                                     <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="cloud" className="text-blue-500 w-3 h-3"></i> 語義熱度分佈 (全景滾動)</h2>
                                     <button 
                                         onClick={() => downloadCanvas(cloudCanvasRef, 'word_cloud_panorama.png')}
-                                        className="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded flex items-center gap-1 transition"
+                                        className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-2 py-1 rounded flex items-center gap-1 transition"
                                     >
-                                        <i data-lucide="download" className="w-3 h-3"></i> 下載圖片
+                                        <i data-lucide="download" className="w-3 h-3"></i> 導出全景圖
                                     </button>
                                 </div>
                                 <div className="flex-1 overflow-x-auto custom-scrollbar bg-slate-950/20 rounded-xl relative">
                                     <div className="canvas-container">
                                         <canvas ref={cloudCanvasRef}></canvas>
                                     </div>
-                                    {analysisData.words.length === 0 && <div className="absolute inset-0 flex items-center justify-center text-slate-800 text-xs font-bold uppercase tracking-widest">Wait for analysis</div>}
+                                    {analysisData.words.length === 0 && <div className="absolute inset-0 flex items-center justify-center text-slate-800 text-[10px] font-bold uppercase tracking-widest opacity-30">Analytical visual awaiting</div>}
                                 </div>
                             </div>
 
-                            {/* Network Graph with Download */}
                             <div className="glass-panel rounded-2xl p-5 h-[58%] flex flex-col overflow-hidden shadow-2xl">
                                 <div className="flex justify-between items-center mb-2 border-b border-white/5 pb-2">
                                     <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase"><i data-lucide="share-2" className="text-indigo-400 w-3 h-3"></i> 情資拓撲關聯 (交互式)</h2>
                                     <button 
                                         onClick={downloadNetwork}
-                                        className="text-xs bg-slate-800 hover:bg-slate-700 px-2 py-1 rounded flex items-center gap-1 transition"
+                                        className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-2 py-1 rounded flex items-center gap-1 transition"
                                     >
-                                        <i data-lucide="download" className="w-3 h-3"></i> 下載拓撲
+                                        <i data-lucide="download" className="w-3 h-3"></i> 導出拓撲圖
                                     </button>
                                 </div>
                                 <div ref={networkRef} className="flex-1 bg-slate-950/30 rounded-xl border border-white/5"></div>
@@ -330,17 +398,17 @@
                     <footer className="flex-none grid grid-cols-1 md:grid-cols-3 gap-4 h-12">
                         <div className="bg-red-950/10 border border-red-500/10 px-4 py-2 rounded-xl flex items-center gap-3">
                             <i data-lucide="info" className="w-3 h-3 text-red-500"></i>
-                            <p className="text-[9px] text-slate-500 uppercase font-bold">歷史威脅、嫌疑人與特定凶器（C4、槍彈）已被標記為最高風險。</p>
+                            <p className="text-[9px] text-slate-500 uppercase font-bold tracking-tight">核心威脅實體權重已設定為 100%。點擊「分析說明」查看完整算法公式。</p>
                         </div>
                         <div className="bg-blue-950/10 border border-blue-500/10 px-4 py-2 rounded-xl flex items-center gap-3">
                             <i data-lucide="crosshair" className="w-3 h-3 text-blue-500"></i>
-                            <p className="text-[9px] text-slate-500 uppercase font-bold">鎖定對象：台中捷運、台北101、科博館、各考場等重要熱點。</p>
+                            <p className="text-[9px] text-slate-500 uppercase font-bold tracking-tight">偵測模型已載入歷史情資。自動比對嫌疑人名與炸彈特徵。</p>
                         </div>
                         <div className="bg-slate-900/50 border border-white/5 px-4 py-2 rounded-xl flex items-center justify-between">
-                            <span className="text-[9px] text-slate-600 font-mono">PANORAMA_SCAN_ENABLED</span>
+                            <span className="text-[9px] text-slate-600 font-mono">INTEL_ENGINE_ONLINE</span>
                             <div className="flex items-center gap-2">
-                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                                <span className="text-[9px] text-emerald-500 font-bold uppercase">Ready</span>
+                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_5px_#10b981]"></div>
+                                <span className="text-[9px] text-emerald-500 font-bold uppercase tracking-widest">Running</span>
                             </div>
                         </div>
                     </footer>
@@ -350,7 +418,17 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-        setTimeout(() => { if(window.lucide) window.lucide.createIcons(); }, 150);
+        
+        // 初始化 Lucide 圖標
+        setTimeout(() => { 
+            if(window.lucide) window.lucide.createIcons(); 
+        }, 200);
+
+        // 當 Modal 開啟時重新觸發圖標生成
+        const observer = new MutationObserver(() => {
+            if(window.lucide) window.lucide.createIcons();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     </script>
 </body>
 </html>
