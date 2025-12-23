@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-09-03
+* 更新至 2025-12-23
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -25,6 +25,17 @@
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 重磅推薦 ☆☆☆ </span>
+
+* ## [網路巡邏情資分析系統 (Patrol Insight Analyzer)](https://chiakai-chang.github.io/CKTools/Tools/patrol-insight-analyzer.html)
+  * [![](https://chiakai-chang.github.io/CKTools/img/patrol-insight-analyzer.png)](https://chiakai-chang.github.io/CKTools/Tools/patrol-insight-analyzer.html)
+  * ### [點我開啟](https://chiakai-chang.github.io/CKTools/Tools/patrol-insight-analyzer.html)
+  * 面對突發性重大案件（如近期北捷事件）所引發的網路連鎖恐嚇與宣告模仿犯罪，情資往往散落在大量的社群貼文與留言中。為了分析大量不同恐怖攻擊發言之間的文本資訊，快速釐清發文者動機、遣詞用字、措辭習慣，特別開發此系統提供「一站式情資分析視覺化」服務。
+  * **核心特色：**
+    * 1、**即時文字雲分析**：自動提取情資文本中的高頻關鍵字，瞬間掌握發文核心主題。
+    * 2、**動態關聯圖譜**：自動建立關鍵字間的交互網絡（Topology），視覺化呈現不同情資點之間的潛在聯繫，協助勾勒犯嫌思維邏輯。
+    * 3、**關鍵字頻率排名**：精確統計出現次數，過濾掉贅字，直擊情資重點。
+    * 4、**純前端隱私保護**：所有分析均在您的瀏覽器端完成，不會將任何敏感的情資文字上傳到後端伺服器，確保偵查不公開與資料安全性。
+
 * ## [AI Insight Seeker 智慧偵查筆記系統](https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing)
 [![](https://chiakai-chang.github.io/tempHTML/img/Logo_AIInsightSEEKER_small.png)](https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing)
   * <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://docs.google.com/spreadsheets/d/1aFgOI4WYD-wgW9c8Ex0VE_cpyN_k8AzOG7o4vqbfCgU/edit?usp=sharing">AI Insight Seeker 智慧偵查筆記系統</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.linkedin.com/in/chiakai-chang-htciu">Chang, Chia-kai</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""></a></p>
