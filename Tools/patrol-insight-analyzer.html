@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網路巡邏情資分析系統 v4.0</title>
+    <title>網路巡邏情資分析系統 v4.1</title>
     <!-- 預先載入外部資源 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -21,14 +21,15 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
         .glass-panel { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .risk-row:hover { background: rgba(239, 68, 68, 0.1); transition: background 0.15s ease; }
-        .canvas-container { min-width: 1300px; height: 350px; }
+        .canvas-viewport { overflow: auto; background: rgba(0, 0, 0, 0.2); border-radius: 1rem; position: relative; }
+        .canvas-container { min-width: 1600px; height: 400px; transition: transform 0.2s ease-out; transform-origin: left top; }
         .modal-overlay { background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(15px); }
         canvas { user-select: none; }
+        .zoom-controls { position: absolute; top: 1rem; right: 1rem; z-index: 10; display: flex; gap: 0.5rem; }
     </style>
 </head>
 <body class="overflow-hidden">
     <div id="root">
-        <!-- 核心引擎尚未啟動前的顯示 -->
         <div class="h-screen w-screen flex flex-col items-center justify-center bg-[#020617] space-y-6">
             <div class="relative">
                 <div class="w-16 h-16 border-4 border-blue-500/20 rounded-full"></div>
@@ -36,7 +37,7 @@
             </div>
             <div class="text-center">
                 <p class="text-blue-500 font-bold tracking-[0.2em] text-lg uppercase mb-2">Intelligence Engine</p>
-                <p class="text-slate-600 text-sm animate-pulse">正在初始化分析組件與語義字典...</p>
+                <p class="text-slate-600 text-sm animate-pulse">正在優化語義字典與縮放模組...</p>
             </div>
         </div>
     </div>
@@ -44,41 +45,49 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo } = React;
 
-        // --- 核心威脅特徵字典 (歷史情資深度同步) ---
-        const THREAT_SINGLE_CHARS = new Set(['砍', '炸', '殺', '死', '槍', '彈', '刀', '血', '恨', '仇', '爆', '捅', '刺', '斬']);
+        // --- 核心威脅特徵字典 (依據附件精準修訂) ---
+        const THREAT_SINGLE_CHARS = new Set(['砍', '炸', '殺', '死', '槍', '彈', '刀', '血', '恨', '仇', '爆', '捅', '刺', '斬', '捅刺', '割喉']);
         const CORE_DICT = [
-            '隨機殺人', '恐怖攻擊', '丟煙霧彈', '完成任務', '精神傳承', '第五縱隊', '射殺人群', '割喉', '燃燒瓶', '塑膠炸彈', 
-            '定時炸彈', '遙控炸彈', '爆裂物', '土製炸彈', '手雷', '手槍', 'C4', '塑化劑', '氯酸鉀', '匕首', '硝酸銨',
-            '台中歌劇院', '自然科學博物館', '親親影城', '台北101', '桃園國際機場', '市政府站', '東海大學', '高鐵', 
-            '新光三越', '台中車站', '中港新光', '台中秀泰', '豐原愛買', '中央公園', '麥當勞', '中山站', '市政府', '榮總', 'BRT',
-            '唐澤貴洋', 'Karasawa', '粘孝帆', '蕭清淵', '蔡傑宏', '余福明', '賴志忠', '黑色豪門企業', '黑社會', '比特幣',
-            '國有器官', '直播', 'Youtube', 'Facebook', 'TikTok'
+            // 人物關係與宣告
+            '我兄弟', '我小弟', '我的人', '我朋友', '張文同夥', '一個組織', '這群人', '同夥表示', '我們組織',
+            '張文', '鄭捷', '吳明璋', '唐澤貴洋', '粘孝帆', '蔡傑宏', '蕭清淵', '余福明', '賴志忠',
+            // 地點實體 (精準匹配附件)
+            '北捷事件', '中山捷運站', '高雄車站', '台北車站', '台中車站', '小港機場', '台中新光三越', '新光三越', 
+            '台中秀泰', '豐原愛買', '中山誠品', '板南線', '市政府站', '高雄中央公園', '東海大學', '鳳山行動',
+            '馬公基地', '台北101', '日曜天地', '太平洋百貨', '大雅國中', '親親影城', '台中市政府', '學士路',
+            // 行動與武器
+            '恐怖攻擊', '隨機殺人', '丟煙霧彈', '完成任務', '未完成的任務', '土製炸彈', '手榴彈', '汽油彈', 
+            '塑膠炸彈', '定時炸彈', '遙控炸彈', '開山刀', '燃燒瓶', '硝酸銨', 'TNT', 'C4', '氯酸鉀', '匕首',
+            // 組織與背景
+            '第五縱隊', '中國上海', '武警', '上海當武警', '中國解放軍', '共青團', '軍旅生活', '黑色豪門企業', '黑社會',
+            '國有器官', '直播中', 'Youtube直播', 'Facebook直播', 'TikTok直播', '社會毒瘤', '共體時艱'
         ];
 
         const SENTIMENT_MAP = {
-            '隨機殺人': 100, '恐怖攻擊': 100, '炸死': 100, '砍死': 100, '射殺': 100, '割喉': 100, '捅刺': 100,
-            '塑膠炸彈': 100, '定時炸彈': 100, '遙控炸彈': 100, '爆裂物': 100, 'C4': 100, '手雷': 100, '手槍': 100, '土製炸彈': 100,
+            '隨機殺人': 100, '恐怖攻擊': 100, '炸死': 100, '砍死': 100, '射殺人群': 100, '割喉': 100, '捅刺': 100,
+            '塑膠炸彈': 100, '定時炸彈': 100, '遙控炸彈': 100, '爆裂物': 100, 'C4': 100, '手槍': 100, '土製炸彈': 100,
             '燃燒瓶': 100, '炸': 100, '殺': 100, '砍': 100, '槍': 100, '彈': 100, '死': 100,
-            '唐澤貴洋': 98, '粘孝帆': 98, 'BTC': 95, '引爆': 98, '放置': 90, '12月25日': 95, '12月31日': 95,
-            '歌劇院': 92, '科博館': 92, '台中車站': 90, '台北101': 95, '機場': 95, '直播': 85
+            '我兄弟': 95, '我小弟': 95, '張文': 90, '鄭捷': 90, '引爆': 98, '放置炸彈': 98, '12月25日': 95, '12月31日': 95,
+            '歌劇院': 92, '科博館': 92, '機場': 95, '直播': 85
         };
 
-        const STOP_WORDS = new Set(['的', '了', '在', '我', '你', '他', '她', '們', '是', '一個', '也才', '也是', '這部', '這個', '就是', '因為', '所以', '但是', '我們', '今天', '已經', '真的', '什麼', '大家', '都是', '起來', '現在', '還是', '內容', '請問', '怎麼', '知道', '指示', '原本', '計劃', '表示', '需要', '可能', '長期', '如果', '結果', '準備', '事件', '哈哈', '那些', '這些', '一些', '一點', '一樣', '一下', '你好', '先生', '本人']);
+        const STOP_WORDS = new Set(['的', '了', '在', '我', '你', '他', '她', '們', '是', '一個', '也才', '也是', '這部', '這個', '就是', '因為', '所以', '但是', '我們', '今天', '已經', '真的', '什麼', '大家', '都是', '起來', '現在', '還是', '內容', '請問', '怎麼', '知道', '指示', '原本', '計劃', '表示', '需要', '可能', '長期', '如果', '結果', '準備', '事件', '哈哈', '那些', '這些', '一些', '一點', '一樣', '一下', '你好', '先生', '本人', '大家', '恭喜', '期待']);
 
         const App = () => {
             const [inputText, setInputText] = useState('');
             const [analysisData, setAnalysisData] = useState({ words: [], edges: [], stats: {} });
             const [isAnalyzing, setIsAnalyzing] = useState(false);
             const [showAbout, setShowAbout] = useState(false);
+            const [zoom, setZoom] = useState(1);
             
             const cloudCanvasRef = useRef(null);
             const networkRef = useRef(null);
             const networkInstance = useRef(null);
 
             const getCategory = (word) => {
-                if (['殺', '炸', '砍', '射', '死', '彈', '槍', '刀', '手雷', 'C4', '爆裂物', '割喉', '燃燒瓶', '炸彈', '硝酸銨'].some(k => word.includes(k))) return '行動/武器';
-                if (['車站', '捷運', '板南', '商場', '新光', '秀泰', '歌劇院', '科博館', '影城', '機場', '101', '大學', '校園', '中心', '百貨', '市政府'].some(k => word.includes(k))) return '目標場所';
-                if (['張文', '鄭捷', '唐澤', '貴洋', '粘孝帆', '蕭清淵', '蔡傑宏', '組織', '同夥', '兄弟'].some(k => word.includes(k))) return '嫌疑主體';
+                if (['殺', '炸', '砍', '射', '死', '彈', '槍', '刀', '手雷', 'C4', '爆', '割喉', '燃燒', '硝酸銨'].some(k => word.includes(k))) return '行動/武器';
+                if (['車站', '捷運', '板南', '商場', '新光', '秀泰', '歌劇院', '科博館', '影城', '機場', '101', '大學', '誠品', '公園', '考場'].some(k => word.includes(k))) return '目標場所';
+                if (['兄弟', '小弟', '同夥', '組織', '張文', '鄭捷', '吳明璋', '武警', '解放軍', '貴洋'].some(k => word.includes(k))) return '群體/身分';
                 return '一般性言論';
             };
 
@@ -98,11 +107,12 @@
                         let i = 0;
                         while (i < seg.length) {
                             let matched = false;
-                            for (let len = 6; len >= 2; len--) {
-                                let word = seg.substring(i, i + len);
-                                if (CORE_DICT.includes(word)) {
+                            // 排序字典，優先匹配長詞
+                            const sortedDict = [...CORE_DICT].sort((a, b) => b.length - a.length);
+                            for (const word of sortedDict) {
+                                if (seg.substring(i, i + word.length) === word) {
                                     tokens.push(word);
-                                    i += len;
+                                    i += word.length;
                                     matched = true;
                                     break;
                                 }
@@ -119,20 +129,18 @@
                             }
                         }
                     });
-                } catch (e) { console.error("Tokenization error", e); }
+                } catch (e) { console.error(e); }
                 return tokens.filter(t => t.length > 1 || THREAT_SINGLE_CHARS.has(t));
             };
 
             const performAnalysis = () => {
                 if (!inputText.trim()) return;
                 setIsAnalyzing(true);
-                
                 setTimeout(() => {
                     try {
                         const lines = inputText.split(/\n/).filter(l => l.trim().length > 0);
                         const wordFreq = {};
                         const coOccurrence = {};
-                        
                         lines.forEach(line => {
                             const tokens = tokenize(line);
                             const uniqueTokens = [...new Set(tokens)];
@@ -144,7 +152,6 @@
                                 }
                             }
                         });
-
                         const sortedWords = Object.entries(wordFreq)
                             .sort((a, b) => b[1] - a[1])
                             .map(([text, count]) => ({
@@ -153,7 +160,6 @@
                                 sentiment: SENTIMENT_MAP[text] || Math.min(65 + count * 2, 85),
                                 category: getCategory(text)
                             }));
-
                         setAnalysisData({
                             words: sortedWords,
                             edges: Object.entries(coOccurrence).map(([id, weight]) => ({ id, weight })),
@@ -163,11 +169,7 @@
                                 avgThreat: Math.round(sortedWords.reduce((acc, curr) => acc + (SENTIMENT_MAP[curr.text] || 65), 0) / (sortedWords.length || 1))
                             }
                         });
-                    } catch (err) {
-                        console.error("Analysis crashed", err);
-                    } finally {
-                        setIsAnalyzing(false);
-                    }
+                    } catch (err) { console.error(err); } finally { setIsAnalyzing(false); }
                 }, 100);
             };
 
@@ -180,43 +182,27 @@
                 link.click();
             };
 
-            const downloadNetwork = () => {
-                if (!networkInstance.current) return;
-                const canvas = networkRef.current.querySelector('canvas');
-                if (!canvas) return;
-                const link = document.createElement('a');
-                link.download = 'network_topology.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            };
-
             useEffect(() => {
                 if (analysisData.words.length > 0) {
-                    // 1. 詞雲
-                    if (cloudCanvasRef.current && typeof window.WordCloud === 'function') {
+                    if (cloudCanvasRef.current && window.WordCloud) {
                         const canvas = cloudCanvasRef.current;
-                        canvas.width = 1600; 
-                        canvas.height = 350;
+                        canvas.width = 1800; 
+                        canvas.height = 400;
                         window.WordCloud(canvas, {
-                            list: analysisData.words.slice(0, 200).map(w => [w.text, Math.sqrt(w.count) * 22 + 8]),
+                            list: analysisData.words.slice(0, 200).map(w => [w.text, Math.sqrt(w.count) * 25 + 8]),
                             fontFamily: 'Noto Sans TC',
                             color: (w) => (SENTIMENT_MAP[w] >= 95 || THREAT_SINGLE_CHARS.has(w)) ? '#ef4444' : '#60a5fa',
                             rotateRatio: 0,
                             backgroundColor: 'transparent',
-                            gridSize: 10,
-                            weightFactor: 1.2
+                            gridSize: 8,
+                            weightFactor: 1.5
                         });
                     }
-                    // 2. 關聯圖
                     if (networkRef.current && window.vis) {
                         const topWords = analysisData.words.slice(0, 50);
-                        const baseCount = analysisData.words[0]?.count || 1;
                         const nodes = topWords.map(w => ({
-                            id: w.text,
-                            label: w.text,
-                            shape: 'box',
-                            margin: 10,
-                            font: { size: 16 + (w.count / baseCount) * 25, color: '#fff', face: 'Noto Sans TC' },
+                            id: w.text, label: w.text, shape: 'box', margin: 10,
+                            font: { size: 16 + (w.count / (analysisData.words[0]?.count || 1)) * 25, color: '#fff', face: 'Noto Sans TC' },
                             color: { background: w.sentiment >= 95 ? '#7f1d1d' : '#1e3a8a', border: w.sentiment >= 95 ? '#ef4444' : '#3b82f6' }
                         }));
                         const edges = analysisData.edges
@@ -224,7 +210,7 @@
                                 const [s, t] = e.id.split('::');
                                 return topWords.some(w => w.text === s) && topWords.some(w => w.text === t);
                             })
-                            .map(e => ({ from: e.id.split('::')[0], to: e.id.split('::')[1], width: Math.sqrt(e.weight) * 3, color: 'rgba(148, 163, 184, 0.3)', length: 280 }));
+                            .map(e => ({ from: e.id.split('::')[0], to: e.id.split('::')[1], width: Math.sqrt(e.weight) * 3, color: 'rgba(148, 163, 184, 0.3)', length: 300 }));
                         if (networkInstance.current) networkInstance.current.destroy();
                         networkInstance.current = new window.vis.Network(networkRef.current, { nodes, edges }, {
                             physics: { solver: 'forceAtlas2Based', forceAtlas2Based: { gravitationalConstant: -150, avoidOverlap: 1 } },
@@ -234,80 +220,68 @@
                 }
             }, [analysisData]);
 
-            useEffect(() => {
-                if (window.lucide) window.lucide.createIcons();
-            }, [showAbout, analysisData]);
+            useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
 
             return (
                 <div className="h-screen flex flex-col p-4 lg:p-6 space-y-4 bg-[#020617] overflow-hidden">
-                    {/* Header */}
                     <header className="flex-none flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-900/40 p-5 rounded-3xl border border-white/5 shadow-2xl backdrop-blur-xl">
                         <div className="flex items-center gap-4">
-                            <div className="bg-red-600 p-2.5 rounded-2xl shadow-lg shadow-red-500/30">
+                            <div className="bg-red-600 p-2.5 rounded-2xl shadow-lg">
                                 <i data-lucide="shield-alert" className="w-6 h-6 text-white"></i>
                             </div>
                             <div>
                                 <h1 className="text-xl font-bold text-white tracking-tight">網路巡邏情資分析系統</h1>
-                                <p className="text-slate-500 text-[10px] uppercase tracking-widest font-black opacity-70">Methodology v4.0 | Real-time Dashboard</p>
+                                <p className="text-slate-500 text-[10px] uppercase tracking-widest font-black opacity-70">Methodology v4.1 | UI Zoom & Semantic Enhanced</p>
                             </div>
                         </div>
                         <div className="flex gap-3">
-                            <button onClick={() => setShowAbout(true)} className="px-4 py-2.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-2xl text-[11px] font-bold border border-white/10 transition-all flex items-center gap-2">
-                                <i data-lucide="help-circle" className="w-4 h-4 text-blue-400"></i> 分析方法論
+                            <button onClick={() => setShowAbout(true)} className="px-4 py-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-2xl text-[11px] font-bold border border-white/10 transition-all flex items-center gap-2">
+                                <i data-lucide="help-circle" className="w-4 h-4 text-blue-400"></i> 分析說明
                             </button>
-                            <button onClick={performAnalysis} disabled={isAnalyzing} className="px-8 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 transition transform active:scale-95 flex items-center gap-2 text-sm disabled:opacity-50">
-                                <i data-lucide="zap" className={`w-4 h-4 ${isAnalyzing ? 'animate-pulse' : ''}`}></i>
-                                {isAnalyzing ? "正在計算..." : "啟動全景分析"}
+                            <button onClick={performAnalysis} disabled={isAnalyzing} className="px-8 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-bold shadow-xl transition transform active:scale-95 flex items-center gap-2 text-sm disabled:opacity-50">
+                                <i data-lucide="zap" className={`w-4 h-4 ${isAnalyzing ? 'animate-pulse' : ''}`}></i>啟動全景分析
                             </button>
                         </div>
                     </header>
 
-                    {/* About Modal */}
                     {showAbout && (
                         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-overlay">
-                            <div className="glass-panel max-w-3xl w-full max-h-[90vh] rounded-[2.5rem] p-10 flex flex-col overflow-hidden border border-white/10 shadow-2xl">
+                            <div className="glass-panel max-w-3xl w-full max-h-[90vh] rounded-[2.5rem] p-10 flex flex-col overflow-hidden border border-white/10 shadow-2xl text-slate-300">
                                 <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-6">
-                                    <h3 className="text-2xl font-bold text-blue-400 flex items-center gap-3">分析邏輯與計算說明</h3>
-                                    <button onClick={() => setShowAbout(false)} className="p-2 hover:bg-white/5 rounded-full text-slate-500 transition-colors"><i data-lucide="x" className="w-8 h-8"></i></button>
+                                    <h3 className="text-2xl font-bold text-blue-400">v4.1 語義邏輯更新說明</h3>
+                                    <button onClick={() => setShowAbout(false)} className="p-2 hover:bg-white/5 rounded-full text-slate-500"><i data-lucide="x" className="w-8 h-8"></i></button>
                                 </div>
-                                <div className="flex-1 overflow-y-auto custom-scrollbar space-y-8 text-slate-300 text-[15px] leading-relaxed pr-4">
-                                    <section className="bg-slate-900/50 p-6 rounded-3xl border border-white/5">
-                                        <h4 className="font-bold text-white mb-4 text-lg border-l-4 border-blue-500 pl-3">1. 斷詞引擎 (Tokenization)</h4>
-                                        <p>系統結合了字典匹配與特徵識別：</p>
-                                        <ul className="list-disc ml-6 mt-3 space-y-2 text-slate-400">
-                                            <li><b>優先級字典：</b> 內建包含 100+ 個特定地標、炸彈化學式、歷史威脅者姓名的字典，確保高價值詞彙不被錯誤切分。</li>
-                                            <li><b>威脅單字保留：</b> 針對具備強烈行動意圖的單字（如：砍、炸、殺）建立白名單，避免傳統 NLP 過濾虛詞。</li>
+                                <div className="flex-1 overflow-y-auto custom-scrollbar space-y-6 text-sm">
+                                    <section className="bg-slate-950/50 p-6 rounded-3xl border border-white/5">
+                                        <h4 className="font-bold text-white mb-3 flex items-center gap-2 border-l-4 border-blue-500 pl-3">新增關聯詞彙組合</h4>
+                                        <p>針對附件內容優化，系統現在會自動識別並鎖定下列特定組合：</p>
+                                        <ul className="list-disc ml-6 mt-3 space-y-1 text-slate-400 font-mono text-xs">
+                                            <li>[身分關係]: 我兄弟、我小弟、我的人、張文同夥</li>
+                                            <li>[行動目標]: 高雄中央公園、台中新光三越、中山誠品、小港機場</li>
+                                            <li>[背景調查]: 上海當武警、共青團背景、解放軍影片、軍旅生活</li>
                                         </ul>
                                     </section>
-                                    <section className="bg-slate-900/50 p-6 rounded-3xl border border-white/5">
-                                        <h4 className="font-bold text-white mb-4 text-lg border-l-4 border-red-500 pl-3">2. 風險指數權重 (Scoring)</h4>
-                                        <p>風險權重透過歷史樣本特徵進行靜態標註：</p>
-                                        <div className="bg-slate-950/80 p-4 rounded-2xl mt-4 font-mono text-[12px] text-emerald-400 border border-emerald-500/20 leading-relaxed">
-                                            // 關鍵詞風險評估公式 <br/>
-                                            if (word in WeaponDict) return 100%; <br/>
-                                            if (word in TargetDict) return 92% - 95%; <br/>
-                                            default score = min(65% + (freq * 2), 85%);
-                                        </div>
+                                    <section className="bg-slate-950/50 p-6 rounded-3xl border border-white/5">
+                                        <h4 className="font-bold text-white mb-3 flex items-center gap-2 border-l-4 border-red-500 pl-3">全景圖縮放說明</h4>
+                                        <p>右側詞雲圖區域新增了 CSS Transform 縮放控制，支持最高 300% 的局部放大，以便觀察低頻但具有高關聯度的情資碎片。</p>
                                     </section>
                                 </div>
-                                <div className="mt-10 text-center"><button onClick={() => setShowAbout(false)} className="px-16 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold transition shadow-xl shadow-blue-900/40">確認並返回</button></div>
+                                <div className="mt-8 text-center"><button onClick={() => setShowAbout(false)} className="px-16 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-bold transition shadow-xl">確認</button></div>
                             </div>
                         </div>
                     )}
 
-                    {/* Main Layout */}
                     <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-hidden">
                         <div className="lg:col-span-3 flex flex-col overflow-hidden">
                             <div className="glass-panel rounded-3xl p-6 flex-1 flex flex-col shadow-xl">
                                 <h2 className="font-bold flex items-center gap-2 mb-4 text-slate-400 text-xs uppercase tracking-widest"><i data-lucide="file-text" className="text-blue-500 w-3 h-3"></i> 情資來源內容</h2>
                                 <textarea value={inputText} onChange={(e) => setInputText(e.target.value)} className="flex-1 w-full bg-slate-950/40 border border-white/5 rounded-2xl p-5 text-[13px] text-slate-300 focus:ring-1 focus:ring-red-600 outline-none transition resize-none placeholder-slate-800 font-mono custom-scrollbar leading-relaxed" placeholder="在此處貼上社群留言、電郵或其他可疑文本..."/>
-                                <div className="mt-4 flex justify-between items-center text-[10px] text-slate-600 font-bold uppercase"><button onClick={() => setInputText('')} className="hover:text-red-400 flex items-center gap-1 transition-colors"><i data-lucide="trash-2" className="w-3 h-3"></i> 清除</button><span className="tracking-widest">Patrol Monitor v4.0</span></div>
                             </div>
                         </div>
 
                         <div className="lg:col-span-3 glass-panel rounded-3xl flex flex-col overflow-hidden shadow-xl">
                             <div className="p-5 border-b border-white/5 flex justify-between items-center bg-slate-900/40">
-                                <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest"><i data-lucide="table" className="text-red-500 w-3 h-3"></i> 風險報告 (Top 50)</h2>
+                                <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest"><i data-lucide="table" className="text-red-500 w-3 h-3"></i> 風險排行 (Top 50)</h2>
                             </div>
                             <div className="flex-1 overflow-y-auto custom-scrollbar">
                                 <table className="w-full text-left text-[11px]">
@@ -315,18 +289,15 @@
                                         <tr><th className="px-4 py-4 font-bold border-b border-white/5">情資關鍵字</th><th className="px-4 py-4 font-bold border-b border-white/5 text-right">權重</th></tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5">
-                                        {analysisData.words.length > 0 ? (
-                                            analysisData.words.slice(0, 50).map((word, idx) => (
-                                                <tr key={idx} className="risk-row">
-                                                    <td className="px-4 py-3.5"><div className="flex items-center gap-2"><span className="text-slate-800 font-mono text-[9px] w-4">{idx+1}</span><span className={`font-bold tracking-tight ${word.sentiment >= 95 ? "text-red-400" : "text-slate-300"}`}>{word.text}</span>{word.count > 1 && <span className="text-blue-500/40 text-[9px] font-mono">x{word.count}</span>}</div><span className="text-[9px] text-slate-600 ml-6 block font-medium opacity-80">{word.category}</span></td>
-                                                    <td className="px-4 py-3.5 text-right font-mono font-bold text-xs"><span className={word.sentiment >= 95 ? "text-red-500" : "text-slate-500"}>{word.sentiment}%</span></td>
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr><td colSpan="2" className="py-48 text-center text-slate-800 italic text-[10px] font-black tracking-[0.2em] uppercase opacity-40">Ready for Scan</td></tr>
-                                        )}
+                                        {analysisData.words.slice(0, 50).map((word, idx) => (
+                                            <tr key={idx} className="risk-row transition">
+                                                <td className="px-4 py-3.5"><div className="flex items-center gap-2"><span className="text-slate-800 font-mono text-[9px] w-4">{idx+1}</span><span className={`font-bold tracking-tight ${word.sentiment >= 95 ? "text-red-400" : "text-slate-300"}`}>{word.text}</span></div><span className="text-[9px] text-slate-600 ml-6 block">{word.category}</span></td>
+                                                <td className="px-4 py-3.5 text-right font-mono font-bold text-xs"><span className={word.sentiment >= 95 ? "text-red-500" : "text-slate-500"}>{word.sentiment}%</span></td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
+                                {!analysisData.words.length && <div className="py-48 text-center text-slate-800 italic text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Ready for Scan</div>}
                             </div>
                         </div>
 
@@ -334,17 +305,26 @@
                             <div className="glass-panel rounded-3xl p-6 h-[43%] flex flex-col overflow-hidden shadow-2xl relative">
                                 <div className="flex justify-between items-center mb-3 border-b border-white/5 pb-3">
                                     <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest"><i data-lucide="cloud" className="text-blue-500 w-3 h-3"></i> 特徵語義全景圖</h2>
-                                    <button onClick={() => downloadCanvas(cloudCanvasRef, 'word_cloud_panorama.png')} className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all"><i data-lucide="download" className="w-3 h-3"></i> 導出圖檔</button>
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex items-center bg-slate-800 px-3 py-1 rounded-xl gap-2 border border-white/5">
+                                            <i data-lucide="zoom-in" className="w-3 h-3 text-slate-500"></i>
+                                            <input type="range" min="0.5" max="3" step="0.1" value={zoom} onChange={(e) => setZoom(parseFloat(e.target.value))} className="w-20 h-1 accent-blue-500"/>
+                                            <span className="text-[10px] font-mono text-blue-400">{Math.round(zoom*100)}%</span>
+                                        </div>
+                                        <button onClick={() => setZoom(1)} className="text-[9px] text-slate-500 hover:text-white uppercase font-bold">Reset</button>
+                                        <button onClick={() => downloadCanvas(cloudCanvasRef, 'word_cloud_v41.png')} className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all"><i data-lucide="download" className="w-3 h-3"></i> 導出</button>
+                                    </div>
                                 </div>
-                                <div className="flex-1 overflow-x-auto custom-scrollbar bg-slate-950/20 rounded-2xl relative">
-                                    <div className="canvas-container"><canvas ref={cloudCanvasRef}></canvas></div>
-                                    {!analysisData.words.length && <div className="absolute inset-0 flex items-center justify-center text-slate-900 text-[11px] font-black uppercase tracking-[0.5em] opacity-40">Awaiting Data</div>}
+                                <div className="flex-1 canvas-viewport custom-scrollbar relative">
+                                    <div className="canvas-container" style={{ transform: `scale(${zoom})` }}>
+                                        <canvas ref={cloudCanvasRef}></canvas>
+                                    </div>
+                                    {!analysisData.words.length && <div className="absolute inset-0 flex items-center justify-center text-slate-900 text-[11px] font-black uppercase tracking-[0.5em] opacity-40">Awaiting Intelligence Data</div>}
                                 </div>
                             </div>
-                            <div className="glass-panel rounded-3xl p-6 h-[57%] flex flex-col overflow-hidden shadow-2xl">
+                            <div className="glass-panel rounded-3xl p-6 h-[57%] flex flex-col overflow-hidden shadow-2xl relative">
                                 <div className="flex justify-between items-center mb-3 border-b border-white/5 pb-3">
                                     <h2 className="font-bold flex items-center gap-2 text-slate-400 text-xs uppercase tracking-widest"><i data-lucide="share-2" className="text-indigo-400 w-3 h-3"></i> 情資拓撲關聯網絡</h2>
-                                    <button onClick={downloadNetwork} className="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-400 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all"><i data-lucide="download" className="w-3 h-3"></i> 導出拓撲</button>
                                 </div>
                                 <div ref={networkRef} className="flex-1 bg-slate-950/40 rounded-2xl border border-white/5"></div>
                             </div>
@@ -353,34 +333,28 @@
 
                     <footer className="flex-none grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div className="bg-red-950/10 border border-red-500/10 px-5 py-3 rounded-2xl flex items-center gap-4">
-                            <i data-lucide="alert-triangle" className="w-4 h-4 text-red-600"></i>
-                            <p className="text-[10px] text-slate-500 font-bold leading-relaxed uppercase">核心威脅、炸彈類型與歷史嫌疑人（唐澤貴洋等）已被標註為 100% 風險級別。</p>
+                            <i data-lucide="users" className="w-4 h-4 text-red-600"></i>
+                            <p className="text-[10px] text-slate-500 font-bold leading-relaxed uppercase tracking-tight">已強化同夥關係識別：「我兄弟」、「我小弟」等詞彙已納入高風險宣告追蹤。</p>
                         </div>
                         <div className="bg-blue-950/10 border border-blue-500/10 px-5 py-3 rounded-2xl flex items-center gap-4">
-                            <i data-lucide="crosshair" className="w-4 h-4 text-blue-600"></i>
-                            <p className="text-[10px] text-slate-500 font-bold leading-relaxed uppercase">目標涵蓋歌劇院、捷運、科博館、101 及各大交通樞紐。</p>
+                            <i data-lucide="map-pin" className="w-4 h-4 text-blue-600"></i>
+                            <p className="text-[10px] text-slate-500 font-bold leading-relaxed uppercase tracking-tight">目標實體同步：高雄中央公園、台中新光三越、中山誠品等熱點已精準標記。</p>
                         </div>
                         <div className="bg-slate-900/40 border border-white/5 px-5 py-3 rounded-2xl flex items-center justify-between">
-                            <span className="text-[10px] text-slate-700 font-black tracking-widest font-mono uppercase">System Node: Secure</span>
-                            <div className="flex items-center gap-2.5">
-                                <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></div>
-                                <span className="text-[10px] text-emerald-500 font-black uppercase tracking-tighter">Engine Ready</span>
-                            </div>
+                            <span className="text-[10px] text-slate-700 font-black tracking-widest font-mono uppercase">Version 4.1 Reinforced</span>
+                            <div className="flex items-center gap-2.5"><div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981] animate-pulse"></div><span className="text-[10px] text-emerald-500 font-black uppercase tracking-tighter">Ready</span></div>
                         </div>
                     </footer>
                 </div>
             );
         };
 
-        // 穩定渲染入口
         const mount = () => {
             const container = document.getElementById('root');
             if (container && typeof ReactDOM !== 'undefined') {
                 const root = ReactDOM.createRoot(container);
                 root.render(<App />);
-            } else {
-                setTimeout(mount, 50); // 若 ReactDOM 尚未就緒，循環偵測
-            }
+            } else { setTimeout(mount, 50); }
         };
         mount();
     </script>
