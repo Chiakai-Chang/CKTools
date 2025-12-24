@@ -55,40 +55,33 @@
         <div class="h-screen w-screen flex flex-col items-center justify-center bg-[#020617] space-y-6 text-center text-slate-400 font-sans">
             <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             <div>
-                <p class="text-blue-500 font-bold tracking-widest text-lg uppercase font-black">Patrol Engine v6.5</p>
+                <p class="text-blue-500 font-bold tracking-widest text-lg uppercase font-black">Patrol Engine v1.1</p>
                 <p class="text-xs animate-pulse mt-2 uppercase font-black tracking-tighter">正在優化全量拓樸網絡與情資權重矩陣...</p>
             </div>
         </div>
     </div>
     
     <script type="text/babel">
-        const { useState, useEffect, useRef, useMemo } = React;
+        const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
         // --- 高危犯罪嫌疑人 (全量保持) ---
-        const SUSPECTS = new Set(['張文', '鄭捷', '張海川', '唐澤貴洋', '吳明璋', '粘孝帆', '蔡傑宏', '蕭清淵', '余福明', '賴志忠', 'Karasawa Takahiro', 'Karasawa', 'Takahiro', '文弟', '萊爾校長', '粘男', '蕭處長', '余處長', '賴負責人', '蔡男', '粘男']);
+        const DEFAULT_SUSPECTS = new Set(['張文', '鄭捷', '張海川', '唐澤貴洋', '吳明璋', '粘孝帆', '蔡傑宏', '蕭清淵', '余福明', '賴志忠', 'Karasawa Takahiro', 'Karasawa', 'Takahiro', '文弟', '萊爾校長', '粘男', '蕭處長', '余處長', '賴負責人', '蔡男', '粘男']);
 
-        // --- 核心字典：2025 全量不縮減強化版 (含國安歷史、PTT 暱稱、恐攻情資) ---
-        const CORE_DICT = [
-            // --- [優先匹配長詞] 避免斷詞重疊錯誤，如「賴清德皇」優先匹配長詞 ---
+        // --- 核心字典：預設資料 ---
+        const DEFAULT_CORE_DICT = [
             '務實台獨工作者', '土城的選擇柯文哲', '土城選擇柯文哲', '巧芯巧芯得第一', '台德混血沈伯洋', 
             '主角張文是我兄弟', '主角張文是我小弟', '主角張文是我哥哥', '張文遺願我來完成',
             '大規模隨機殺人', '境外敵對勢力', '遂行軍事目的', '無人機自殺攻擊', '誠品生活南西', 
             '下一個被砍的是', '金錢來源於民進黨', '紅藍白三黨的資金', '上海當武警', '中國五星旗',
             '黑熊學院沈伯洋', '第五縱隊沈伯洋', '二七部隊精神', '張文拿的是沈伯洋資助',
-        
-            // --- 1. [國安、民防與歷史武裝] 特別獨立區塊 ---
             '第五縱隊', '在地協力者', '內應', '中共內應', '紅色滲透', '二七部隊', '27部隊', '台中武裝', 
             '謝雪紅', '鍾逸人', '黑熊學院', '黑熊', '民防組織', '武裝反抗', '私人軍隊', '地下武裝',
             '認知作戰', '假旗行動', '壓力測試', '國安紅線', '境外勢力', '反滲透法', '黑熊勇士',
-        
-            // --- 2. 總統與行政核心 (全量 PTT 暱稱) ---
             '賴清德', '賴神', '威廉', '功德', '清德', '賴桑', '大學長', '德哥', '賴半天', '務實台獨', '反核', '大 A', '賴皮寮', '台獨金孫', '功德院長', '賴皇', 'Lie', 'LieCheater',
             '蔡英文', '小英', '辣台妹', 'EE', '讀稿機', '太后', '大小姐', '蔡EE', '論文', '菸皇', '土城找安', '蔡1.5', '假博士', '蔡包', '祭文', '霧島', '英皇', '空心菜',
             '陳水扁', '阿扁', '扁哥', '2630', '海角七億', '致中', '陳致中', '勇哥', '李登輝', '阿輝伯', '民主之父',
             '馬英九', '馬皇', '死亡之握', '小馬哥', '水母', '馬奶粉', '鹿茸', '馬茸', '馬囧',
             '柯文哲', '柯P', '檳榔', '師傅', '阿北', '白賊柯', 'KP', '蚵仔', '柯黑', '157', '台大醫', '超越藍綠', '木可', 'USB', '1500', '1500萬', '京華', '小沈', '曼德拉', '柯痞', '銬文哲', '銬阿北',
-        
-            // --- 3. 立法院與政壇實體 ---
             '沈伯洋', 'Puma', '撲馬', '沈教授', '沈老師', '黃國昌', '國昌老師', '蔥哥', '咆哮帝', '國昌', '影帝', '加蔥', '戰神', '咆哮', '加蔥老師', '昌神', '蔥神', '濕背秀',
             '徐巧芯', '芯芯', '巧芯', '違停芯', '早餐店', '美鳳', '美鳳姊', '蜜獾', '芯芯費費',
             '王世堅', '堅哥', '恰吉', '世堅', '跳海', 'Over my dead body', '吞曲棍球', '鬼娃', '王瑞德',
@@ -107,29 +100,21 @@
             '朱立倫', '精算師', '剪綵倫', '換柱', '邊緣倫', '林佳龍', '佳龍', '龍龍', '林飛帆', '帆廷', '九萬', '帆神', '林九萬',
             '吳釗燮', '斷交部長', '游錫堃', '水牛伯', '游錫堃', '憨堃', 'JOSHUA',
             '顏寬恆', '寬恆', '消波塊', '標哥', '顏家', '冬瓜標', '連勝文', '神豬', '勝文', '連公子',
-        
-            // --- 4. 2025 恐攻情資與組織關鍵詞 (附件深度提取) ---
             '民進黨', '綠營', '塔綠班', '青鳥', '國民黨', '藍營', '民眾黨', '白營', '小草', '白共', '白蓮教', '中共', '共產黨', '共匪',
             '恐怖攻擊', '隨機殺人', '北捷事件', '煙霧彈', '下一站', '敬請期待', '文弟', '這部影片', '社會病態', '社會毒瘤', '萊爾校長',
             '我兄弟', '我小弟', '我的人', '我朋友', '張文同夥', '一個組織', '我們組織', '未完成任務', '大規模隨機殺人', '完美犯罪',
             '慷慨就義', '軍旅生活', '五星旗', '中國解放軍', '共青團', '上海武警', '中國武警', '武警',
             '台北車站', '台中車站', '高雄車站', '小港機場', '新光三越', '板南線', '市政府', '北投', '中央公園', '中山誠品', '中山捷運站', '誠品南西', '南港展覽館', '秀泰影城', '愛買', '豐原愛買', '麥當勞', '美麗島站', '左營站',
             '土製炸彈', '汽油彈', '手榴彈', '爆裂物', '砍死', '砍人', '割喉', '射殺', '丟煙霧彈', 'C4', 'TNT', '定時炸彈', '硝酸銨', '炸藥', '手槍', '開山刀', '砍刀', '綁滿炸彈', '炸死你們',
-        
-            // --- 5. 2025 案件特定嫌疑人與關聯 ---
             '張文', '文弟', '張文兄弟', '張文小弟', '張文同夥', '張文哥哥', '鄭捷', '張海川', '唐澤貴洋', '吳明璋', '粘孝帆', '蔡傑宏', '蕭清淵', '余福明', '賴志忠', 'Karasawa', 'Takahiro', '粘男', '蕭處長', '余處長', '賴負責人', '蔡男'
         ];
 
-        // --- 分級權重引擎：2025 全量強化版 (針對政治人物與恐怖攻擊威脅優化) ---
-        const SENTIMENT_MAP = {
-            // --- 極高危 (95-100%): 涉及具體犯罪宣告、致命武裝、模仿犯承接語句 ---
+        const DEFAULT_SENTIMENT_MAP = {
             '隨機殺人': 100, '恐怖攻擊': 100, '炸死': 100, '砍死': 100, '射殺': 100, '割喉': 100, '炸彈': 100, 'C4': 100, 'TNT': 100, '手榴彈': 100, 
             '硝酸銨': 100, '汽油彈': 100, '土製炸彈': 98, '定時炸彈': 98, '爆裂物': 98, '引爆': 98, '綁滿炸彈': 100, '炸死你們': 100, '砍死100人': 100,
             '張文': 100, '鄭捷': 100, '唐澤貴洋': 100, '張海川': 100, '吳明璋': 100, '文弟': 95, '萊爾校長': 95,
             '張文遺願我來完成': 100, '主角張文是我兄弟': 98, '主角張文是我小弟': 98, '主角張文是我哥哥': 98, '接下去': 95, '未完成任務': 98,
             '無人機自殺': 100, '無人機自殺攻擊': 100, '大規模隨機殺人': 100, '完美犯罪': 95, '慷慨就義': 95, '犧牲其實蠻帥': 95,
-        
-            // --- 高風險 (85-94%): 國安威脅標籤、武裝組織指控、行政核心人物 ---
             '第五縱隊': 95, '在地協力者': 92, '中共內應': 92, '壓力測試': 95, '遂行軍事目的': 95, '境外敵對勢力': 95,
             '斬首行動': 94, '裡應外合': 92, '地下組織': 92, '滲透行動': 90, '潛伏人員': 90, '武裝抵抗': 88,
             '二七部隊': 92, '27部隊': 92, '台中武裝': 90, '武裝反抗': 90, '私人軍隊': 90, '地下武裝': 90,
@@ -138,8 +123,6 @@
             '柯文哲': 90, '阿北': 88, '檳榔': 88, '師傅': 85, 'KP': 88, '157': 85, '木可': 88, 'USB': 88, '1500萬': 90, '銬文哲': 90,
             '沈伯洋': 90, 'Puma': 90, '撲馬': 88, '黑熊': 88, '黑熊學院': 90, '認知作戰': 85, '沈伯洋資助': 92,
             '韓國瑜': 88, '韓總': 88, '韓導': 85, '禿子': 85, '解放軍': 92, '武警': 92, '上海武警': 92, '共青團': 90, '五星旗': 90,
-        
-            // --- 中風險 (70-84%): 重要政界人物、敏感地標、政治衝突詞彙 ---
             '黃國昌': 82, '國昌': 80, '蔥哥': 80, '咆哮帝': 80, '戰神': 80, '加蔥': 78,
             '徐巧芯': 80, '芯芯': 78, '巧芯': 78, '違停芯': 78, '美鳳': 75,
             '苗博雅': 78, '阿苗': 78, '博雅': 78, '王世堅': 80, '恰吉': 78, '堅哥': 78,
@@ -163,50 +146,84 @@
             const [selectedRisks, setSelectedRisks] = useState([]); 
             const [isDragging, setIsDragging] = useState(false);
             
+            // System Config State
+            const [showConfig, setShowConfig] = useState(false);
+            const [customConfigStr, setCustomConfigStr] = useState('');
+            const [customData, setCustomData] = useState({ dict: [], sentiment: {}, categories: {} });
+
             const cloudCanvasRef = useRef(null);
             const networkRef = useRef(null);
             const networkInstance = useRef(null);
             const viewportRef = useRef(null);
 
-            const getCategory = (word) => {
-                // 1. 行動/武器：包含具體暴力動作、炸藥成分與致命武器 (優先權最高)
-                if ([
+            // Parse Custom Config (Format: Keyword,Score,Category)
+            useEffect(() => {
+                const lines = customConfigStr.split('\n');
+                const newDict = [];
+                const newSentiment = {};
+                const newCategories = {};
+
+                lines.forEach(line => {
+                    const [term, score, cat] = line.split(',').map(s => s.trim());
+                    if (term) {
+                        newDict.push(term);
+                        if (score) newSentiment[term] = parseInt(score, 10);
+                        if (cat) newCategories[term] = cat;
+                    }
+                });
+                setCustomData({ dict: newDict, sentiment: newSentiment, categories: newCategories });
+            }, [customConfigStr]);
+
+            // Merge Data (Memoized for Performance)
+            const activeCoreDict = useMemo(() => {
+                const merged = [...DEFAULT_CORE_DICT, ...customData.dict];
+                // Performance Optimization: Pre-sort dictionary by length (Longest first) ONCE
+                return merged.sort((a, b) => b.length - a.length);
+            }, [customData.dict]);
+
+            const activeSentimentMap = useMemo(() => ({ ...DEFAULT_SENTIMENT_MAP, ...customData.sentiment }), [customData.sentiment]);
+            
+            const getCategory = useCallback((word) => {
+                // 0. Custom Category (Highest Priority)
+                if (customData.categories[word]) return customData.categories[word];
+
+                // 1. 行動/武器
+                if ([ 
                     '殺', '炸', '砍', '射', '死', '彈', '槍', '刀', '手雷', 'C4', 'TNT', '爆', '割喉', '燃燒', 
                     '炸彈', '煙霧彈', '硝酸銨', '爆裂物', '引爆', '投擲', '殺傷', '全副武裝', '汽油彈'
                 ].some(k => word.includes(k))) return '行動/武器';
             
-                // 2. 國安與歷史武裝：獨立區分出第五縱隊、二七部隊等高度敏感詞
-                if ([
+                // 2. 國安與歷史武裝
+                if ([ 
                     '第五縱隊', '二七部隊', '27部隊', '在地協力者', '內應', '武裝', '民防', 
                     '認知作戰', '壓力測試', '境外敵對', '遂行軍事', '解放軍', '武警'
                 ].some(k => word.includes(k))) return '國安與歷史武裝';
             
-                // 3. 目標場所：涵蓋北中高交通樞紐與大型集散地
-                if ([
+                // 3. 目標場所
+                if ([ 
                     '車站', '捷運', '板南', '商場', '新光', '秀泰', '機場', '101', '大學', '北投', '站', 
                     '誠品', '南西', '愛買', '影城', '車廂', '密閉空間', '中央公園', '府中', '西門'
                 ].some(k => word.includes(k))) return '目標場所';
             
-                // 4. 群體/身分：特定罪犯及其聲稱的組織關係
-                if (SUSPECTS.has(word) || [
+                // 4. 群體/身分
+                if (DEFAULT_SUSPECTS.has(word) || [ 
                     '兄弟', '小弟', '同夥', '組織', '張文', '鄭捷', '萊爾', '文弟', 
                     '接下去', '未完成任務', '遺願', '我的人', '我朋友'
                 ].some(k => word.includes(k))) return '群體/身分';
             
-                // 5. 政治人物/暱稱：全量涵蓋 PTT 暱稱與政黨標籤
-                if ([
+                // 5. 政治人物/暱稱
+                if ([ 
                     '賴清德', '蔡英文', '柯文哲', '韓國瑜', '沈伯洋', '黃國昌', '徐巧芯', '王世堅', 
                     '盧秀燕', '蔣萬安', '陳其邁', '郭台銘', '馬英九', '阿扁', '蘇貞昌', '蕭美琴',
                     '國民黨', '民進黨', '民眾黨', '塔綠班', '青鳥', '小草', '白共', '綠營', '藍營',
                     '賴神', '小英', '阿北', '韓總', 'Puma', '蔥哥', '恰吉', '花蓮王', 'EE', '功德'
                 ].some(k => word.includes(k))) return '政治人物/暱稱';
             
-                // 6. 識別特徵碼：身分證字號或加密貨幣錢包地址
+                // 6. 識別特徵碼
                 if (/[A-Z]\d{9}/.test(word) || word.startsWith('bc1q') || word.includes('IP')) return '識別特徵碼';
             
-                // 7. 一般性言論
                 return '一般性言論';
-            };
+            }, [customData.categories]);
 
             const getRiskLevel = (score) => {
                 if (score >= 95) return '極高危';
@@ -234,7 +251,8 @@
                 }
             };
 
-            const precisionTokenize = (text) => {
+            // Optimized Tokenize: Uses pre-sorted activeCoreDict
+            const precisionTokenize = useCallback((text) => {
                 let tokens = [];
                 try {
                     const clean = text.replace(/[^\u4e00-\u9fa5a-zA-Z0-9]/g, ' ');
@@ -243,8 +261,8 @@
                         let i = 0;
                         while (i < seg.length) {
                             let matched = false;
-                            const sortedDict = [...CORE_DICT].sort((a, b) => b.length - a.length);
-                            for (const word of sortedDict) {
+                            // Uses pre-sorted dictionary from useMemo (Significant Perf Boost)
+                            for (const word of activeCoreDict) {
                                 if (seg.substring(i, i + word.length) === word) {
                                     tokens.push(word);
                                     i += word.length; 
@@ -263,9 +281,9 @@
                             }
                         }
                     });
-                } catch (e) { console.error(e); }
+                } catch (e) { console.error(e); } 
                 return tokens.filter(t => t.length > 1 || ['砍', '炸', '殺', '死'].includes(t));
-            };
+            }, [activeCoreDict]);
 
             const performAnalysis = () => {
                 if (!inputText.trim()) return;
@@ -286,7 +304,14 @@
                         }
                     });
                     const sortedWords = Object.entries(wordFreq).sort((a, b) => b[1] - a[1]).map(([text, count]) => {
-                        const baseScore = SENTIMENT_MAP[text] || Math.min(65 + count * 2, 85);
+                        // Risk Calculation Update: 
+                        // Only use sentiment map for base score. Unknown words get low base score (10), 
+                        // and frequency boost is capped at 50 to prevent false positives for common non-risk words.
+                        const definedScore = activeSentimentMap[text];
+                        const baseScore = definedScore !== undefined 
+                            ? definedScore 
+                            : Math.min(10 + count * 1, 50); 
+                            
                         return { text, count, sentiment: baseScore, category: getCategory(text) };
                     });
                     setAnalysisData({ words: sortedWords, edges: Object.entries(coOccurrence).map(([id, weight]) => ({ id, weight })) });
@@ -299,7 +324,7 @@
                 let list = analysisData.words || [];
                 if (categoryFilter !== '全部') list = list.filter(w => w.category === categoryFilter);
                 if (selectedRisks.length > 0) {
-                    list = list.filter(w => selectedRisks.includes(getRiskLevel(SUSPECTS.has(w.text) ? 100 : w.sentiment)));
+                    list = list.filter(w => selectedRisks.includes(getRiskLevel(DEFAULT_SUSPECTS.has(w.text) ? 100 : w.sentiment)));
                 }
                 return list;
             }, [analysisData.words, categoryFilter, selectedRisks]);
@@ -308,10 +333,8 @@
                 setSelectedRisks(prev => prev.includes(label) ? prev.filter(r => r !== label) : [...prev, label]);
             };
 
-            // --- 繪圖邏輯：全量清單但「視覺分流」拓樸 ---
             useEffect(() => {
                 if (analysisData.words.length > 0) {
-                    // 1. 詞雲依然保持前 250 個熱點
                     if (cloudCanvasRef.current && window.WordCloud) {
                         const canvas = cloudCanvasRef.current;
                         const container = viewportRef.current;
@@ -322,7 +345,7 @@
                         window.WordCloud(canvas, {
                             list: analysisData.words.slice(0, 250).map(w => [w.text, w.count]),
                             fontFamily: 'Noto Sans TC',
-                            color: (w) => (SUSPECTS.has(w) || (SENTIMENT_MAP[w] || 0) >= 95) ? '#ef4444' : '#60a5fa',
+                            color: (w) => (DEFAULT_SUSPECTS.has(w) || (activeSentimentMap[w] || 0) >= 95) ? '#ef4444' : '#60a5fa',
                             rotateRatio: 0,
                             gridSize: 10,
                             weightFactor: (size) => Math.sqrt(size / maxCount) * dynamicScale + 5,
@@ -330,14 +353,13 @@
                             clearCanvas: true
                         });
                     }
-                    // 2. 拓樸圖性能優化：全量清單，但「智能上限」顯示前 150 個節點，並在穩定後關閉物理運算防止卡頓
                     if (networkRef.current && window.vis) {
                         const currentWords = filteredWords.length > 0 ? filteredWords : analysisData.words;
-                        const limitedNodesData = currentWords.slice(0, 150); // 性能上限臨界值
+                        const limitedNodesData = currentWords.slice(0, 150);
                         const baseCount = analysisData.words[0]?.count || 1;
                         
                         const nodes = limitedNodesData.map(w => {
-                            const isHighRisk = SUSPECTS.has(w.text) || (SENTIMENT_MAP[w.text] || 0) >= 95;
+                            const isHighRisk = DEFAULT_SUSPECTS.has(w.text) || (activeSentimentMap[w.text] || 0) >= 95;
                             const fontSize = Math.max(26, (w.count / baseCount) * 75);
                             return {
                                 id: w.text, label: w.text, shape: 'box', margin: 15,
@@ -351,48 +373,68 @@
                         const edges = analysisData.edges.filter(e => {
                             const [s, t] = e.id.split('::');
                             return limitedNodesData.some(w => w.text === s) && limitedNodesData.some(w => w.text === t);
-                        }).map(e => ({ 
+                        }).map(e => ({
                             from: e.id.split('::')[0], to: e.id.split('::')[1], 
                             width: Math.sqrt(e.weight) * 5, color: 'rgba(148, 163, 184, 0.4)', length: 250 
                         }));
 
                         if (networkInstance.current) networkInstance.current.destroy();
                         
-                        // 使用簡化的物理引擎 (barnesHut) 處理較多節點
                         networkInstance.current = new window.vis.Network(networkRef.current, { nodes, edges }, {
                             physics: { 
                                 enabled: true,
                                 solver: 'barnesHut',
                                 barnesHut: { gravitationalConstant: -3000, centralGravity: 0.1, springLength: 200, avoidOverlap: 1.0 },
-                                stabilization: { iterations: 150, fit: true } // 預先穩定化
+                                stabilization: { iterations: 150, fit: true } 
                             },
                             interaction: { hover: true, zoomView: true, dragNodes: true }
                         });
 
-                        // 核心修復：在穩定後關閉物理引擎，防止 CPU 持續高負載導致網頁卡死
                         networkInstance.current.on("stabilizationIterationsDone", () => {
                             networkInstance.current.setOptions({ physics: { enabled: false } });
                         });
                     }
                 }
-            }, [analysisData, filteredWords]);
+            }, [analysisData, filteredWords, activeSentimentMap]); // Added activeSentimentMap dep
 
             useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
 
             return (
-                <div className="app-container p-4 lg:p-6 bg-[#020617] text-slate-200 font-sans">
+                <div className="app-container p-4 lg:p-6 bg-[#020617] text-slate-200 font-sans relative">
                     <header className="flex-none flex flex-col lg:flex-row justify-between items-center gap-4 bg-slate-900/40 p-5 rounded-3xl border border-white/5 shadow-2xl mb-6 backdrop-blur-xl">
                         <div className="flex items-center gap-4 text-center lg:text-left">
                             <div className="bg-red-600 p-2.5 rounded-2xl shadow-lg animate-pulse"><i data-lucide="shield-alert" className="w-6 h-6 text-white"></i></div>
                             <div>
                                 <h1 className="text-xl lg:text-2xl font-black tracking-tight uppercase tracking-tighter">網路巡邏情資分析系統</h1>
-                                <p className="text-slate-500 text-[10px] uppercase tracking-widest font-black opacity-70">v6.6 | Performance Optimized | Smart Node Balance</p>
+                                <p className="text-slate-500 text-[10px] uppercase tracking-widest font-black opacity-70">v1.1 | Performance Optimized | Smart Node Balance</p>
                             </div>
                         </div>
-                        <button onClick={performAnalysis} disabled={isAnalyzing} className="px-10 py-3 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black shadow-2xl transition transform active:scale-95 flex items-center gap-2 text-sm uppercase tracking-widest">
-                            <i data-lucide="zap" className={`w-4 h-4 ${isAnalyzing ? 'animate-pulse' : ''}`}></i>啟動分析
-                        </button>
+                        <div className="flex gap-3">
+                             <button onClick={() => setShowConfig(!showConfig)} className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-2xl font-black shadow-xl transition transform active:scale-95 flex items-center gap-2 text-sm uppercase tracking-widest">
+                                <i data-lucide="settings" className="w-4 h-4"></i> 系統參數
+                            </button>
+                            <button onClick={performAnalysis} disabled={isAnalyzing} className="px-10 py-3 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black shadow-2xl transition transform active:scale-95 flex items-center gap-2 text-sm uppercase tracking-widest">
+                                <i data-lucide="zap" className={`w-4 h-4 ${isAnalyzing ? 'animate-pulse' : ''}`}></i> 啟動分析
+                            </button>
+                        </div>
                     </header>
+                    
+                    {/* Config Modal */}
+                    {showConfig && (
+                        <div className="absolute top-24 right-6 z-50 w-96 bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl p-6 backdrop-blur-3xl animate-in fade-in slide-in-from-top-4 duration-200">
+                             <h3 className="font-bold text-white mb-2 flex items-center gap-2"><i data-lucide="database" className="w-4 h-4 text-blue-500"></i> 自定義字典庫擴充</h3>
+                             <p className="text-xs text-slate-400 mb-4">格式: 關鍵詞,危險分數(0-100),分類名稱<br/>(每行一筆，將即時合併至核心引擎)</p>
+                             <textarea 
+                                value={customConfigStr}
+                                onChange={(e) => setCustomConfigStr(e.target.value)}
+                                className="w-full h-64 bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs font-mono text-green-400 outline-none focus:border-blue-500 resize-none"
+                                placeholder={`範例:\n新型病毒,90,生化威脅\n秘密基地,85,目標場所\n暗網交易,75,犯罪行為`}
+                             />
+                             <div className="mt-3 flex justify-end">
+                                <button onClick={() => setShowConfig(false)} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs rounded-lg font-bold">確認應用</button>
+                             </div>
+                        </div>
+                    )}
 
                     <div className="main-content">
                         {/* Column 1: Input */}
@@ -426,12 +468,13 @@
                                 </div>
                                 <div className="space-y-3">
                                     <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="w-full bg-slate-800 border border-white/10 rounded-xl px-3 py-2 text-[10px] text-slate-200 outline-none cursor-pointer font-bold">
-                                        <option value="全部">所有類別 (全部結果)</option>
+                                        <option value="全部">所有類別 (含自定義)</option>
                                         <option value="行動/武器">行動/武器</option>
                                         <option value="目標場所">目標場所</option>
                                         <option value="政治人物/暱稱">政治人物/暱稱</option>
                                         <option value="群體/身分">群體/身分</option>
                                         <option value="識別特徵碼">識別特徵碼</option>
+                                        {/* Dynamically render custom categories if needed, but 'All' covers it */}
                                     </select>
                                     <div className="flex flex-wrap gap-1.5">
                                         {['極高危', '高風險', '中風險'].map(label => (
@@ -448,8 +491,8 @@
                                     </thead>
                                     <tbody className="divide-y divide-white/5">
                                         {filteredWords.map((word, idx) => {
-                                            const riskL = getRiskLevel(SUSPECTS.has(word.text) ? 100 : word.sentiment);
-                                            const isH = SUSPECTS.has(word.text) || (SENTIMENT_MAP[word.text] || 0) >= 95;
+                                            const riskL = getRiskLevel(DEFAULT_SUSPECTS.has(word.text) ? 100 : word.sentiment);
+                                            const isH = DEFAULT_SUSPECTS.has(word.text) || (activeSentimentMap[word.text] || 0) >= 95;
                                             return (
                                                 <tr key={idx} className="risk-row transition">
                                                     <td className="px-4 py-3.5">
@@ -460,7 +503,7 @@
                                                         <span className="text-[9px] text-slate-600 block italic opacity-70 font-medium tracking-tight uppercase">{word.category}</span>
                                                     </td>
                                                     <td className="px-4 py-3.5 text-right">
-                                                        <span className={`px-2 py-0.5 rounded-[4px] text-[8px] font-black border ${getRiskColor(SUSPECTS.has(word.text) ? 100 : word.sentiment)} uppercase tracking-tighter`}>{riskL}</span>
+                                                        <span className={`px-2 py-0.5 rounded-[4px] text-[8px] font-black border ${getRiskColor(DEFAULT_SUSPECTS.has(word.text) ? 100 : word.sentiment)} uppercase tracking-tighter`}>{riskL}</span>
                                                     </td>
                                                 </tr>
                                             );
