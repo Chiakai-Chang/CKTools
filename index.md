@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2025-12-23
+* 更新至 2026-01-05
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -466,6 +466,93 @@ function autoExpandContent() {
 
 // 啟動自動展開Facebook貼文與留言的功能並搜尋關鍵字
 autoExpandContent();
+```
+
+* ## ☆ 臺中市公文系統自動校正常見錯誤 ☆
+  * 以下這段程式碼會全自動幫忙：
+    * 1、將如()等半形符號轉換成全形符號（）
+    * 2、自動去除空格與奇怪符號
+  * 未來考慮增加其他檢查項目，並考慮做成更方便的擴充套件，規劃中...
+  * 使用步驟:
+      * 1、使用「**Chrome**」開啟你目標公文的「**文書編輯**」頁面
+      * 2、點右上角的「 **⋮** 」 -> 選「**更多工具**」 -> 選「**開發人員工具**」(即 **DevTools**)
+      * 3、「**開發人員工具**」(即 **DevTools**) 跳到「**Console**」頁籤，點上方「 **∅** 」符號清空畫面以利觀看程式進度
+      * 4、複製以下指令(要搜尋的關鍵字記得要改)，在「**Console**」內貼上後按「**Enter**」執行即可 (若無法貼上，請參考 [**allow pasting 的教學**](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
+
+```javascript
+(function() {
+    // === 靈活設定區 ===
+    const CONFIG = {
+        targetIds: ['主旨', '說明', '擬辦'], 
+        
+        // 定義要轉換的符號對照表（可以在這自由增加）
+        symbolMap: {
+            '(': '（', ')': '）',
+            ',': '，', '.': '。',
+            ':': '：', ';': '；',
+            '!': '！', '?': '？',
+            '[': '〔', ']': '〕',
+            '<': '〈', '>': '〉'
+        },
+
+        // 清理規則
+        cleanRules: [
+            { search: /[ \t\r\n]/g, replace: '' }, // 去除半形空格、Tab、換行
+            { search: /\u00a0/g, replace: '' }    // 去除 HTML 特殊空格
+        ]
+    };
+
+    let totalChanges = 0;
+
+    function processElement(el) {
+        if (!el) return;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        let nodesToProcess = [];
+        while (node = walker.nextNode()) nodesToProcess.push(node);
+
+        nodesToProcess.forEach(node => {
+            let text = node.nodeValue;
+            let originalText = text;
+            
+            // 執行規則 1：清理空白
+            CONFIG.cleanRules.forEach(rule => {
+                text = text.replace(rule.search, rule.replace);
+            });
+
+            // 執行規則 2：只針對符號對照表進行替換
+            for (let [half, full] of Object.entries(CONFIG.symbolMap)) {
+                // 使用轉義處理特殊正則字元
+                const escapedHalf = half.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(escapedHalf, 'g');
+                text = text.replace(regex, full);
+            }
+
+            if (originalText !== text) {
+                node.nodeValue = text;
+                totalChanges++;
+            }
+        });
+    }
+
+    function run() {
+        const contexts = [document];
+        document.querySelectorAll('iframe').forEach(f => {
+            try { if (f.contentDocument) contexts.push(f.contentDocument); } catch(e) {}
+        });
+
+        contexts.forEach(ctx => {
+            CONFIG.targetIds.forEach(id => {
+                const target = ctx.getElementById(id);
+                if (target) processElement(target);
+            });
+        });
+
+        console.log(`✅ 符號校正完成！保留了英數字，僅針對指定標點修正了 ${totalChanges} 處。`);
+    }
+
+    run();
+})();
 ```
 
 ---
