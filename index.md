@@ -477,7 +477,8 @@ autoExpandContent();
       * 1、使用「**Chrome**」開啟你目標公文的「**文書編輯**」頁面
       * 2、請在該頁面按鍵盤上的「**F12**」按鈕來開啟「**開發人員工具**」(即 **DevTools**)
       * 3、請在「**開發人員工具**」(即 **DevTools**) 跳到「**Console**」頁籤，點上方「 **∅** 」符號清空畫面以利觀看程式進度
-      * 4、複製以下指令(要搜尋的關鍵字記得要改)，在「**Console**」內貼上後按「**Enter**」執行即可 (若無法貼上，請參考 [**allow pasting 的教學**](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
+      * 4、複製以下指令後，到在「**Console**」內貼上後按「**Enter**」執行即可
+           * (※ 若無法貼上，請參考 [**allow pasting 的教學**](https://chiakai-chang.github.io/CKTools/#%E5%BF%85%E9%A0%88%E5%85%88%E5%81%9A-%E8%AB%8B%E5%85%88%E6%89%8B%E5%8B%95%E8%BC%B8%E5%85%A5%E4%BB%A5%E4%B8%8B%E6%8C%87%E4%BB%A4%E6%89%8D%E6%9C%83%E8%A2%AB%E5%85%81%E8%A8%B1%E5%9C%A8-devtools-%E7%9A%84-console-%E5%85%A7%E8%B2%BC%E4%B8%8A%E7%A8%8B%E5%BC%8F%E7%A2%BC))
       * 5、完成後，記得回到「**文書編輯**」頁面檢查；若檢查OK，請記得按左上角的「**💾儲存**」按鈕來儲存修改後結果唷！
 
 ```javascript
