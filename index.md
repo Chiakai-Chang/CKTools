@@ -39,7 +39,7 @@
     - 想讓您的寶貴文章/影片或您的專業被看見？歡迎投稿分享。這裡不只是舞台，更是領先者交流的秘密基地。
 
 * ## [📺 YouTube 影音頻道：DeepReadAI](https://www.youtube.com/@DeepReadAI-CK)
-  * **🎯 那些只有少數人預見的先機：** 影片清單伴隨我的研究節奏（目前大約每天一篇）動態更新，只鎖定最具含金量的領域。
+  * **🎯 那些只有少數人預見的先機：** 動態更新（目前大約每天一篇），只鎖定最具含金量的領域。
     <div style="margin: 20px 0; text-align: left;">
       <a href="https://www.youtube.com/@DeepReadAI-CK?sub_confirmation=1" target="_blank" style="background-color: #ff0000; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
         <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
