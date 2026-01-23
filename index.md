@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2026-01-05
+* 更新至 2026-01-23
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -21,6 +21,34 @@
     * 左上角「**檔案**」->「**在雲端硬碟中儲存副本**」
   * ### Google Sheet 複製方法:
     * 左上角「**檔案**」->「**建立副本**」
+
+---
+
+# <span style="background-color:yellow;"> ☆☆☆ 深夜的大腦充電站：科偵之夜 DeepReadAI ☆☆☆ </span>
+[![](https://aideepread-tech.github.io/img/logo.png)](https://aideepread-tech.github.io/)
+
+* **辦案累了？來點領先者的「核心眼界」吧！**
+* 在科技與犯罪交織的當下，真正決定落差的不再是體力，而是您掌握了多少「稀缺情報」。**「科偵之夜 (DeepReadAI)」** 秉持以教為學的靈魂，將全球科技最尖端的脈動，轉化為 **10 分鐘就能同步的中文精華導讀**。這不是額外的功課，而是一場讓您在靜默中完成的「降維進化」。
+* **💡 打造個人的專業護城河**：
+  這份導讀不只是為了破案，更是為了累積您個人最深厚的**關鍵籌碼**。當您掌握了極少數人能洞察的佈局邏輯，不僅偵查會變得優雅且省力，更讓您在不知不覺中，具備了**擁有選擇的底氣**與無可取代的價值。
+
+* ## [🌐 官方知識庫網站：科偵之夜 DeepReadAI](https://aideepread-tech.github.io/)
+  * **🎯 視覺化的高階情報**：
+    我將原本充滿門檻、令人望而生畏的趨勢文獻，轉化為 **20-25頁左右的視覺化圖文簡報與10分鐘以內的影片**。讓您在幾分鐘內，默默同步世界最前沿的佈局。
+  * **🔥 許願池（掌握未來的選票）**：
+    當世界出現新的技術波段，許願池就是您的投票器。累積高人氣的主題，我會順應這股推力，優先轉化為導讀簡報。讓我們一起維持在最敏銳的狀態，不漏掉任何一個強化個人資產的機會。
+
+* ## [📺 YouTube 影音頻道：DeepReadAI](https://www.youtube.com/@DeepReadAI-CK)
+  * **🎯 那些只有領先者預見的先機：** 影片清單伴隨我的研究節奏（目前約每天一篇）動態更新，涵蓋（但不限於）以下核心領域：
+    * 🤖 **AI 應用實戰**：從 LLM 論文到 Agent 多代理人架構，探索如何讓 AI 成為您全天候的偵查分身。
+    * 🔍 **數位鑑識黑科技**：深入 WinRE 破解、記憶體取證 (RAM) 與隱形足跡追蹤，讓數位證據無所遁形。
+    * 💰 **OSINT 與虛擬幣偵查**：解構區塊鏈洗錢、Web3.0 黑產與暗網交易，掌握隱形世界的錢路與思路。
+    * 🛡️ **資安漏洞與攻防**：拆解 WAF 繞過、惡意程式分析與系統弱點，在威脅發生前就先看穿風險。
+    * 🧠 **問題解決與戰術思維**：融合行為科學、管理學與執法安全（如 Tueller Drill），全方位優化辦案直覺。
+    * 🎭 **高手在民間（共享舞台）**：想讓您的專業被看見？歡迎投稿分享。這裡不只是舞台，更是領先者交流的秘密基地。
+  * 📢 **點擊下方影片(預設顯示最新影片)，別讓自己成為最後一個掌握先機的人。讓我們一起在靜默中升級，擁有定義職涯的底氣！**
+
+  <iframe width="75%" height="450" src="https://www.youtube.com/embed/videoseries?list=UU0jkNbn9bQK1sBp9DYUFRZg" title="DeepReadAI 最新科偵影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
