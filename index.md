@@ -46,8 +46,8 @@
         立即訂閱，同步最新進化情報
       </a>
     </div>
-<br><br>
-  <iframe src="https://aideepread-tech.github.io/" width="100%" height="600" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
+
+  <iframe src="https://aideepread-tech.github.io/" width="100%" height="850" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
 
 ---
 
