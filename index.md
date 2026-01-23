@@ -32,15 +32,10 @@
   不只是為了破案，更是為了累積個人不可取代的**關鍵籌碼**。涵蓋 **AI 應用實戰、數位鑑識黑科技、OSINT 與虛擬幣偵查、資安攻防、以及問題解決思維**。當您掌握了極少數人能洞察的佈局邏輯，您將擁有定義職涯的底氣與選擇權。
 
 <div style="margin: 40px 0; padding: 25px; background-color: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-  <p style="margin-top: 0; color: #64748b; font-size: 14px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">YouTube 影音頻道</p>
-  <h3 style="margin: 10px 0 20px 0; color: #1e293b; font-size: 22px; font-weight: 800;">每日同步全球尖端情報</h3>
-  
   <a href="https://www.youtube.com/@DeepReadAI-CK?sub_confirmation=1" target="_blank" style="background-color: #ff0000; color: white; padding: 15px 40px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 18px; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 8px 15px rgba(255, 0, 0, 0.2); transition: all 0.3s ease;">
     <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93-0.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-    立即訂閱 YouTube 頻道
+    點我訂閱 YouTube 頻道
   </a>
-  
-  <p style="margin-top: 15px; color: #94a3b8; font-size: 13px;">( 點擊上方按鈕後，請於彈出視窗點選「確認訂閱」即可完成同步 )</p>
 </div>
 
 <iframe src="https://aideepread-tech.github.io/" width="100%" height="850" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
