@@ -31,7 +31,7 @@
 * **💡 打造個人的專業護城河**：
   - 不只是為了破案，更是為了累積個人不可取代的**關鍵籌碼**。涵蓋 **AI 應用實戰、數位鑑識黑科技、OSINT 與虛擬幣偵查、資安攻防、以及問題解決思維**。當您掌握了極少數人能洞察的佈局邏輯，您將擁有定義職涯的底氣與選擇權。
 
-<iframe src="https://aideepread-tech.github.io/" width="100%" height="1000" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
+<iframe src="https://aideepread-tech.github.io/" width="100%" height="1200" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
 
 <div style="margin: 40px 0; padding: 25px; background-color: #ffffff; border: 1px solid #f1f5f9; border-radius: 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
   <a href="https://www.youtube.com/@DeepReadAI-CK?sub_confirmation=1" target="_blank" style="background-color: #ff0000; color: white; padding: 15px 40px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 18px; display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 8px 15px rgba(255, 0, 0, 0.2); transition: all 0.3s ease;">
