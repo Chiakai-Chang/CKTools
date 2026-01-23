@@ -36,8 +36,6 @@
   * **🔥 許願池（掌握未來的選票）**：
     當世界出現新的技術波段，許願池就是您的投票器。累積高人氣的主題，我會順應這股推力，優先轉化為導讀簡報。讓我們一起維持在最敏銳的狀態，不漏掉任何一個強化個人資產的機會。
 
-  <iframe src="https://aideepread-tech.github.io/" width="100%" height="550" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
-
 * ## [📺 YouTube 影音頻道：DeepReadAI](https://www.youtube.com/@DeepReadAI-CK)
   * **🎯 那些只有領先者預見的先機：** 影片清單伴隨我的研究節奏（目前約每天一篇）動態更新，涵蓋（但不限於）以下核心領域：
     * 🤖 **AI 應用實戰**：從 LLM 論文到 Agent 多代理人架構，探索如何讓 AI 成為您全天候的偵查分身。
@@ -46,8 +44,9 @@
     * 🛡️ **資安漏洞與攻防**：拆解 WAF 繞過、惡意程式分析與系統弱點，在威脅發生前就先看穿風險。
     * 🧠 **問題解決與戰術思維**：融合行為科學、管理學與執法安全（如 Tueller Drill），全方位優化辦案直覺。
     * 🎭 **高手在民間（共享舞台）**：想讓您的專業被看見？歡迎投稿分享。這裡不只是舞台，更是領先者交流的秘密基地。
-  * 📢 **點擊下方影片(預設顯示最新影片)，別讓自己成為最後一個掌握先機的人。讓我們一起在靜默中升級，擁有定義職涯的底氣！**
-    <iframe width="75%" height="450" src="https://www.youtube.com/embed/videoseries?list=UU0jkNbn9bQK1sBp9DYUFRZg" title="DeepReadAI 最新科偵影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  * 📢 **點擊下方影片，別讓自己成為最後一個掌握先機的人。讓我們一起在靜默中升級，擁有定義職涯的底氣！**
+
+<iframe src="https://aideepread-tech.github.io/" width="100%" height="550" style="border:1px solid #e2e8f0; border-radius: 15px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 20px;" loading="lazy"></iframe>
 
 ---
 
