@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2026-01-23
+* 更新至 2026-02-10
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -147,7 +147,179 @@
     
       console.log("全部處理完成");
     })();
-
+    ```
+* ## ☆ 自動化幫忙「報超勤」密技 ☆
+  * 步驟:
+    * 1、開啟到「值班臺應勤簿冊電子化系統」-「印領清冊」-「超勤加班費請領」的網頁
+    * 2、手動填輸要報超勤的「日期年月」，然後按下「查詢」按鈕，確認已正確跳轉到該月份日歷內容
+    * 3、按 **F12** 開啟 **DevTools**，切換到 **Console** 頁籤
+    * 4、在「>」後面輸入以下指令，然後按「Enter」鍵
+    * 4.1、若出現黃色的警示字樣，那是安全警示，告訴你勿隨便相信別人給的程式碼，請「手打」輸入以下指令(已經沒辦法複製貼上，只能手打)，允許在 DevTools 的 Console 內貼上程式碼:
+           ```javascript
+           allow pasting
+           ```
+    * 4.2、完成後，請再次複製以下指令，再次按「Enter」鍵。
+    * 5、程式會自動偵測您的姓名、帳號與單位，並自動偵測當月有幾天可以報超勤，您確認後按下「確定」按鈕，就會自動幫您將可報超勤的日期，每天8小時候的時數，逐一幫您提報請領加班費的動作，全部完成後會跳出視窗通知，此時重新整理頁面或再按一次「查詢」按鈕，即可發現報超勤工作已完成。
+  * 指令:
+    ```javascript
+    (async function() {
+        console.clear();
+        console.log("🤖 啟動全自動偵測模式...");
+    
+        // --- 1. 自動取得身份與單位資訊 ---
+        let userId = "";
+        let userName = "";
+        let unitId = "";
+    
+        try {
+            // 抓取 User ID 與 姓名
+            const userSelect = document.getElementById('DUTY_USER_query');
+            if (userSelect) {
+                userId = userSelect.value;
+                // 抓取選中的 option 文字 (移除可能的前後空白)
+                userName = userSelect.options[userSelect.selectedIndex].text.trim();
+            }
+    
+            // 抓取 Unit ID (被選取的 radio)
+            const unitInput = document.querySelector('input[name="unitCd"]:checked');
+            if (unitInput) {
+                unitId = unitInput.value;
+            }
+    
+            if (!userId || !unitId) {
+                throw new Error("無法自動抓取使用者資訊，請確認您已登入並位於正確頁面。");
+            }
+    
+            console.log(`✅ 身份確認：${userName} (${userId})`);
+            console.log(`✅ 單位代碼：${unitId}`);
+    
+        } catch (e) {
+            console.error("❌ 初始化失敗:", e.message);
+            alert("無法自動抓取身份資訊，請確認網頁載入完成。");
+            return;
+        }
+    
+        // --- 2. 掃描 DOM 找出未申報日期 ---
+        console.log("🕵️ 正在掃描日曆，尋找未申報的紅色日期...");
+    
+        // 鎖定紅色背景的 event (代表未設定或被清除)
+        const redEvents = document.querySelectorAll('a.fc-event[style*="background-color: red"], a.fc-event[style*="background-color: rgb(255, 0, 0)"]');
+        let targetDates = [];
+    
+        redEvents.forEach(el => {
+            const td = el.closest('td[data-date]');
+            if (td) {
+                const date = td.getAttribute('data-date');
+                // 確保該日期沒有其他綠色(已請領)或藍色(已補休)的標籤，避免重複處理
+                const hasDoneEvents = td.querySelectorAll('a.fc-event:not([style*="red"]):not([style*="rgb(255, 0, 0)"])').length > 0;
+                
+                if (!hasDoneEvents && !targetDates.includes(date)) {
+                    targetDates.push(date);
+                }
+            }
+        });
+    
+        targetDates.sort(); // 日期排序
+    
+        if (targetDates.length === 0) {
+            console.log("🎉 掃描完畢，沒有發現任何需要補單的日期！");
+            alert("恭喜！日曆上沒有紅色未申報的日期。");
+            return;
+        }
+    
+        // --- 3. 確認與執行 ---
+        console.log(`📋 發現 ${targetDates.length} 天未申報：`, targetDates);
+        if (!confirm(`🤖 自動偵測身分：${userName}\n📅 發現 ${targetDates.length} 天未申報 (${targetDates[0]} ~ ${targetDates[targetDates.length-1]})\n\n是否執行自動補單 (超過8小時轉補休)？`)) {
+            console.log("已取消操作。");
+            return;
+        }
+    
+        // 工具: 延遲與格式轉換
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const formatToRocTime = (rawTime) => {
+            if (!rawTime || rawTime.length !== 12) return rawTime;
+            const year = parseInt(rawTime.substring(0, 4)) - 1911;
+            // 轉為 115/01/06 09:00 格式
+            return `${year}/${rawTime.substring(4, 6)}/${rawTime.substring(6, 8)} ${rawTime.substring(8, 10)}:${rawTime.substring(10, 12)}`;
+        };
+    
+        // --- 4. 逐日處理迴圈 ---
+        let successCount = 0;
+        
+        for (const dateStr of targetDates) {
+            console.log(`\n⚙️ 正在處理：${dateStr}`);
+    
+            try {
+                // A. 查詢該日上班時段
+                const queryResp = await fetch("https://oc.eportal.npa.gov.tw/NM106-508Web/OC07Servlet", {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "body": `ajaxAction=WorkExtraHoursCalendarByDay&UNIT=${unitId}&DUTY_UNIT=%5B%5D&DUTY_DATE=${dateStr}&DUTY_USER=${userId}&DUTY_USER_NM=${encodeURIComponent(userName)}&DEPT=`,
+                    "method": "POST"
+                });
+                const queryData = await queryResp.json();
+    
+                // 如果那天是紅字但沒時段資料(可能只是標記異常但實際休假)，就跳過
+                if (!queryData.formData || queryData.formData.length === 0) {
+                    console.log(`   └─ ⚠️ 查無實際時段資料，跳過。`);
+                    continue;
+                }
+    
+                // B. 計算邏輯：前8小時請領，第9小時起補休
+                let accumulatedMinutes = 0;
+                let saveArray = [];
+                
+                // 確保按順序計算
+                queryData.formData.sort((a, b) => a.seqNo - b.seqNo);
+    
+                queryData.formData.forEach(item => {
+                    const minutes = parseInt(item.min) || 60;
+                    let type = ""; // 預設空字串 (請領)
+    
+                    // 核心規則：如果「累計已達」480分鐘，這筆設為 R
+                    if (accumulatedMinutes >= 480) {
+                        type = "R";
+                    }
+                    accumulatedMinutes += minutes;
+    
+                    saveArray.push({
+                        "WORK_EXTRA_HOURS_UNIT_add": item.unit,
+                        "WORK_EXTRA_HOURS_BEGIN_add": formatToRocTime(item.beginTime),
+                        "WORK_EXTRA_HOURS_END_add": formatToRocTime(item.endTime),
+                        "WORK_EXTRA_HOURS_SEQ_add": String(item.seqNo),
+                        "WORK_EXTRA_HOURS_ITEM_add": item.item,
+                        "WORK_EXTRA_HOURS_MIN_add": item.min,
+                        "time": item.time,
+                        "user": userId,
+                        "type": type,
+                        "date": dateStr
+                    });
+                });
+    
+                // C. 送出儲存
+                const saveResp = await fetch("https://oc.eportal.npa.gov.tw/NM106-508Web/OC07Servlet", {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "body": `ajaxAction=WorkExtraHoursSave&workExtraHoursArray=${encodeURIComponent(JSON.stringify(saveArray))}`,
+                    "method": "POST"
+                });
+                
+                // 讀取回應確認
+                // 有些 server 回傳空 json 或特定欄位代表成功，這裡只要不噴 error 就視為成功
+                await saveResp.json(); 
+                
+                console.log(`   └─ ✅ 申報成功！總時數 ${accumulatedMinutes/60} 小時`);
+                successCount++;
+    
+                // 稍微休息，避免對伺服器太兇
+                await sleep(300);
+    
+            } catch (e) {
+                console.error(`   ❌ ${dateStr} 處理失敗:`, e);
+            }
+        }
+    
+        console.log(`\n🏁 全部完成！共成功處理 ${successCount} 天。`);
+        alert(`自動補單完成！\n共處理 ${successCount} 天。\n請重新整理網頁查看結果。`);
+    })();
     ```
 * ## ☆ 下載「PDF」簡報檔密技 ☆
   * 步驟:
