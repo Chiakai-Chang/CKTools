@@ -1,6 +1,6 @@
 # Chiakai's 科偵軍火庫
 * [![Hits](https://hits.sh/chiakai-chang.github.io/CKTools.svg?style=for-the-badge&label=%E7%80%8F%E8%A6%BD%E4%BA%BA%E6%AC%A1)](https://hits.sh/chiakai-chang.github.io/CKTools/)
-* 更新至 2026-03-10
+* 更新至 2026-08-10
 * [**【如果有任何建議或問題回饋，歡迎點這裡填寫表單跟我說】**](https://forms.gle/euDVcKwk7QsiHgsz8)
 ---
 
@@ -818,7 +818,9 @@ autoExpandContent();
 ---
 
 # <span style="background-color:yellow;"> ☆☆☆ 精心研發各種小幫手程式 (點擊程式名稱即可下載) ☆☆☆ </span>
-* ## [IPwhois好好查](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
+* ## ⚠️ [IPwhois好好查](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip) <font color="red"><b>[已知故障待修]</b></font>
+  * <font color="red"><b>⚠️ 狀態提示：</b></font> 本工具目前因 Whois 協定陸續轉移至 RDAP 及底層資料庫變更，目前已知故障待修中。
+  * <b>💡 推薦替代方案：</b> 建議可先前往警察同仁開發的 [鴿手 (pigeonhand.tw/apps)](https://pigeonhand.tw/apps) 平台，使用由廖瑞瑜學長開發的 **「IP查詢工具」** 或其他實用偵查工具。
   * 當前版本： 20240403_2 [點我下載](https://chiakai-chang.github.io/CKTools/Tools/IPwhoisTool.zip)
   * 一般案件偵查時，針對 IP 使用紀錄通常有幾十到上百的 IP 要逐筆手動查詢 Whois，再轉貼到 Excel 中，往往查完到整理好可以申請投單調閱就已耗時2小時以上；甚至在從事 log 分析時，還可能面臨有多達百萬、甚至上千萬行的資料與 IP，以人力是不可能完成的困境(以舊版的 IP Whois 好好查仍需耗費約連續60~80小時才能查完)。因此特別設計、改進此程式，讓大家自由貼上任意文本資料，程式將自動從每一行資料中，將 IP 抽取出來彙整，並以「即時更新離線資料庫」搭配精心設計的「二分搜尋演算法 (Binary search algorithm)」來加速，自動進行 IP Whois 查詢(若係臺灣 IP 還會再進一步自動查詢 TWNIC 資料)，最後將結果整理成「Excel 一覽表」+「臺灣 IP 基資投單格式 TXT 檔」，其中惱人的 IPv6 也會自動幫大家轉換成符合投單系統可以吃的格式。力求從各種面向，以最貼心的方式，大量節約同仁查詢所需耗費的寶貴時間與精力。
   * 解壓縮密碼：`htciu`
